@@ -36,9 +36,10 @@
        realized that when you get to sites that are on the edges of the system, you would end up
        throwing an exception depending on which direction you look. I ended up adding a small check
        before isOpen in the if statement for the border sites. I'm not sure if there's a better way
-       to do it or if I misinterpreted what the method does. As of this point, I haven't figured out
-        the backwash problem yet but I am getting back to it after I turn everything else first so I
-         can at least get some points.
+       to do it or if I misinterpreted what the method does. Thinking about the backwash problem, I
+       thought it would be easier to create another uf percolation system that mimics the original
+       system but removes one of the virtual sites. Then I could just check for percolation on the
+       backwash system.
 
    Problem 3 (Estimation of Percolation Threshold)
        Approach: This one was simple as well. I just followed the instructions and copied the

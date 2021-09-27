@@ -20,7 +20,9 @@ public class UFPercolation implements Percolation {
         open = new boolean[n][n];
         openSites = 0;
         uf = new WeightedQuickUnionUF(n * n + 2);
-        uf2 = new WeightedQuickUnionUF(n * n + 2);
+
+        // backwash problem uf with only 1 virtual site
+        uf2 = new WeightedQuickUnionUF(n * n + 1);
     }
 
     // Opens site (i, j) if it is not already open.
@@ -37,6 +39,7 @@ public class UFPercolation implements Percolation {
             // if the site is in the first row, connect it to the source
             if (i == 0) {
                 uf.union(0, ufSite);
+                uf2.union(0, ufSite);
             }
             if (i == n - 1) {
                 uf.union(ufSite, n * n + 1);
@@ -46,24 +49,28 @@ public class UFPercolation implements Percolation {
             // connect said neighbor to current site
             if (!(i - 1 < 0) && isOpen(i - 1, j)) {
                 uf.union(ufSite, encode(i - 1, j));
+                uf2.union(ufSite, encode(i - 1, j));
             }
 
             // if eastern neighbor in column j+1 is not out of bounds and neighbor is open,
             // connect said neighbor to current site
             if (!(j + 1 >= n) && isOpen(i, j + 1)) {
                 uf.union(ufSite, encode(i, j + 1));
+                uf2.union(ufSite, encode(i, j + 1));
             }
 
             // if western neighbor in column j-1 is not out of bounds and neighbor is open,
             // connect said neighbor to current site
             if (!(j - 1 < 0) && isOpen(i, j - 1)) {
                 uf.union(ufSite, encode(i, j - 1));
+                uf2.union(ufSite, encode(i, j - 1));
             }
 
             // if southern neighbor in row i+1 is not out of bounds and neighbor is open,
             // connect said neighbor to current site
             if (!(i + 1 >= n) && isOpen(i + 1, j)) {
                 uf.union(ufSite, encode(i + 1, j));
+                uf2.union(ufSite, encode(i + 1, j));
             }
         }
 
@@ -83,7 +90,7 @@ public class UFPercolation implements Percolation {
             throw new IndexOutOfBoundsException("Illegal i or j");
         }
         int ufSite = encode(i, j);
-        return isOpen(i, j) && uf.connected(0, ufSite);
+        return isOpen(i, j) && uf2.connected(0, ufSite);
     }
 
     // Returns the number of open sites.
