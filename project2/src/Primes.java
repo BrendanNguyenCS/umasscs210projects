@@ -8,12 +8,12 @@ public class Primes implements Iterable<Integer> {
 
     // Constructs a Primes object given the number of primes needed.
     public Primes(int n) {
-        ...
+        this.n = n;
     }
 
     // Returns an iterator to iterate over the first n primes.
     public Iterator<Integer> iterator() {
-        ...
+        return new PrimesIterator();
     }
 
     // Primes iterator.
@@ -23,24 +23,27 @@ public class Primes implements Iterable<Integer> {
 
         // Constructs an iterator.
         public PrimesIterator() {
-            ...
+            this.count = 0;
+            this.p = 2;
         }
 
         // Returns true if there are anymore primes to be iterated, and false otherwise.
         public boolean hasNext() {
-            ...
+            return count < n;
         }
 
         // Returns the next prime.
         public Integer next() {
             // Increment count by 1.
-            ...
+            count++;
 
             // As long as p is not prime, increment p by 1.
-            ...
+            while (!isPrime(p)) {
+                p++;
+            }
 
             // Return current value of p and increment it by 1.
-            ...
+            return p;
         }
 
         // Returns true if x is a prime, and false otherwise.

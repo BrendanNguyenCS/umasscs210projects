@@ -8,12 +8,12 @@ public class BinaryStrings implements Iterable<String> {
 
     // Constructs a BinaryStrings object given the length of binary strings needed.
     public BinaryStrings(int n) {
-        ...
+        this.n = n;
     }
 
     // Returns an iterator to iterate over binary strings of length n.
     public Iterator<String> iterator() {
-        ...
+        return new BinaryStringsIterator();
     }
 
     // Binary strings iterator.
@@ -23,17 +23,20 @@ public class BinaryStrings implements Iterable<String> {
 
         // Constructs an iterator.
         public BinaryStringsIterator() {
-            ...
+            this.count = 0;
+            this.p = 0;
         }
 
         // Returns true if there are anymore binary strings to be iterated, and false otherwise.
         public boolean hasNext() {
-            ...
+            return count <= Math.pow(2, n) - 1;
         }
 
         // Returns the next binary string.
         public String next() {
-            ...
+            String s = binary(p++);
+            count++;
+            return s;
         }
 
         // Returns the n-bit binary representation of x.

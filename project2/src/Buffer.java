@@ -8,53 +8,67 @@ public class Buffer {
 
     // Creates an empty buffer.
     public Buffer() {
-        ...
-    }
+        left = new LinkedStack<Character>();
+        right = new LinkedStack<Character>();
+   }
 
     // Inserts c at the cursor position.
     public void insert(char c) {
-        ...
+        left.push(c);
     }
 
     // Deletes and returns the character immediately ahead of the cursor.
     public char delete() {
-        ...
+        return right.pop();
     }
 
     // Moves the cursor k positions to the left.
     public void left(int k) {
-        ...
+        for (int i = 0; i < k; i++) {
+            char c = left.pop();
+            right.push(c);
+        }
     }
 
     // Moves the cursor k positions to the right.
     public void right(int k) {
-        ...
+        for (int i = 0; i < k; i++) {
+            char c = right.pop();
+            left.push(c);
+        }
     }
 
     // Returns the number of characters in this buffer.
     public int size() {
-        ...
+        return left.size() + right.size();
     }
 
     // Returns a string representation of the buffer with the "|" character (not part of the buffer)
     // at the cursor position.
     public String toString() {
-        ...
+        StringBuilder sb = new StringBuilder();
 
         // Push chars from left into a temporary stack.
-        ...
+        LinkedStack<Character> ts = new LinkedStack<Character>();
+        for (char c : left) {
+            ts.push(c);
+        }
 
         // Append chars from temporary stack to sb.
-        ...
+        for (char c : ts) {
+            sb.append(c);
+        }
 
         // Append "|" to sb.
-        ...
+        sb.append("|");
 
         // Append chars from right to sb.
-        ...
+        for (char c : right) {
+            sb.append(c);
+        }
 
         // Return the string from sb.
-        ...
+        return sb.toString();
     }
 
     // Unit tests the data type (DO NOT EDIT).
