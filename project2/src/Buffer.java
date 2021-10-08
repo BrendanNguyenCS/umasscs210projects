@@ -10,7 +10,7 @@ public class Buffer {
     public Buffer() {
         left = new LinkedStack<Character>();
         right = new LinkedStack<Character>();
-   }
+    }
 
     // Inserts c at the cursor position.
     public void insert(char c) {

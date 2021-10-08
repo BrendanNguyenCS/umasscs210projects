@@ -43,7 +43,7 @@ public class Primes implements Iterable<Integer> {
             }
 
             // Return current value of p and increment it by 1.
-            return p;
+            return p++;
         }
 
         // Returns true if x is a prime, and false otherwise.

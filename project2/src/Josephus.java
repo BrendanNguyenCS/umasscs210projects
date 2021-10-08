@@ -10,7 +10,7 @@ public class Josephus {
 
         // Create a queue q and enqueue integers 1, 2, ..., n.
         LinkedQueue<Integer> q = new LinkedQueue<Integer>();
-        for (int i  = 1; i <= n; i++) {
+        for (int i = 1; i <= n; i++) {
             q.enqueue(i);
         }
 
@@ -22,8 +22,7 @@ public class Josephus {
             int pos = q.dequeue();
             if (i % m == 0) {
                 StdOut.println(pos);
-            }
-            else {
+            } else {
                 q.enqueue(pos);
             }
         }
