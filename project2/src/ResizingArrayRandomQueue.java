@@ -7,41 +7,65 @@ import stdlib.StdRandom;
 // A data type to represent a random queue, implemented using a resizing array as the underlying
 // data structure.
 public class ResizingArrayRandomQueue<Item> implements Iterable<Item> {
-    ...
+    private Item[] q; // array to store items in the queue
+    private int n; // size of the queue
 
     // Constructs an empty random queue.
     public ResizingArrayRandomQueue() {
-        ...
+        q = (Item[]) new Object[2];
+        n = 0;
     }
 
     // Returns true if this queue is empty, and false otherwise.
     public boolean isEmpty() {
-        ...
+        return n == 0;
     }
 
     // Returns the number of items in this queue.
     public int size() {
-        ...
+        return n;
     }
 
     // Adds item to the end of this queue.
     public void enqueue(Item item) {
-        ...
+        if (item == null) {
+            throw new NullPointerException("item is null");
+        }
+        if (n == q.length) {
+            resize(2 * q.length);
+        }
+        q[n] = item;
+        n++;
     }
 
     // Returns a random item from this queue.
     public Item sample() {
-        ...
+        if (isEmpty()) {
+            throw new NoSuchElementException("Random queue is empty");
+        }
+        int r = StdRandom.uniform(n);
+        return q[r];
     }
 
     // Removes and returns a random item from this queue.
     public Item dequeue() {
-        ...
+        if (isEmpty()) {
+            throw new NoSuchElementException("Random queue is empty");
+        }
+        int r = StdRandom.uniform(n);
+        Item item = q[r];
+        q[r] = q[n-1];
+        q[n-1] = null;
+        n--;
+        if (n > 0 && n == q.length / 4) {
+            resize(q.length / 2);
+        }
+        return item;
     }
 
     // Returns an independent iterator to iterate over the items in this queue in random order.
     public Iterator<Item> iterator() {
-        ...
+        return new RandomQueueIterator();
     }
 
     // Returns a string representation of this queue.
@@ -56,21 +80,32 @@ public class ResizingArrayRandomQueue<Item> implements Iterable<Item> {
 
     // An iterator, doesn't implement remove() since it's optional.
     private class RandomQueueIterator implements Iterator<Item> {
-        ...
+        private Item[] items; // array to store the items of q
+        private int current; // index of current item
 
         // Constructs an iterator.
         public RandomQueueIterator() {
-            ...
+            items = (Item[]) new Object[n];
+            for (int i = 0; i < n; i++) {
+                items[i] = q[i];
+            }
+            StdRandom.shuffle(items);
+            current = 0;
         }
 
         // Returns true if there are more items to iterate, and false otherwise.
         public boolean hasNext() {
-            ...
+            return current < n;
         }
 
         // Returns the next item.
         public Item next() {
-            ...
+            if (!hasNext()) {
+                throw new NoSuchElementException("Iterator is exhausted");
+            }
+            Item item = items[current];
+            current++;
+            return item;
         }
     }
 
