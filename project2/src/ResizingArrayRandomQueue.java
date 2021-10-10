@@ -53,13 +53,20 @@ public class ResizingArrayRandomQueue<Item> implements Iterable<Item> {
             throw new NoSuchElementException("Random queue is empty");
         }
         int r = StdRandom.uniform(n);
+        // temp variable for the random sample
         Item item = q[r];
+        // set the random sample element to the last element of the queue
         q[r] = q[n-1];
+        // set the last element of the queue to null
         q[n-1] = null;
+        // decrement n
         n--;
+
+        // check for resize
         if (n > 0 && n == q.length / 4) {
             resize(q.length / 2);
         }
+
         return item;
     }
 
@@ -86,9 +93,11 @@ public class ResizingArrayRandomQueue<Item> implements Iterable<Item> {
         // Constructs an iterator.
         public RandomQueueIterator() {
             items = (Item[]) new Object[n];
+            // copy q's elements into items
             for (int i = 0; i < n; i++) {
                 items[i] = q[i];
             }
+            // shuffle items
             StdRandom.shuffle(items);
             current = 0;
         }

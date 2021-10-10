@@ -33,11 +33,22 @@ public class LinkedDeque<Item> implements Iterable<Item> {
         if (item == null) {
             throw new NullPointerException("item is null");
         }
-        Node currentFirst = first;
-        first = new Node();
-        first.item = item;
-        first.next = currentFirst;
-        first.prev = null;
+        Node newFirst = new Node();
+        newFirst.item = item;
+        if (isEmpty()) {
+            // both first and last will be the same value since it will be the only element in
+            // the queue
+            last = newFirst;
+            first = newFirst;
+        } else {
+            // new Node's next is the old first Node
+            newFirst.next = first;
+            // the old first Node's previous is the new first
+            first.prev = newFirst;
+            // set first to new Node
+            first = newFirst;
+        }
+        // Increment n by 1
         n++;
     }
 
@@ -46,17 +57,29 @@ public class LinkedDeque<Item> implements Iterable<Item> {
         if (item == null) {
             throw new NullPointerException("item is null");
         }
-        Node currentLast = last;
-        last = new Node();
-        last.item = item;
-        last.prev = currentLast;
-        last.next = null;
+        Node newLast = new Node();
+        newLast.item = item;
+        if (isEmpty()) {
+            // both first and last will be the same value since it will be the only element in
+            // the queue
+            last = newLast;
+            first = newLast;
+        } else {
+            // new last Node's previous is the old last Node
+            newLast.prev = last;
+            // the old last Node's next will be the new Node
+            last.next = newLast;
+            // set last to new Node
+            last = newLast;
+        }
+
+        // Increment n
         n++;
     }
 
     // Returns the item at the front of this deque.
     public Item peekFirst() {
-        if (this.isEmpty()) {
+        if (isEmpty()) {
             throw new NoSuchElementException("Deque is empty");
         }
         return first.item;
@@ -64,16 +87,23 @@ public class LinkedDeque<Item> implements Iterable<Item> {
 
     // Removes and returns the item at the front of this deque.
     public Item removeFirst() {
-        if (this.isEmpty()) {
+        if (isEmpty()) {
             throw new NoSuchElementException("Deque is empty");
         }
         Item item = first.item;
-        first = first.next;
-        n--;
-        if (isEmpty()) {
+        if (n == 1) {
+            // Removing a Node in a queue with only 1 Node will result in an empty queue
             first = null;
             last = null;
+        } else {
+            // set new first to the current first's next Node
+            first = first.next;
+            // set the new first's previous to null
+            first.prev = null;
         }
+
+        // decrement n
+        n--;
         return item;
     }
 
@@ -87,17 +117,24 @@ public class LinkedDeque<Item> implements Iterable<Item> {
 
     // Removes and returns the item at the back of this deque.
     public Item removeLast() {
-        if (this.isEmpty()) {
+        if (isEmpty()) {
             throw new NoSuchElementException("Deque is empty");
         }
         Item item = last.item;
-        last = last.prev;
-        last.next = null;
-        n--;
-        if (isEmpty()) {
+        // checking to see if there is more than 1 item in the deque
+        if (n == 1) {
+            // Removing a Node in a queue with only 1 Node will result in an empty queue
             first = null;
             last = null;
+        } else {
+            // set new last to the current last's previous Node
+            last = last.prev;
+            // set new last's next Node to null
+            last.next = null;
         }
+
+        // decrement n
+        n--;
         return item;
     }
 
@@ -132,8 +169,8 @@ public class LinkedDeque<Item> implements Iterable<Item> {
 
         // Returns the next item.
         public Item next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException("Iterator is empty");
+            if (isEmpty()) {
+                throw new NoSuchElementException("Iterator is exhausted");
             }
             Item item = current.item;
             current = current.next;

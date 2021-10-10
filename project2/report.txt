@@ -1,42 +1,112 @@
 1. Enter the number of hours it took you to complete the project between
    the <<< and >>> signs below (eg, <<<10>>>).
 
-   <<< >>>
+   <<<10>>>
    
 2. Enter the difficulty level (1: very easy; 5: very difficult) of the project
    between <<< and >>> signs below (eg, <<<3>>>).
 
-   <<< >>>
+   <<<4>>>
 
 3. Provide a short description of how you approached each problem, issues you 
    encountered, and how you resolved those issues.
 
    Problem 1 (Deque)
-       Approach: ...
+       Approach: This one was pretty difficult for me. I started by completing the constructor and
+       the methods that simply return one of instance variables. isEmpty() checks if n equals 0,
+       size() just returns n, peekFirst() returns first's item, and peekLast returns last's item.
+       The iterator was quite simple as current is the first Node in the queue and as long as
+       current exists (not null), you can continue iterating through. next() simply was creating a
+       temp variable for the Node's item and then setting current to current.next to continue the
+       iterating, then you return the item from the temp variable.
 
-       Issues and resolution: ...
+       Issues and resolution: While I understand how the Node as a linked list provides a reference
+       to the previous and next elements, the challenge with the rest of the methods (the add and
+       remove methods) was how each function affects the instance variables. For the add methods, I
+       didn't consider the fact at first that depending on the size of the current queue, how you
+       add is different. After being reminded of that by a classmate, I realized that adding to an
+       empty queue would result in first and last being this new Node. When the existing list is not
+        empty, I just set the new Node's next to the existing first, the current first's previous to
+         the new Node, and the first to the new Node before incrementing n. I applied this same fix
+         to addLast while switching previous and next. For the removes, I had initially thought that
+          I could just remove by nullifying prev and next for removeFirst and removeLast
+          respectively, and then using isEmpty to check for empty queue. With the help of a
+          classmate, I realized that this was very wrong. I changed it so that when the queue only
+          has 1 Node (n == 1), you set first and last to null (effectively creating an empty queue).
+          In the else, I just set the new first and old first's next and the new first's prev to
+          null. I applied the same change to removeLast but substituting first for last and
+          switching next and prev.
 
-   Problem 2 (Sorting Strings)
-       Approach: ...
 
-       Issues and resolution: ...
+   Problem 2 (Sorting Strings) * not enough time
+       Approach: I think this problem wouldn't be very difficult if I had enough time to complete
+       this problem. I would've first created the LinkedDeque object. When I would create a while
+       loop to read the standard input until you get an empty value. I would first check the size of
+        the queue. If it is empty, I would just add the input value to the queue. If it is 1, then I
+         would just check if is less than the value in the queue. If it is, call addLast; if not,
+         call addFirst. To check if it less than the first value, it is just less(input, first).
+         Checking if it is greater than the last value would be less(last, input). With
+          queues bigger than 1, I'd create the temporary LinkedStack and create another while loop.
+          Starting with the beginning, you would check if the element in the queue is less than the
+          input value. If so, removeFirst from the queue and push to the temp stack. Once the loop
+          ends, push the input value to the temporary stack and then transfer the temporary stack
+          into the queue (pop() from the temporary stack and addFirst to the queue).
+
+       Issues and resolution: I think I would've been able to complete this problem if I gave myself
+        enough time and if I didn't struggle with the other problems. I also overthought some of the
+         problems so that led to more time on them.
 
    Problem 3 (Random Queue)
-       Approach: ...
+       Approach: I started doing this one first since it was the one I thought I was the most
+       confident with. isEmpty() and size() both depend on n for the return value. The enqueue() was
+        simply just checking corner case and the current capacity of q (more on that below) and
+        initializing n element in q to the parameter item before incrementing n. Sample was simply
+        using StdRandom to get an element in q. After checking the corner case in dequeue(), I got a
+         random value (from StdRandom). Then I create a temp variable to that element's item and
+         then remove that element from the array while decrementing n. I then check to see if q
+         needs to be resized and return the temp variable. For the iterator, I had the mindset that
+         an iterator is like a more complicated for loop. In the constructor, I initialized
+         items and current and used a for loop to copy q into items (then StdRandom.shuffle to
+         shuffle). hasNext() was simply making sure the current is within the limits of the queue
+         (current < n). next() was simply checking the corner case, creating a temp variable for the
+          current item, incrementing current, and returning the temp variable.
 
-       Issues and resolution: ...
+       Issues and resolution: I had initially forgotten that because Item is a generic type, I
+       couldn't initialize q as a direct array of Item[]. The easy solution to this problem was just
+        to create an array of Object and then cast it to Item. Another part that brief caught me was
+        some places where I was supposed to use q.length (the length of the array) vs n. In the
+        enqueue method for instance after checking the corner case, I had done the check to see if n
+         was equal q.length but used n to resize q instead of q.length.
 
    Problem 4 (Sampling Integers)
-       Approach: ...
+       Approach: This one took some time because I didn't fully understand the objective. After
+       getting some clarification, it was quite simple. After the corner case, I created the queue
+       and then populated that queue with non-repeating integers between lo and hi using a for loop.
+        Next, I did another for loop with i between 0 inclusive and k exclusive (will get you k
+        samples). Inside the for loop, I dequeued a random sample using ResizingArrayRandomQueue's
+        dequeue method and stored it in a temp variable. If the mode is "+" (with
+        replacement), then I enqueued the sample back in. Either way, I have to print out said
+        sample.
 
-       Issues and resolution: ...
+       Issues and resolution: The above solution is what I thought was the correct solution. But I
+       received a couple of failed cases in Gradescope so I had to rethink what I did. The first
+       problem I found was that it was incorrect to print out the sample every time if the mode was
+       with replacement. Getting some assistance from Kyle, I tried to find a way of getting with
+       replacement to work without dequeuing and enqueuing and using the StdRandom class. What I did
+        to fix this was if the mode is with replacement, all I have to do is call
+        ResizingArrayRandomQueue's sample method and print in a for loop. For without replacement, I
+         just looped and dequeued and printed each time.
+
 
 4. Did you receive help from anyone? List their names, status (classmate,
    CS210 grad, TA, other), and the nature of help received.
 
    Name               Status       Help Received
    ----               ------       -------------
-
+   Kyle Hackett       TA           Helped clarify objective of problem 4 and explained replacement
+                                   and how dequeuing and enqueuing back in wouldn't work for that
+                                   problem
+   Joseph Nguyen      Classmate    Helped me understand the linked deque problem
    ...                ...          ...
 
 5. List any other comments here. Feel free to provide any feedback on how
