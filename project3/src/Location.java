@@ -9,12 +9,20 @@ public class Location implements Comparable<Location> {
 
     // Constructs a new location given its name, latitude, and longitude.
     public Location(String name, double lat, double lon) {
-        ...
+        this.name = name;
+        this.lat = lat;
+        this.lon = lon;
     }
 
     // Returns the great-circle distance between this location and other.
     public double distanceTo(Location other) {
-        ...
+        double lat1 = Math.toRadians(lat);
+        double lon1 = Math.toRadians(lon);
+        double lat2 = Math.toRadians(other.lat);
+        double lon2 = Math.toRadians(other.lon);
+
+        return 111 * Math.toDegrees(Math.acos(Math.sin(lat1) * Math.sin(lat2) +
+                Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1-lon2)));
     }
 
     // Returns true if this location is the same as other, and false otherwise.
@@ -28,18 +36,22 @@ public class Location implements Comparable<Location> {
         if (other.getClass() != this.getClass()) {
             return false;
         }
-        ...
+        Location a = this; Location b = (Location) other;
+        return a.lat == b.lat && a.lon == b.lon;
     }
 
     // Returns a string representation of this location.
     public String toString() {
-        ...
+        return name + " (" + lat + ", " + lon + ")";
     }
 
     // Returns a comparison of this location with other based on their respective distances to
     // the origin, Parthenon (Greece) @ 37.971525, 23.726726.
     public int compareTo(Location that) {
-        ...
+        Location origin = new Location("Parthenon (Greece)", 37.971525, 23.726726);
+        double a = distanceTo(origin);
+        double b = that.distanceTo(origin);
+        return Double.compare(a, b);
     }
 
     // Unit tests the data type. [DO NOT EDIT]

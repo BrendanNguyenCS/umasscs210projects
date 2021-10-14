@@ -42,13 +42,13 @@ public class Die implements Comparable<Die> {
     // Returns a string representation of this die.
     public String toString() {
         switch(this.value) {
-            case 1: return "";
-            case 2: return "";
-            case 3: return "";
+            case 1: return "     \n  *  \n     ";
+            case 2: return "*    \n     \n    *";
+            case 3: return "*    \n  *  \n    *";
             case 4: return "*   *\n     \n*   *";
             case 5: return "*   *\n  *  \n*   *";
             case 6: return "* * *\n     \n* * *";
-            default: return "";
+            default: return "Not rolled yet";
         }
     }
 

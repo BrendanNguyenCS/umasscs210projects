@@ -11,45 +11,51 @@ public class Point3D implements Comparable<Point3D> {
 
     // Constructs a point in 3D given its x, y, and z coordinates.
     public Point3D(double x, double y, double z) {
-        ...
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     // Returns the Euclidean distance between this point and other.
     public double distance(Point3D other) {
-        ...
+        return Math.sqrt(Math.pow((this.x - other.x), 2) * Math.pow((this.y - other.y),
+                2) * Math.pow((this.z - other.z), 2));
     }
 
     // Returns a string representation of this point.
     public String toString() {
-        ...
+        return "(" + x + ", " + y + ", " + z + ")";
     }
 
     // Returns a comparison of this point with other based on their respective distances to the
     // origin (0, 0, 0).
     public int compareTo(Point3D other) {
-        ...
+        Point3D origin = new Point3D(0, 0, 0);
+        double a = distance(origin);
+        double b = other.distance(origin);
+        return Double.compare(a, b);
     }
 
     // Returns a comparator to compare two points by their x-coordinate.
     public static Comparator<Point3D> xOrder() {
-        ...
+        return new XOrder();
     }
 
     // Returns a comparator to compare two points by their y-coordinate.
     public static Comparator<Point3D> yOrder() {
-        ...
+        return new YOrder();
     }
 
     // Returns a comparator to compare two points by their z-coordinate.
     public static Comparator<Point3D> zOrder() {
-        ...
+        return new ZOrder();
     }
 
     // A comparator for comparing two points by their x-coordinate.
     private static class XOrder implements Comparator<Point3D> {
         // Returns a comparison of p1 and p2 by their x-coordinate.
         public int compare(Point3D p1, Point3D p2) {
-            ...
+            return Double.compare(p1.x, p2.x);
         }
     }
 
@@ -57,7 +63,7 @@ public class Point3D implements Comparable<Point3D> {
     private static class YOrder implements Comparator<Point3D> {
         // Returns a comparison of p1 and p2 by their y-coordinate.
         public int compare(Point3D p1, Point3D p2) {
-            ...
+            return Double.compare(p1.y, p2.y);
         }
     }
 
@@ -65,7 +71,7 @@ public class Point3D implements Comparable<Point3D> {
     private static class ZOrder implements Comparator<Point3D> {
         // Returns a comparison of p1 and p2 by their z-coordinate.
         public int compare(Point3D p1, Point3D p2) {
-            ...
+            return Double.compare(p1.z, p2.z);
         }
     }
 
