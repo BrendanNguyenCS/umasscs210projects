@@ -36,7 +36,8 @@ public class Location implements Comparable<Location> {
         if (other.getClass() != this.getClass()) {
             return false;
         }
-        Location a = this; Location b = (Location) other;
+        Location a = this;
+        Location b = (Location) other;
         return a.lat == b.lat && a.lon == b.lon;
     }
 

@@ -6,20 +6,35 @@ import stdlib.StdIn;
 import stdlib.StdOut;
 
 public class Autocomplete {
-    ...
+    private Term[] terms; // array of terms
 
     // Constructs an autocomplete data structure from an array of terms.
     public Autocomplete(Term[] terms) {
-        ...
+        if (terms == null) {
+            throw new NullPointerException("terms is null");
+        }
+        // set instance variable length to same length as parameter
+        this.terms = new Term[terms.length];
+        // loop through parameter and set each to its corresponding index
+        // in instance variable
+        for (int i = 0; i < terms.length; i++) {
+            this.terms[i] = terms[i];
+        }
     }
 
     // Returns all terms that start with prefix, in descending order of their weights.
     public Term[] allMatches(String prefix) {
+        if (prefix == null) {
+            throw new NullPointerException("prefix is null");
+        }
         ...
     }
 
     // Returns the number of terms that start with prefix.
     public int numberOfMatches(String prefix) {
+        if (prefix == null) {
+            throw new NullPointerException("prefix is null");
+        }
         ...
     }
 

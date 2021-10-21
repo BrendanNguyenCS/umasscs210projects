@@ -11,7 +11,7 @@ public class Die implements Comparable<Die> {
     
     // Rolls this die.
     public void roll() {
-        value = StdRandom.uniform(1,7);
+        value = StdRandom.uniform(1, 7);
     }
 
     // Returns the face value of this die.
@@ -30,7 +30,8 @@ public class Die implements Comparable<Die> {
         if (other.getClass() != this.getClass()) {
             return false;
         }
-        Die a = this; Die b = (Die) other;
+        Die a = this;
+        Die b = (Die) other;
         return a.value == b.value;
     }
 
