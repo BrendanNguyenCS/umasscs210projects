@@ -10,6 +10,7 @@ public class Term implements Comparable<Term> {
 
     // Constructs a term given the associated query string, having weight 0.
     public Term(String query) {
+        // corner case
         if (query == null) {
             throw new NullPointerException("query is null");
         }
@@ -19,12 +20,15 @@ public class Term implements Comparable<Term> {
 
     // Constructs a term given the associated query string and weight.
     public Term(String query, long weight) {
+        // corner case
         if (query == null) {
             throw new NullPointerException("query is null");
         }
+        // corner case
         if (weight < 0) {
             throw new IllegalArgumentException("Illegal weight");
         }
+        // initialize instance variables
         this.query = query;
         this.weight = weight;
     }
@@ -46,6 +50,7 @@ public class Term implements Comparable<Term> {
 
     // Returns a comparator for comparing two terms by their prefixes of length r.
     public static Comparator<Term> byPrefixOrder(int r) {
+        // corner case
         if (r < 0) {
             throw new IllegalArgumentException("Illegal r");
         }

@@ -8,6 +8,7 @@ public class BinarySearchDeluxe {
     // Returns the index of the first key in a that equals the search key, or -1, according to
     // the order induced by the comparator c.
     public static <Key> int firstIndexOf(Key[] a, Key key, Comparator<Key> c) {
+        // corner case
         if (a == null || key == null || c == null) {
             throw new NullPointerException("a, key, or c is null");
         }
