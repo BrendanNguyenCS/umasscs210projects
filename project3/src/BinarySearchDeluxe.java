@@ -12,16 +12,72 @@ public class BinarySearchDeluxe {
         if (a == null || key == null || c == null) {
             throw new NullPointerException("a, key, or c is null");
         }
-        ...
+        // invalid or empty array length
+        if (a.length <= 0) {
+            return -1;
+        }
+        int lo = 0; // first index of a
+        int hi = a.length - 1; // last index of a
+        int mid;
+        int index = -1; // placeholder index
+        while (lo <= hi) {
+            mid = (hi - lo) / 2 + lo; // set mid index
+            // if key is higher than mid, check right of current mid
+            if (c.compare(key, a[mid]) > 0) {
+                lo = mid + 1;
+            } else if (c.compare(key, a[mid]) < 0) {
+                // if key is lower than mid, check left of current mid
+                hi = mid - 1;
+            } else {             // if key is equal to mid
+                // if mid is in the first index of a or position left of mid is less than key
+                if (mid == 0 || c.compare(key, a[mid - 1]) > 0) {
+                    index = mid;
+                    break;
+                } else {
+                    // position left is equal or greater than key
+                    hi = mid - 1;
+                }
+            }
+        }
+        return index;
     }
 
     // Returns the index of the first key in a that equals the search key, or -1, according to
     // the order induced by the comparator c.
     public static <Key> int lastIndexOf(Key[] a, Key key, Comparator<Key> c) {
+        // corner case
         if (a == null || key == null || c == null) {
             throw new NullPointerException("a, key, or c is null");
         }
-        ...
+        // invalid or empty array
+        if (a.length <= 0) {
+            return -1;
+        }
+        int lo = 0; // first index of a
+        int hi = a.length - 1; // last index of a
+        int mid;
+        int index = -1; // placeholder index
+        while (lo <= hi) {
+            mid = (hi - lo) / 2 + lo; // set mid index
+            // if key is higher than mid, check right of current mid
+            if (c.compare(key, a[mid]) > 0) {
+                lo = mid + 1;
+            } else if (c.compare(key, a[mid]) < 0) {
+                // if key is lower than mid, check left of current mid
+                hi = mid - 1;
+            } else {             // if key is equal to mid
+                // check last position in a or position right of mid is greater than key
+                if (mid == a.length - 1 || c.compare(key, a[mid + 1]) < 0) {
+                    // if position right of mid is greater than key
+                    index = mid;
+                    break;
+                }  else {
+                    // position right is equal or less than key
+                    lo = mid + 1;
+                }
+            }
+        }
+        return index;
     }
 
     // Unit tests the library. [DO NOT EDIT]

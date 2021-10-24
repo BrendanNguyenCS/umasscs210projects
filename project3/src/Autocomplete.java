@@ -21,6 +21,8 @@ public class Autocomplete {
         for (int i = 0; i < terms.length; i++) {
             this.terms[i] = terms[i];
         }
+        // Lexicographic sort
+        Arrays.sort(this.terms, Comparator.naturalOrder());
     }
 
     // Returns all terms that start with prefix, in descending order of their weights.
@@ -29,7 +31,27 @@ public class Autocomplete {
         if (prefix == null) {
             throw new NullPointerException("prefix is null");
         }
-        ...
+        // first instance of prefix
+        int i = BinarySearchDeluxe.firstIndexOf(terms, new Term(prefix),
+                Term.byPrefixOrder(prefix.length()));
+        // last instance of prefix
+        int j = BinarySearchDeluxe.lastIndexOf(terms, new Term(prefix),
+                Term.byPrefixOrder(prefix.length()));
+        // number of matching terms
+        int n = numberOfMatches(prefix);
+        // array to hold results
+        Term[] matches = new Term[n];
+
+        // if results are found, copy matches from terms into matches
+        if (i != -1 && j != -1) {
+            for (int k = 0; k < n; k++) {
+                matches[k] = terms[i + k];
+            }
+        }
+        // sort matches by reverse weight
+        Arrays.sort(matches, Term.byReverseWeightOrder());
+        // return matches
+        return matches;
     }
 
     // Returns the number of terms that start with prefix.
@@ -38,7 +60,14 @@ public class Autocomplete {
         if (prefix == null) {
             throw new NullPointerException("prefix is null");
         }
-        ...
+        // new Term for prefix
+        Term search = new Term(prefix);
+        // first instance of prefix
+        int i = BinarySearchDeluxe.firstIndexOf(terms, search, Term.byPrefixOrder(prefix.length()));
+        // last instance of prefix
+        int j = BinarySearchDeluxe.lastIndexOf(terms, search, Term.byPrefixOrder(prefix.length()));
+        // take difference and add one for total
+        return j - i + 1;
     }
 
     // Unit tests the data type. [DO NOT EDIT]
