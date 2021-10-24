@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.Comparator;
 
 import stdlib.In;
 import stdlib.StdIn;
@@ -22,7 +21,7 @@ public class Autocomplete {
             this.terms[i] = terms[i];
         }
         // Lexicographic sort
-        Arrays.sort(this.terms, Comparator.naturalOrder());
+        Arrays.sort(this.terms);
     }
 
     // Returns all terms that start with prefix, in descending order of their weights.
