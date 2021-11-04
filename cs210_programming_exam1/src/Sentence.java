@@ -11,6 +11,7 @@ public class Sentence implements Comparable<Sentence>, Iterable<String> {
     // Constructs a Sentence object from the sentence s.
     public Sentence(String s) {
         this.s = s;
+        // split string by words and assign to instance variable
         words = s.split("\\s+");
     }
 
@@ -40,6 +41,15 @@ public class Sentence implements Comparable<Sentence>, Iterable<String> {
                 return false;
             }
         }
+
+        /* Another way to do the above
+         *
+         * Sentence a = words;
+         * Sentence b = (Sentence) other;
+         * for loop through 0 <= i < a.length
+         * if(!a.words[i].equals(b.words[i])) return false
+         */
+
         // both should be the same if this is reached
         return true;
     }
@@ -77,21 +87,22 @@ public class Sentence implements Comparable<Sentence>, Iterable<String> {
     private class ReverseIterator implements Iterator<String> {
         private int i; // index of current letter
 
-        // Constructs an interator.
+        // Constructs an iterator.
         public ReverseIterator() {
+            // set i to the last element of words array
             i = wordCount() - 1;
         }
 
         // Returns true if there are more words in the sentence, and false otherwise.
         public boolean hasNext() {
-            return i >= 0;
+            return i >= 0;              // as long as the index is in bounds
         }
 
         // Returns the next word in the sentence.
         public String next() {
-            String item = words[i];
-            i--;
-            return item;
+            String item = words[i];     // temp for current item value
+            i--;                        // move to next item
+            return item;                // return temp
         }
     }
 

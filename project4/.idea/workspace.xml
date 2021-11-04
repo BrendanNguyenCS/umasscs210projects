@@ -2,38 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a98645d-3361-4fdc-900c-9619eec47e5e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../project2_solutions/src/Sort.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../programs/src/BSTOrders.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../programs/src/ErrorHandling.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../programs/src/FibonacciSequence.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../programs/src/dsa/LinearSearch.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../programs/src/dsa/OrderedST.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../code/Bubble.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../code/Counter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../code/Date.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../code/Heap.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../code/Insertion.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../code/Merge.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../code/Quick.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../code/Quick3way.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../code/Selection.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../code/Shell.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../code/SortOrderOfGrowth.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../code/Transaction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../code/Transactions.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../sorting/bubble.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../sorting/elementary_sorts_scene0.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../sorting/elementary_sorts_scene1.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../sorting/elementary_sorts_scene2.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../sorting/elementary_sorts_scene3.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../sorting/prologue_scene0.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../sorting/prologue_scene1.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../sorting/prologue_scene2.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../sorting/prologue_scene3.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../sorting/prologue_scene4.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../sorting/prologue_scene5.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../sorting/selection.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../sorting/sort.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs210_programming_exam1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../cs210_programming_exam1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs210_programming_exam1/out/Sentence$ReverseIterator.class" beforeDir="false" afterPath="$PROJECT_DIR$/../cs210_programming_exam1/out/Sentence$ReverseIterator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs210_programming_exam1/out/Sentence$WordCountOrder.class" beforeDir="false" afterPath="$PROJECT_DIR$/../cs210_programming_exam1/out/Sentence$WordCountOrder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs210_programming_exam1/out/Sentence.class" beforeDir="false" afterPath="$PROJECT_DIR$/../cs210_programming_exam1/out/Sentence.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs210_programming_exam1/out/UniqueCount.class" beforeDir="false" afterPath="$PROJECT_DIR$/../cs210_programming_exam1/out/UniqueCount.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs210_programming_exam1/src/Sentence.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs210_programming_exam1/src/Sentence.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs210_programming_exam1/src/UniqueCount.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs210_programming_exam1/src/UniqueCount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CertifyHeap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CertifyHeap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +20,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1eHwWYFKQmr7n6F0sK74tF0FPcb" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -134,11 +113,5 @@
       <updated>1593991857250</updated>
     </task>
     <servers />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="399" y="199" width="992" height="733" key="SettingsEditor" timestamp="1616103153932">
-      <screen x="0" y="30" width="1920" height="1050" />
-    </state>
-    <state x="399" y="199" width="992" height="733" key="SettingsEditor/0.30.1920.1050@0.30.1920.1050" timestamp="1616103153932" />
   </component>
 </project>

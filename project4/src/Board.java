@@ -5,22 +5,30 @@ import stdlib.StdOut;
 
 // A data type to represent a board in the 8-puzzle game or its generalizations.
 public class Board {
-    ...
+    private int[][] tiles; // tiles in the board
+    private int n; // board size
+    private int hamming; // Hamming distance to the goal board
+    private int manhattan; // Manhattan distance to the goal board
+    private int blankPos; // position of the blank tile in row-major order
 
     // Constructs a board from an n x n array; tiles[i][j] is the tile at row i and column j, with 0
     // denoting the blank tile.
     public Board(int[][] tiles) {
-        ...
+        this.tiles = tiles;
+        n = tiles[0].length;
+        hamming = hamming();
+        manhattan = manhattan();
+        blankPos = 0;
     }
 
     // Returns the size of this board.
     public int size() {
-        ...
+        return n;
     }
 
     // Returns the tile at row i and column j of this board.
     public int tileAt(int i, int j) {
-        ...
+        return tiles[i][j];
     }
 
     // Returns Hamming distance between this board and the goal board.
@@ -59,7 +67,9 @@ public class Board {
         if (other.getClass() != this.getClass()) {
             return false;
         }
-        ...
+        Board a = this;
+        Board b = (Board) other;
+        ... // return statement
     }
 
     // Returns a string representation of this board.
