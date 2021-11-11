@@ -53,6 +53,8 @@ public class Board {
 
     // Returns an iterable object containing the neighboring boards of this board.
     public Iterable<Board> neighbors() {
+        LinkedQueue<Board> q = new LinkedQueue<Board>();
+        // clone here
         ...
     }
 

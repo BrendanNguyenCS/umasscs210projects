@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e88801c-28a6-4151-9c64-3fd685fced3b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/Sentence$ReverseIterator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Sentence$ReverseIterator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/Sentence$WordCountOrder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Sentence$WordCountOrder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/Sentence.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Sentence.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/UniqueCount.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/UniqueCount.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sentence.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sentence.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UniqueCount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UniqueCount.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../project4/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../project4/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../project4/src/CertifyHeap.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project4/src/CertifyHeap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project4/src/Ramanujan1.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project4/src/Ramanujan1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project4/src/Ramanujan2.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project4/src/Ramanujan2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
