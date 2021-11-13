@@ -14,11 +14,45 @@ public class Board {
     // Constructs a board from an n x n array; tiles[i][j] is the tile at row i and column j, with 0
     // denoting the blank tile.
     public Board(int[][] tiles) {
-        this.tiles = tiles;
         n = tiles[0].length;
-        hamming = hamming();
-        manhattan = manhattan();
-        blankPos = 0;
+        this.tiles = tiles;
+        // hamming calculation
+        hamming = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                // if empty tile, skip
+                if (tiles[i][j] == 0) {
+                    continue;
+                }
+                // in order if tile value is equal to index in row-major order
+                if (tiles[i][j] != n * i + j + 1) {
+                    hamming++;
+                }
+            }
+        }
+        // manhattan calculation
+        this.manhattan = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                // not blank tile and not in right order
+                if (this.tiles[i][j] != 0 && this.tiles[i][j] != n * i + j + 1) {
+                    // math in row-major order mindset
+                    int colDif = (tiles[i][j] - 1) % n;     // goal board column
+                    int rowDif = (tiles[i][j] - 1) / n;     // goal board row
+                    // add difference between goal board values and current values
+                    // add to distance
+                    this.manhattan += Math.abs(i - rowDif) + Math.abs(j - colDif);
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (tiles[i][j] == 0) {
+                    blankPos = n * i + j + 1;
+                }
+            }
+        }
     }
 
     // Returns the size of this board.
@@ -33,29 +67,77 @@ public class Board {
 
     // Returns Hamming distance between this board and the goal board.
     public int hamming() {
-        ...
+        return hamming;
     }
 
     // Returns the Manhattan distance between this board and the goal board.
     public int manhattan() {
-        ...
+        return manhattan;
     }
 
     // Returns true if this board is the goal board, and false otherwise.
     public boolean isGoal() {
-        ...
+        return hamming == 0;
     }
 
     // Returns true if this board is solvable, and false otherwise.
     public boolean isSolvable() {
-        ...
+        int[] rowMajorArray = new int[n * n - 1];
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (tiles[i][j] == 0) {
+                    continue;
+                }
+                rowMajorArray[count] = tiles[i][j];
+                count++;
+            }
+        }
+        if (n % 2 != 0 && Inversions.count(rowMajorArray) % 2 != 0) {
+            return false;
+        }
+        if (n % 2 == 0) {
+            int blankRow = (blankPos - 1) / n; // row of blank tile
+            return (blankRow + Inversions.count(rowMajorArray)) % 2 != 0;
+        }
+        return true;
     }
 
     // Returns an iterable object containing the neighboring boards of this board.
     public Iterable<Board> neighbors() {
+        int i = (blankPos - 1) / n; // row of blank tile
+        int j = (blankPos - 1) % n; // column of blank tile
         LinkedQueue<Board> q = new LinkedQueue<Board>();
-        // clone here
-        ...
+        int[][] clone = null; // defensive copy 2d array
+        if (i > 0) {                        // if row is within top bounds
+            clone = cloneTiles();
+            int v = clone[i][j];            // temp value for current tile
+            clone[i][j] = clone[i - 1][j];  // set current to value of tile above current
+            clone[i - 1][j] = v;            // set above tile to temp
+            q.enqueue(new Board(clone));
+        }
+        if (i < n - 1) {                    // if row is within bottom bounds
+            clone = cloneTiles();
+            int v = clone[i][j];            // temp value for current tile
+            clone[i][j] = clone[i + 1][j];  // set current to value of tile below current
+            clone[i + 1][j] = v;            // set below tile to temp
+            q.enqueue(new Board(clone));
+        }
+        if (j > 0) {                        // if column is within left bounds
+            clone = cloneTiles();
+            int v = clone[i][j];            // temp value for current tile
+            clone[i][j] = clone[i][j - 1];  // set current to value of tile left
+            clone[i][j - 1] = v;            // set left tile to temp
+            q.enqueue(new Board(clone));
+        }
+        if (j < n - 1) {                    // if column is within right bounds
+            clone = cloneTiles();
+            int v = clone[i][j];            // temp value for current tile
+            clone[i][j] = clone[i][j + 1];  // set current to value of tile right
+            clone[i][j + 1] = v;            // set right tile to temp
+            q.enqueue(new Board(clone));
+        }
+        return q;
     }
 
     // Returns true if this board is the same as other, and false otherwise.
@@ -71,7 +153,17 @@ public class Board {
         }
         Board a = this;
         Board b = (Board) other;
-        ... // return statement
+        if (a.size() != b.size()) {
+            return false;
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (a.tileAt(i, j) != b.tileAt(i, j)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     // Returns a string representation of this board.

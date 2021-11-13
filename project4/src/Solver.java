@@ -6,17 +6,39 @@ import stdlib.StdOut;
 // A data type that implements the A* algorithm for solving the 8-puzzle and its generalizations.
 public class Solver {
     private int moves; // minimum number of moves to solve
-    private Iterable<Board> solution; // short solution sequence of boards
+    private LinkedStack<Board> solution; // short solution sequence of boards
 
     // Finds a solution to the initial board using the A* algorithm.
     public Solver(Board board) {
+        // corner cases
         if (board == null) {
             throw new NullPointerException("board is null");
         }
         if (!board.isSolvable()) {
             throw new IllegalArgumentException("board is unsolvable");
         }
-        ...
+        int moves = 0;
+        solution = new LinkedStack<Board>();
+        MinPQ<SearchNode> pq = new MinPQ<>();
+        // insert initial board to the queue
+        pq.insert(new SearchNode(board, 0, null));
+        while (!pq.isEmpty()) {
+            SearchNode node = pq.delMin();
+            if (node.board.isGoal()) {
+                solution.push(node.board);
+                this.moves = node.moves;
+                break;
+            } else {
+                for (Board neighbor : node.board.neighbors()) {
+                    if (node.previous == null) {
+                        continue;
+                    }
+                    if (!neighbor.equals(node.previous.board)) {
+                        pq.insert(new SearchNode(neighbor, moves + 1, node));
+                    }
+                }
+            }
+        }
     }
 
     // Returns the minimum number of moves needed to solve the initial board.
@@ -35,13 +57,13 @@ public class Solver {
     private class SearchNode implements Comparable<SearchNode> {
         private Board board; // board reference
         private int moves; // number of moves to the node from initial node
-        private SearchNode prev; // reference to previous node
+        private SearchNode previous; // reference to previous node
 
         // Constructs a new search node.
         public SearchNode(Board board, int moves, SearchNode previous) {
             this.board = board;
             this.moves = moves;
-            this.prev = previous;
+            this.previous = previous;
         }
 
         // Returns a comparison of this node and other based on the following sum:

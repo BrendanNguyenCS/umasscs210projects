@@ -25,6 +25,7 @@ public class Ramanujan2 {
         }
     }
 
+    // Returns an integer cubed (or to the 3rd power)
     public static int cubed(int x) {
         return x * x * x;
     }

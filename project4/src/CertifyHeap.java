@@ -11,7 +11,7 @@ public class CertifyHeap {
         // false, meaning a[] does not represent a max-heap. If no such i exists, return true.
         for (int i = 1; i <= n / 2; i++) {
             int l = 2 * i, r = 2 * i + 1;
-            if (l < n && less(a[i], a[l]) && less(a[i], a[r])) {
+            if (l < n && (less(a[i], a[l]) || r < n && less(a[i], a[r]))) {
                 return false;
             }
         }

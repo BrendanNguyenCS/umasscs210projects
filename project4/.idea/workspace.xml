@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a98645d-3361-4fdc-900c-9619eec47e5e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../cs210_programming_exam1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../cs210_programming_exam1/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/report.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CertifyHeap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CertifyHeap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Ramanujan1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ramanujan1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Ramanujan2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ramanujan2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
