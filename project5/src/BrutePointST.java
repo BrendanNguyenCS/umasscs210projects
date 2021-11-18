@@ -7,36 +7,48 @@ import stdlib.StdIn;
 import stdlib.StdOut;
 
 public class BrutePointST<Value> implements PointST<Value> {
-    ...
+    private RedBlackBinarySearchTreeST<Point2D, Value> bst; // underlying data structure
 
     // Constructs an empty symbol table.
     public BrutePointST() {
-        ...
+        bst = new RedBlackBinarySearchTreeST<>();
     }
 
     // Returns true if this symbol table is empty, and false otherwise.
     public boolean isEmpty() {
-        ...
+        return size() == 0;
     }
 
     // Returns the number of key-value pairs in this symbol table.
     public int size() {
-        ...
+        return bst.size();
     }
 
     // Inserts the given point and value into this symbol table.
     public void put(Point2D p, Value value) {
-        ...
+        if (p == null) {
+            throw new NullPointerException("p is null");
+        }
+        if (value == null) {
+            throw new NullPointerException("value is null");
+        }
+        bst.put(p, value);
     }
 
     // Returns the value associated with the given point in this symbol table, or null.
     public Value get(Point2D p) {
-        ...
+        if (p == null) {
+            throw new NullPointerException("p is null");
+        }
+        return bst.get(p);
     }
 
     // Returns true if this symbol table contains the given point, and false otherwise.
     public boolean contains(Point2D p) {
-        ...
+        if (p == null) {
+            throw new NullPointerException("p is null");
+        }
+        return bst.get(p) != null;
     }
 
     // Returns all the points in this symbol table.
@@ -46,18 +58,27 @@ public class BrutePointST<Value> implements PointST<Value> {
 
     // Returns all the points in this symbol table that are inside the given rectangle.
     public Iterable<Point2D> range(RectHV rect) {
+        if (rect == null) {
+            throw new NullPointerException("rect is null");
+        }
         ...
     }
 
     // Returns the point in this symbol table that is different from and closest to the given point,
     // or null.
     public Point2D nearest(Point2D p) {
+        if (p == null) {
+            throw new NullPointerException("p is null");
+        }
         ...
     }
 
     // Returns up to k points from this symbol table that are different from and closest to the
     // given point.
     public Iterable<Point2D> nearest(Point2D p, int k) {
+        if (p == null) {
+            throw new NullPointerException("p is null");
+        }
         ...
     }
 

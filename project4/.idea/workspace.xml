@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a98645d-3361-4fdc-900c-9619eec47e5e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../project2/src/Sort.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project2/src/Sort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project5/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../project5/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project5/src/ArrayST.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project5/src/ArrayST.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project5/src/BrutePointST.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project5/src/BrutePointST.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project5/src/KdTreePointST.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project5/src/KdTreePointST.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project5/src/Spell.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project5/src/Spell.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

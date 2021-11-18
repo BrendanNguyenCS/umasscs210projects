@@ -6,7 +6,8 @@ import stdlib.StdIn;
 import stdlib.StdOut;
 
 public class KdTreePointST<Value> implements PointST<Value> {
-    ...
+    private Node root; // reference to the root of a 2D tree
+    private int n; // number of nodes in the tree
 
     // Constructs an empty symbol table.
     public KdTreePointST() {
@@ -15,26 +16,38 @@ public class KdTreePointST<Value> implements PointST<Value> {
 
     // Returns true if this symbol table is empty, and false otherwise.
     public boolean isEmpty() {
-        ...
+        return n == 0;
     }
 
     // Returns the number of key-value pairs in this symbol table.
     public int size() {
-        ...
+        return n;
     }
 
     // Inserts the given point and value into this symbol table.
     public void put(Point2D p, Value value) {
+        if (p == null) {
+            throw new NullPointerException("p is null");
+        }
+        if (value == null) {
+            throw new NullPointerException("value is null");
+        }
         ...
     }
 
     // Returns the value associated with the given point in this symbol table, or null.
     public Value get(Point2D p) {
+        if (p == null) {
+            throw new NullPointerException("p is null");
+        }
         ...
     }
 
     // Returns true if this symbol table contains the given point, and false otherwise.
     public boolean contains(Point2D p) {
+        if (p == null) {
+            throw new NullPointerException("p is null");
+        }
         ...
     }
 
@@ -45,18 +58,27 @@ public class KdTreePointST<Value> implements PointST<Value> {
 
     // Returns all the points in this symbol table that are inside the given rectangle.
     public Iterable<Point2D> range(RectHV rect) {
+        if (rect == null) {
+            throw new NullPointerException("rect is null");
+        }
         ...
     }
 
     // Returns the point in this symbol table that is different from and closest to the given point,
     // or null.
     public Point2D nearest(Point2D p) {
+        if (p == null) {
+            throw new NullPointerException("p is null");
+        }
         ...
     }
 
     // Returns up to k points from this symbol table that are different from and closest to the
     // given point.
     public Iterable<Point2D> nearest(Point2D p, int k) {
+        if (p == null) {
+            throw new NullPointerException("p is null");
+        }
         ...
     }
 
