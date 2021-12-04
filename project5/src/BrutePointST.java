@@ -53,7 +53,7 @@ public class BrutePointST<Value> implements PointST<Value> {
 
     // Returns all the points in this symbol table.
     public Iterable<Point2D> points() {
-        ...
+        return this.bst.keys(bst.min(), bst.max());
     }
 
     // Returns all the points in this symbol table that are inside the given rectangle.
@@ -61,7 +61,16 @@ public class BrutePointST<Value> implements PointST<Value> {
         if (rect == null) {
             throw new NullPointerException("rect is null");
         }
-        ...
+        // create queue of points within rect in bst
+        LinkedQueue<Point2D> queue = new LinkedQueue<Point2D>();
+        for (Point2D p : this.points()) {
+            // if point is within rect bounds, enqueue it
+            if (p.x() > rect.xMin() && p.x() < rect.xMax() &&
+                    p.y() > rect.yMin() && p.y() < rect.yMax()) {
+                queue.enqueue(p);
+            }
+        }
+        return queue;
     }
 
     // Returns the point in this symbol table that is different from and closest to the given point,
@@ -70,7 +79,12 @@ public class BrutePointST<Value> implements PointST<Value> {
         if (p == null) {
             throw new NullPointerException("p is null");
         }
-        ...
+        // default return value
+        Point2D result = null;
+        for (Point2D point : this.nearest(p, 1)) {
+            result = point;
+        }
+        return result;
     }
 
     // Returns up to k points from this symbol table that are different from and closest to the
@@ -79,7 +93,22 @@ public class BrutePointST<Value> implements PointST<Value> {
         if (p == null) {
             throw new NullPointerException("p is null");
         }
-        ...
+        MinPQ<Point2D> minpq = new MinPQ<Point2D>(p.distanceToOrder());
+        LinkedQueue<Point2D> q = new LinkedQueue<Point2D>();
+        // counter
+        int queueLength = 0;
+        for (Point2D point : this.points()) {
+            minpq.insert(point);
+        }
+        while (queueLength < k) {
+            Point2D temp = minpq.delMin();
+            // making sure p is not returned
+            if (!p.equals(temp)) {
+                q.enqueue(temp);
+                ++queueLength;
+            }
+        }
+        return q;
     }
 
     // Unit tests the data type. [DO NOT EDIT]

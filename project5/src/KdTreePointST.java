@@ -11,12 +11,13 @@ public class KdTreePointST<Value> implements PointST<Value> {
 
     // Constructs an empty symbol table.
     public KdTreePointST() {
-        ...
+        root = null;
+        n = 0;
     }
 
     // Returns true if this symbol table is empty, and false otherwise.
     public boolean isEmpty() {
-        return n == 0;
+        return root == null;
     }
 
     // Returns the number of key-value pairs in this symbol table.
@@ -32,7 +33,14 @@ public class KdTreePointST<Value> implements PointST<Value> {
         if (value == null) {
             throw new NullPointerException("value is null");
         }
-        ...
+        double negInf = -1 * Double.POSITIVE_INFINITY;
+        double posInf = Double.POSITIVE_INFINITY;
+        if (this.isEmpty()) {
+            root = new Node(p, value, new RectHV(negInf, negInf, posInf, posInf));
+            n++;
+            return;
+        }
+        put(root, p, value, new RectHV(negInf, negInf, posInf, posInf), true);
     }
 
     // Returns the value associated with the given point in this symbol table, or null.
@@ -40,7 +48,7 @@ public class KdTreePointST<Value> implements PointST<Value> {
         if (p == null) {
             throw new NullPointerException("p is null");
         }
-        ...
+        return get(root, p, true);
     }
 
     // Returns true if this symbol table contains the given point, and false otherwise.
@@ -48,12 +56,27 @@ public class KdTreePointST<Value> implements PointST<Value> {
         if (p == null) {
             throw new NullPointerException("p is null");
         }
-        ...
+        return this.get(p) != null;
     }
 
     // Returns all the points in this symbol table.
     public Iterable<Point2D> points() {
-        ...
+        LinkedQueue<Point2D> keys = new LinkedQueue<Point2D>();
+        LinkedQueue<Node> queue = new LinkedQueue<Node>();
+        queue.enqueue(root);
+        while (!queue.isEmpty()) {
+            Node x = queue.dequeue();
+            if (x == null) {
+                continue;
+            }
+            // add current point to keys queue
+            keys.enqueue(x.p);
+            // add left child tree to queue
+            queue.enqueue(x.lb);
+            // add right child tree to queue
+            queue.enqueue(x.rt);
+        }
+        return keys;
     }
 
     // Returns all the points in this symbol table that are inside the given rectangle.
@@ -61,7 +84,9 @@ public class KdTreePointST<Value> implements PointST<Value> {
         if (rect == null) {
             throw new NullPointerException("rect is null");
         }
-        ...
+        LinkedQueue<Point2D> queue = new LinkedQueue<Point2D>();
+        range(root, rect, queue);
+        return queue;
     }
 
     // Returns the point in this symbol table that is different from and closest to the given point,
@@ -70,7 +95,12 @@ public class KdTreePointST<Value> implements PointST<Value> {
         if (p == null) {
             throw new NullPointerException("p is null");
         }
-        ...
+        // default return value
+        Point2D result = null;
+        for (Point2D point : this.nearest(p, 1)) {
+            result = point;
+        }
+        return result;
     }
 
     // Returns up to k points from this symbol table that are different from and closest to the
@@ -79,7 +109,22 @@ public class KdTreePointST<Value> implements PointST<Value> {
         if (p == null) {
             throw new NullPointerException("p is null");
         }
-        ...
+        MaxPQ<Point2D> maxpq = new MaxPQ<Point2D>(p.distanceToOrder());
+        LinkedQueue<Point2D> q = new LinkedQueue<Point2D>();
+        // counter
+        int queueLength = 0;
+        for (Point2D point : this.points()) {
+            maxpq.insert(point);
+        }
+        while (queueLength < k) {
+            Point2D temp = maxpq.delMax();
+            // making sure p is not returned
+            if (!p.equals(temp)) {
+                q.enqueue(temp);
+                ++queueLength;
+            }
+        }
+        return q;
     }
 
     // Note: In the helper methods that have lr as a parameter, its value specifies how to
@@ -91,29 +136,142 @@ public class KdTreePointST<Value> implements PointST<Value> {
     // Inserts the given point and value into the KdTree x having rect as its axis-aligned
     // rectangle, and returns a reference to the modified tree.
     private Node put(Node x, Point2D p, Value value, RectHV rect, boolean lr) {
-        ...
+        if (x == null) {
+            n++;
+            return new Node(p, value, rect);
+        }
+        if (lr) {
+            double compare = Double.compare(p.x(), x.p.x());
+            if (compare < 0.0) {
+                x.lb = put(x.lb, p, value, new RectHV(rect.xMin(), rect.yMin(), x.p.x(),
+                        rect.yMax()), false);
+            } else if (compare > 0.0) {
+                x.rt = put(x.rt, p, value, new RectHV(x.p.x(), rect.yMin(), rect.xMax(),
+                        rect.yMax()), false);
+            } else {
+                x.value = value;
+            }
+        } else {
+            double compare = Double.compare(p.y(), x.p.y());
+            if (compare < 0.0) {
+                x.lb = put(x.lb, p, value, new RectHV(rect.xMin(), rect.yMin(), rect.xMax(),
+                        x.p.y()), true);
+            } else if (compare > 0.0) {
+                x.rt = put(x.rt, p, value, new RectHV(rect.xMin(), x.p.y(), rect.xMax(),
+                        rect.yMax()), true);
+            } else {
+                x.value = value;
+            }
+        }
+        return x;
     }
 
     // Returns the value associated with the given point in the KdTree x, or null.
     private Value get(Node x, Point2D p, boolean lr) {
-        ...
+        if (x == null) {
+            return null;
+        }
+        if (lr) {
+            double compare = Double.compare(p.x(), x.p.x());
+            if (compare < 0.0) {
+                return get(x.lb, p, false);
+            } else if (compare > 0.0) {
+                return get(x.rt, p, false);
+            } else {
+                return x.value;
+            }
+        } else {
+            double compare = Double.compare(p.y(), x.p.y());
+            if (compare < 0.0) {
+                return get(x.lb, p, false);
+            } else if (compare > 0.0) {
+                return get(x.rt, p, false);
+            } else {
+                return x.value;
+            }
+        }
     }
 
     // Collects in the given queue all the points in the KdTree x that are inside rect.
     private void range(Node x, RectHV rect, LinkedQueue<Point2D> q) {
-        ...
+        if (x == null || !x.rect.intersects(rect)) {
+            return;
+        }
+        if (x.p.x() > rect.xMin() && x.p.x() < rect.xMax()
+                && x.p.y() > rect.yMin() && x.p.y() < rect.yMax()) {
+            q.enqueue(x.p);
+        }
+        range(x.lb, rect, q);
+        range(x.rt, rect, q);
     }
 
     // Returns the point in the KdTree x that is closest to p, or null; nearest is the closest
     // point discovered so far.
     private Point2D nearest(Node x, Point2D p, Point2D nearest, boolean lr) {
-        ...
+        Point2D min = nearest;  // tracking nearest point
+        if (x == null) {
+            return min;
+        }
+        if (p.distanceSquaredTo(x.p) < p.distanceSquaredTo(nearest)) {
+            min = x.p;
+        }
+        if (lr) {
+            if (x.p.x() < p.x()) {
+                min = nearest(x.rt, p, min, false);
+                if (x.lb != null && (min.distanceSquaredTo(p) > x.lb.rect.distanceSquaredTo(p))) {
+                    min = nearest(x.lb, p, min, false);
+                }
+            } else {
+                min = nearest(x.lb, p, min, false);
+                if (x.rt != null && (min.distanceSquaredTo(p) > x.rt.rect.distanceSquaredTo(p))) {
+                    min = nearest(x.rt, p, min, false);
+                }
+            }
+        } else {
+            if (x.p.y() < p.y()) {
+                min = nearest(x.rt, p, min, false);
+                if (x.lb != null && (min.distanceSquaredTo(p) > x.lb.rect.distanceSquaredTo(p))) {
+                    min = nearest(x.lb, p, min, false);
+                }
+            } else {
+                min = nearest(x.lb, p, min, false);
+                if (x.rt != null && (min.distanceSquaredTo(p) > x.rt.rect.distanceSquaredTo(p))) {
+                    min = nearest(x.rt, p, min, false);
+                }
+            }
+        }
+        return min;
     }
 
     // Collects in the given max-PQ up to k points from the KdTree x that are different from and
     // closest to p.
     private void nearest(Node x, Point2D p, int k, MaxPQ<Point2D> pq, boolean lr) {
-        ...
+        if (x == null || pq.size() > k) {
+            return;
+        }
+        if (!p.equals(x.p)) {
+            pq.insert(x.p);
+            if (pq.size() > k) {
+                pq.delMax();
+            }
+        }
+        if (lr) {
+            if (p.x() > x.p.x()) {
+                nearest(x.rt, p, k, pq, false);
+                nearest(x.lb, p, k, pq, false);
+            } else {
+                nearest(x.lb, p, k, pq, false);
+                nearest(x.rt, p, k, pq, false);
+            }
+        } else {
+            if (p.y() > x.p.y()) {
+                nearest(x.rt, p, k, pq, true);
+                nearest(x.lb, p, k, pq, true);
+            } else {
+                nearest(x.lb, p, k, pq, true);
+                nearest(x.rt, p, k, pq, true);
+            }
+        }
     }
 
     // A representation of node in a KdTree in two dimensions (ie, a 2dTree). Each node stores a
