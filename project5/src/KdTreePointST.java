@@ -61,7 +61,9 @@ public class KdTreePointST<Value> implements PointST<Value> {
 
     // Returns all the points in this symbol table.
     public Iterable<Point2D> points() {
+        // keys queue
         LinkedQueue<Point2D> keys = new LinkedQueue<Point2D>();
+        // nodes queue
         LinkedQueue<Node> queue = new LinkedQueue<Node>();
         queue.enqueue(root);
         while (!queue.isEmpty()) {
@@ -71,9 +73,9 @@ public class KdTreePointST<Value> implements PointST<Value> {
             }
             // add current point to keys queue
             keys.enqueue(x.p);
-            // add left child tree to queue
+            // add left child tree to node queue
             queue.enqueue(x.lb);
-            // add right child tree to queue
+            // add right child tree to node queue
             queue.enqueue(x.rt);
         }
         return keys;
@@ -96,11 +98,7 @@ public class KdTreePointST<Value> implements PointST<Value> {
             throw new NullPointerException("p is null");
         }
         // default return value
-        Point2D result = null;
-        for (Point2D point : this.nearest(p, 1)) {
-            result = point;
-        }
-        return result;
+        return nearest(root, p, root.p, true);
     }
 
     // Returns up to k points from this symbol table that are different from and closest to the
@@ -110,21 +108,8 @@ public class KdTreePointST<Value> implements PointST<Value> {
             throw new NullPointerException("p is null");
         }
         MaxPQ<Point2D> maxpq = new MaxPQ<Point2D>(p.distanceToOrder());
-        LinkedQueue<Point2D> q = new LinkedQueue<Point2D>();
-        // counter
-        int queueLength = 0;
-        for (Point2D point : this.points()) {
-            maxpq.insert(point);
-        }
-        while (queueLength < k) {
-            Point2D temp = maxpq.delMax();
-            // making sure p is not returned
-            if (!p.equals(temp)) {
-                q.enqueue(temp);
-                ++queueLength;
-            }
-        }
-        return q;
+        nearest(root, p, k, maxpq, true);
+        return maxpq;
     }
 
     // Note: In the helper methods that have lr as a parameter, its value specifies how to
@@ -141,26 +126,28 @@ public class KdTreePointST<Value> implements PointST<Value> {
             return new Node(p, value, rect);
         }
         if (lr) {
+            // should be checking x coordinates
             double compare = Double.compare(p.x(), x.p.x());
-            if (compare < 0.0) {
+            if (compare < 0.0) {            // the current point is to the left of the node
+                // add to left child tree with rect to the left of node
                 x.lb = put(x.lb, p, value, new RectHV(rect.xMin(), rect.yMin(), x.p.x(),
                         rect.yMax()), false);
-            } else if (compare > 0.0) {
+            } else {     // current point is to the right of the node
+                // add to the right child tree with rect to the right of node
                 x.rt = put(x.rt, p, value, new RectHV(x.p.x(), rect.yMin(), rect.xMax(),
                         rect.yMax()), false);
-            } else {
-                x.value = value;
             }
         } else {
+            // should be checking y coordinates
             double compare = Double.compare(p.y(), x.p.y());
-            if (compare < 0.0) {
+            if (compare < 0.0) {            // current point is below the node
+                // add to left child tree with rect below the node
                 x.lb = put(x.lb, p, value, new RectHV(rect.xMin(), rect.yMin(), rect.xMax(),
                         x.p.y()), true);
-            } else if (compare > 0.0) {
+            } else {     // current point is above the node
+                // add to right child tree with rect above the node
                 x.rt = put(x.rt, p, value, new RectHV(rect.xMin(), x.p.y(), rect.xMax(),
                         rect.yMax()), true);
-            } else {
-                x.value = value;
             }
         }
         return x;
@@ -171,21 +158,25 @@ public class KdTreePointST<Value> implements PointST<Value> {
         if (x == null) {
             return null;
         }
-        if (lr) {
+        if (lr) {   // check x coordinates
             double compare = Double.compare(p.x(), x.p.x());
             if (compare < 0.0) {
+                // check left tree y coordinates
                 return get(x.lb, p, false);
             } else if (compare > 0.0) {
+                // check right tree y coordinates
                 return get(x.rt, p, false);
             } else {
                 return x.value;
             }
-        } else {
+        } else {    // check y coordinates
             double compare = Double.compare(p.y(), x.p.y());
             if (compare < 0.0) {
-                return get(x.lb, p, false);
+                // check left tree
+                return get(x.lb, p, true);
             } else if (compare > 0.0) {
-                return get(x.rt, p, false);
+                // check right tree
+                return get(x.rt, p, true);
             } else {
                 return x.value;
             }
@@ -194,15 +185,19 @@ public class KdTreePointST<Value> implements PointST<Value> {
 
     // Collects in the given queue all the points in the KdTree x that are inside rect.
     private void range(Node x, RectHV rect, LinkedQueue<Point2D> q) {
-        if (x == null || !x.rect.intersects(rect)) {
+        if (x == null) {
             return;
         }
-        if (x.p.x() > rect.xMin() && x.p.x() < rect.xMax()
-                && x.p.y() > rect.yMin() && x.p.y() < rect.yMax()) {
+        if (rect.contains(x.p)) {
             q.enqueue(x.p);
         }
-        range(x.lb, rect, q);
-        range(x.rt, rect, q);
+        // pruning rule
+        if (x.lb != null && rect.intersects(x.lb.rect)) {
+            range(x.lb, rect, q);
+        }
+        if (x.rt != null && rect.intersects(x.rt.rect)) {
+            range(x.rt, rect, q);
+        }
     }
 
     // Returns the point in the KdTree x that is closest to p, or null; nearest is the closest
@@ -212,7 +207,7 @@ public class KdTreePointST<Value> implements PointST<Value> {
         if (x == null) {
             return min;
         }
-        if (p.distanceSquaredTo(x.p) < p.distanceSquaredTo(nearest)) {
+        if (!x.p.equals(p) && p.distanceSquaredTo(x.p) < p.distanceSquaredTo(nearest)) {
             min = x.p;
         }
         if (lr) {
@@ -229,14 +224,14 @@ public class KdTreePointST<Value> implements PointST<Value> {
             }
         } else {
             if (x.p.y() < p.y()) {
-                min = nearest(x.rt, p, min, false);
+                min = nearest(x.rt, p, min, true);
                 if (x.lb != null && (min.distanceSquaredTo(p) > x.lb.rect.distanceSquaredTo(p))) {
-                    min = nearest(x.lb, p, min, false);
+                    min = nearest(x.lb, p, min, true);
                 }
             } else {
-                min = nearest(x.lb, p, min, false);
+                min = nearest(x.lb, p, min, true);
                 if (x.rt != null && (min.distanceSquaredTo(p) > x.rt.rect.distanceSquaredTo(p))) {
-                    min = nearest(x.rt, p, min, false);
+                    min = nearest(x.rt, p, min, true);
                 }
             }
         }

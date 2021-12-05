@@ -48,7 +48,7 @@ public class BrutePointST<Value> implements PointST<Value> {
         if (p == null) {
             throw new NullPointerException("p is null");
         }
-        return bst.get(p) != null;
+        return bst.contains(p);
     }
 
     // Returns all the points in this symbol table.
@@ -65,8 +65,7 @@ public class BrutePointST<Value> implements PointST<Value> {
         LinkedQueue<Point2D> queue = new LinkedQueue<Point2D>();
         for (Point2D p : this.points()) {
             // if point is within rect bounds, enqueue it
-            if (p.x() > rect.xMin() && p.x() < rect.xMax() &&
-                    p.y() > rect.yMin() && p.y() < rect.yMax()) {
+            if (rect.contains(p)) {
                 queue.enqueue(p);
             }
         }
@@ -81,6 +80,7 @@ public class BrutePointST<Value> implements PointST<Value> {
         }
         // default return value
         Point2D result = null;
+        // you only want the first nearest point
         for (Point2D point : this.nearest(p, 1)) {
             result = point;
         }
