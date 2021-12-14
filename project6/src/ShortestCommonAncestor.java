@@ -6,26 +6,46 @@ import stdlib.StdIn;
 import stdlib.StdOut;
 
 public class ShortestCommonAncestor {
-    ...
+    private DiGraph G;
 
     // Constructs a ShortestCommonAncestor object given a rooted DAG.
     public ShortestCommonAncestor(DiGraph G) {
-        ...
+        if (G == null) {
+            throw new NullPointerException("G is null");
+        }
+        this.G = G;
     }
 
     // Returns length of the shortest ancestral path between vertices v and w.
     public int length(int v, int w) {
+        if (v < 0 || v >= G.V()) {
+            throw new IndexOutOfBoundsException("v is invalid");
+        }
+        if (w < 0 || w >= G.V()) {
+            throw new IndexOutOfBoundsException("w is invalid");
+        }
         ...
     }
 
     // Returns a shortest common ancestor of vertices v and w.
     public int ancestor(int v, int w) {
+        if (v < 0 || v >= G.V()) {
+            throw new IndexOutOfBoundsException("v is invalid");
+        }
+        if (w < 0 || w >= G.V()) {
+            throw new IndexOutOfBoundsException("w is invalid");
+        }
         ...
     }
 
     // Returns length of the shortest ancestral path of vertex subsets A and B.
     public int length(Iterable<Integer> A, Iterable<Integer> B) {
-        ...
+        if (A == null) {
+            throw new NullPointerException("A is null");
+        }
+        if (B == null) {
+            throw new NullPointerException("B is null");
+        }
     }
 
     // Returns a shortest common ancestor of vertex subsets A and B.

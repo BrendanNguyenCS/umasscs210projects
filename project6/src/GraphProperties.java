@@ -12,28 +12,67 @@ public class GraphProperties {
 
     // Computes graph properties for the undirected graph G.
     public GraphProperties(Graph G) {
-        ...
+        st = new RedBlackBinarySearchTreeST<Integer, Integer>();
+        for (int v = 0; v < G.V(); v++) {
+            int degree = G.degree(v);
+            if (!st.contains(degree)) {
+                st.put(degree, 0);
+            }
+            st.put(degree, st.get(degree) + 1);
+        }
+
+        avgDegree = 2.0 * G.E() / G.V();
+
+        for (int v = 0; v < G.V(); v++) {
+            BFSPaths paths = new BFSPaths(G, v);
+            for (int w = 0; w < G.V(); w++) {
+                if (paths.hasPathTo(w)) {
+                    avgPathLength += paths.distTo(w);
+                }
+            }
+        }
+
+        avgPathLength /= G.V() + (G.V() - 1);
+
+        for (int u = 0; u < G.V(); u++) {
+            int possible = G.degree(u) * (G.degree(u) - 1) / 2;
+            int actual = 0;
+            for (int v : G.adj(u)) {
+                for (int w : G.adj(u)) {
+                    if (hasEdge(G, v, w)) {
+                        actual++;
+                    }
+                }
+            }
+
+            actual /= 2;
+            if (possible > 0) {
+                clusteringCoefficient += 1.0 * actual / possible;
+            }
+        }
+
+        clusteringCoefficient /= G.V();
     }
 
     // Returns the degree distribution of the graph (a symbol table mapping each degree value to
     // the number of vertices with that value).
     public RedBlackBinarySearchTreeST<Integer, Integer> degreeDistribution() {
-        ...
+        return st;
     }
 
     // Returns the average degree of the graph.
     public double averageDegree() {
-        ...
+        return avgDegree;
     }
 
     // Returns the average path length of the graph.
     public double averagePathLength() {
-        ...
+        return avgPathLength;
     }
 
     // Returns the global clustering coefficient of the graph.
     public double clusteringCoefficient() {
-        ...
+        return clusteringCoefficient;
     }
 
     // Returns true if G has an edge between vertices v and w, and false otherwise.

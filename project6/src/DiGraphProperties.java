@@ -12,27 +12,42 @@ public class DiGraphProperties {
 
     // Computes graph properties for the digraph G.
     public DiGraphProperties(DiGraph G) {
-        ...
+        isDAG = !(new DiCycle(G).hasCycle());
+        isMap = true;
+        for (int v = 0; v < G.V(); v++) {
+            isMap = isMap && (G.outDegree(v) == 1);
+        }
+
+        sources = new LinkedBag<Integer>();
+        sinks = new LinkedBag<Integer>();
+        for (int v = 0; v < G.V(); v++) {
+            if (G.inDegree(v) == 0) {
+                sources.add(v);
+            }
+            if (G.outDegree(v) == 0) {
+                sinks.add(v);
+            }
+        }
     }
 
     // Returns true if the digraph is a directed acyclic graph (DAG), and false otherwise.
     public boolean isDAG() {
-        ...
+        return isDAG;
     }
 
     // Returns true if the digraph is a map, and false otherwise.
     public boolean isMap() {
-        ...
+        return isMap;
     }
 
     // Returns all the sources (ie, vertices without any incoming edges) in the digraph.
     public Iterable<Integer> sources() {
-        ...
+        return sources;
     }
 
     // Returns all the sinks (ie, vertices without any outgoing edges) in the digraph.
     public Iterable<Integer> sinks() {
-        ...
+        return sinks;
     }
 
     // Unit tests the data type. [DO NOT EDIT]
