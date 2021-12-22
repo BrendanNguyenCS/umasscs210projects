@@ -32,7 +32,7 @@ public class GraphProperties {
             }
         }
 
-        avgPathLength /= G.V() + (G.V() - 1);
+        avgPathLength /= G.V() * (G.V() - 1);
 
         for (int u = 0; u < G.V(); u++) {
             int possible = G.degree(u) * (G.degree(u) - 1) / 2;

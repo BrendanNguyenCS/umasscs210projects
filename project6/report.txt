@@ -1,37 +1,70 @@
 1. Enter the number of hours it took you to complete the project between
    the <<< and >>> signs below (eg, <<<10>>>).
 
-   <<< >>>
+   <<<6>>>
    
 2. Enter the difficulty level (1: very easy; 5: very difficult) of the project
    between the <<< and >>> signs below (eg, <<<3>>>).
 
-   <<< >>>
+   <<<2>>>
 
 3. Provide a short description of how you approached each problem, issues you 
    encountered, and how you resolved those issues.
 
    Problem 1 (WordNet Data Type)
-      Approach: ...
+      Approach: This one was quite simple. After initializing the instances variables correctly, it
+      was simply reading in the files and splitting up the file contents correctly. I knew that
+      splitting up the files required the built-in splitting method and the right delimiters. Then
+      adding the values to the right symbol table was also quite simple.
 
-      Issues and resolution: ...
+
+      Issues and resolution: The only small hiccup I encountered was trying to figure out how to
+      read in from the synsets and hypernyms files. I looked at the imports I didn't recognize and
+      tried to see if any other them do the job. The In class was the one I needed from the In
+      import.
 
    Problem 2 (ShortestCommonAncestor Data Type)
-      Approach: ...
+      Approach: This one was quite challenging. The hardest part was understanding how all the
+      methods relate to one another. Kyle was quite helpful in this manner. I first completed
+      distFrom (the only main issue as I talk about in the next section). After that, I completed
+      the "int" ancestor method. This one uses the symbol maps returned by distFrom for each vertex
+      parameter. The rest is a simple minimum algorithm. One foreach loop that loops through one of
+      the map keys that constantly checks if it exists in the other map. If it does, then you check
+      if the total distance (the sum of the values from both maps with the same key) is less than
+      the current distance, you override it with this distance. The "int" length method uses the
+      maps returned by distFrom for both vertices and the common ancestor between the 2. Then
+      returning the sum of the values of the ancestor in both maps. The triad method is a minimum
+      distance algorithm that tracks the distances between points in the 2 vertex subsets. I kept
+      track of the vertices in both subsets, the shortest distance, and the shortest ancestor. After
+       the nested for loops, you return the integer array comprising of the 2 vertices and the
+       ancestor. The overloaded ancestor and length methods were quite simple. The ancestor one
+       returns the ancestor element in the triad array. The length overloaded method uses the triad
+       array to get the distances between the subset vertices and the common ancestor. Each distance
+        comprises of the value of the map of the subset vertex whose key is the common ancestor. It
+        returns the sum of the 2 distances.
 
-      Issues and resolution: ...
+      Issues and resolution: The only main issue was trying to understand how to implement the
+      distFrom method. I knew that I need to use BFS to find all the vertices that are reachable. I
+      made sure to understand what I needed to do to follow BFS. Basically, you are using a stack to
+       keep track all the vertices that haven't been checked yet. Everytime you dequeue a vertex
+       from the queue, you add all of the adjacent vertices to the queue. Then you add the current
+       vertex into the symbol table if it doesn't already exist in the symbol table.
 
    Problem 3 (Outcast Data Type)
-      Approach: ...
+      Approach: This one was also quite simple. Basically, it is a simple algorithm of finding the
+      maximum distance of the different nouns. Simply used a for-each loop and if the total distance
+       from the noun to all the other nouns exceeds the current max, override and save that noun.
 
-      Issues and resolution: ...
+      Issues and resolution: This problem didn't take me long because I knew how to do the simple
+      maximum algorithm for an array. It is similar to the ancestor method in problem 2 but a max
+      instead of a minimum.
 
 4. Did you receive help from anyone? List their names, status (classmate, 
    CS210 grad, TA, other), and the nature of help received.
 
    Name               Status       Help Received
    ----               ------       -------------
-
+   Kyle               TA            Clarifying the concepts behind the problems
    ...                ...          ...
 
 5. List any other comments here. Feel free to provide any feedback on how

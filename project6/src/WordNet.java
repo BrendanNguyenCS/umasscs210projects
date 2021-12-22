@@ -1,13 +1,15 @@
 import dsa.DiGraph;
-import dsa.RedBlackBinarySearchTreeST;
 import dsa.SeparateChainingHashST;
 import dsa.Set;
 import stdlib.In;
 import stdlib.StdOut;
 
 public class WordNet {
-    private RedBlackBinarySearchTreeST<String, Set<Integer>> st;
-    private RedBlackBinarySearchTreeST<Integer, String> rst;
+    // symbol table mapping synset noun to set of synset ids
+    private SeparateChainingHashST<String, Set<Integer>> st;
+    // symbol table mapping synset id to synset string
+    private SeparateChainingHashST<Integer, String> rst;
+    // shortest common ancestor
     private ShortestCommonAncestor sca;
 
     // Constructs a WordNet object given the names of the input (synset and hypernym) files.
@@ -18,11 +20,44 @@ public class WordNet {
         if (hypernyms == null) {
             throw new NullPointerException("hypernyms is null");
         }
+        rst = new SeparateChainingHashST<Integer, String>();
+        st = new SeparateChainingHashST<String, Set<Integer>>();
+        In synIn = new In(synsets);
+        In hypIn = new In(hypernyms);
+
+        // parsing synsets file
+        while (synIn.hasNextLine()) {
+            // split up comma separated line into array
+            String[] line = synIn.readLine().split(",");
+            int id = Integer.parseInt(line[0]);
+            rst.put(id, line[1]);
+            String[] synsetSet = line[1].split("\\s");
+            for (String synSet : synsetSet) {
+                if (!st.contains(synSet)) {
+                    st.put(synSet, new Set<Integer>());
+                }
+                st.get(synSet).add(id);
+            }
+        }
+        DiGraph G = new DiGraph(rst.size());
+
+        // parsing hypernyms file
+        while (hypIn.hasNextLine()) {
+            // split up comma separated line into array
+            String[] line = hypIn.readLine().split(",");
+            int synset = Integer.parseInt(line[0]);
+            for (String s : line) {
+                int hypernym = Integer.parseInt(s);
+                G.addEdge(synset, hypernym);
+            }
+        }
+
+        sca = new ShortestCommonAncestor(G);
     }
 
     // Returns all WordNet nouns.
     public Iterable<String> nouns() {
-        ...
+        return st.keys();
     }
 
     // Returns true if the given word is a WordNet noun, and false otherwise.
@@ -30,7 +65,7 @@ public class WordNet {
         if (word == null) {
             throw new NullPointerException("word is null");
         }
-        ...
+        return st.contains(word);
     }
 
     // Returns a synset that is a shortest common ancestor of noun1 and noun2.
@@ -47,7 +82,7 @@ public class WordNet {
         if (!isNoun(noun2)) {
             throw new IllegalArgumentException("noun2 is not a noun");
         }
-        ...
+        return rst.get(sca.ancestor(st.get(noun1), st.get(noun2)));
     }
 
     // Returns the length of the shortest ancestral path between noun1 and noun2.
@@ -64,7 +99,7 @@ public class WordNet {
         if (!isNoun(noun2)) {
             throw new IllegalArgumentException("noun2 is not a noun");
         }
-        ...
+        return sca.length(st.get(noun1), st.get(noun2));
     }
 
     // Unit tests the data type. [DO NOT EDIT]
