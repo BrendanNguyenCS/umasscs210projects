@@ -2,10 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a98645d-3361-4fdc-900c-9619eec47e5e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../project5/src/ArrayST.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project5/src/ArrayST.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project5/src/BrutePointST.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project5/src/BrutePointST.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project5/src/KdTreePointST.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project5/src/KdTreePointST.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../project5/src/Spell.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project5/src/Spell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs210_programming_exam1/cs210_programming_exam1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../cs210_programming_exam1/cs210_programming_exam1.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dummy_project/dummy_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../dummy_project/dummy_project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project1/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../project1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project2/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project3/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/CertifyHeap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/CertifyHeap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/Ramanujan1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Ramanujan1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/Ramanujan2$Pair.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Ramanujan2$Pair.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/Ramanujan2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Ramanujan2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/Solver$SearchNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Solver$SearchNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/Solver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/Solver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project5/project5.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../project5/project5.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project6/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../project6/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project6/project6.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../project6/project6.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +28,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="1eHwWYFKQmr7n6F0sK74tF0FPcb" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -25,6 +42,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
@@ -104,7 +122,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1593991857250</updated>
+      <workItem from="1647959864610" duration="74000" />
+      <workItem from="1647960069651" duration="35000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

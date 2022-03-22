@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e88801c-28a6-4151-9c64-3fd685fced3b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../dummy_project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../dummy_project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs210_programming_exam1/cs210_programming_exam1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../cs210_programming_exam1/cs210_programming_exam1.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dummy_project/dummy_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../dummy_project/dummy_project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project5/project5.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../project5/project5.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project6/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../project6/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project6/project6.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../project6/project6.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +28,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
@@ -142,8 +147,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1592908941654</updated>
+      <workItem from="1647959707511" duration="18000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
