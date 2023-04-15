@@ -10,7 +10,7 @@ Note: The `cmd` statements needed to run these programs may differ from those li
 
 In order to compile the code, `cd` to the src folder (or where the root of your source code is) and run the following command. This example compiles code in project1.
 
-```cmd
+```console
 javac -d ../classes project1/*.java
 ```
 
@@ -20,7 +20,7 @@ This will compile all Java files in project 1 and put the `.class` files in the 
 
 In order to run programs, `cd` to the classes subdirectory and run the following command. The Windows command is shown, other OS's will replace `;` with `:`. This also loads in the `algs4` library in order to utilize its objects. The example below runs the Great Circle Distance program from Project 1 Exercise 1.
 
-```cmd
+```console
 java -cp .;../lib/algs4.jar project1.GreatCircle 48.87 -2.33 37.8 -122.4
 ```
 
