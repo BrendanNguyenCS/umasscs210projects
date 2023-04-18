@@ -3,33 +3,44 @@ package project5;
 import edu.princeton.cs.algs4.*;
 
 public class KdTreePointST<Value> implements PointST<Value> {
-    private Node root; // reference to the root of a 2D tree
-    private int n; // number of nodes in the tree
+    /**
+     * Reference to the root of the 2D tree
+     */
+    private Node root;
+    /**
+     * Number of nodes in the tree
+     */
+    private int n;
 
-    // Constructs an empty symbol table.
+    /**
+     * Constructs an empty symbol table
+     */
     public KdTreePointST() {
         root = null;
         n = 0;
     }
 
-    // Returns true if this symbol table is empty, and false otherwise.
-    public boolean isEmpty() {
-        return root == null;
-    }
+    /**
+     * @return {@code true} if this symbol table is empty, {@code false} otherwise
+     */
+    public boolean isEmpty() { return root == null; }
 
-    // Returns the number of key-value pairs in this symbol table.
-    public int size() {
-        return n;
-    }
+    /**
+     * Getter for {@link #n}
+     * @return the number of key-value pairs in this symbol table
+     */
+    public int size() { return n; }
 
-    // Inserts the given point and value into this symbol table.
+    /**
+     * Inserts the given point and value into this symbol table
+     * @param p the point
+     * @param value the value
+     */
     public void put(Point2D p, Value value) {
-        if (p == null) {
+        if (p == null)
             throw new NullPointerException("p is null");
-        }
-        if (value == null) {
+        if (value == null)
             throw new NullPointerException("value is null");
-        }
         double negInf = -1 * Double.POSITIVE_INFINITY;
         double posInf = Double.POSITIVE_INFINITY;
         if (this.isEmpty()) {
@@ -40,23 +51,29 @@ public class KdTreePointST<Value> implements PointST<Value> {
         put(root, p, value, new RectHV(negInf, negInf, posInf, posInf), true);
     }
 
-    // Returns the value associated with the given point in this symbol table, or null.
+    /**
+     * @param p the point
+     * @return the value associated with the given point in this symbol table, or {@code null}
+     */
     public Value get(Point2D p) {
-        if (p == null) {
+        if (p == null)
             throw new NullPointerException("p is null");
-        }
         return get(root, p, true);
     }
 
-    // Returns true if this symbol table contains the given point, and false otherwise.
+    /**
+     * @param p the point
+     * @return {@code true} if this symbol table contains the given point, {@code false} otherwise
+     */
     public boolean contains(Point2D p) {
-        if (p == null) {
+        if (p == null)
             throw new NullPointerException("p is null");
-        }
         return this.get(p) != null;
     }
 
-    // Returns all the points in this symbol table.
+    /**
+     * @return all the points in this symbol table
+     */
     public Iterable<Point2D> points() {
         // keys queue
         LinkedQueue<Point2D> keys = new LinkedQueue<>();
@@ -65,9 +82,8 @@ public class KdTreePointST<Value> implements PointST<Value> {
         queue.enqueue(root);
         while (!queue.isEmpty()) {
             Node x = queue.dequeue();
-            if (x == null) {
+            if (x == null)
                 continue;
-            }
             // add current point to keys queue
             keys.enqueue(x.p);
             // add left child tree to node queue
@@ -78,45 +94,58 @@ public class KdTreePointST<Value> implements PointST<Value> {
         return keys;
     }
 
-    // Returns all the points in this symbol table that are inside the given rectangle.
+    /**
+     * @param rect the rectangle that is the bounds of the returned group
+     * @return all the points in this symbol table that are inside the given rectangle
+     */
     public Iterable<Point2D> range(RectHV rect) {
-        if (rect == null) {
+        if (rect == null)
             throw new NullPointerException("rect is null");
-        }
         LinkedQueue<Point2D> queue = new LinkedQueue<>();
         range(root, rect, queue);
         return queue;
     }
 
-    // Returns the point in this symbol table that is different from and closest to the given point,
-    // or null.
+    /**
+     * @param p the point
+     * @return the point in this symbol table that is different from and closest to the given point, or {@code null}
+     */
     public Point2D nearest(Point2D p) {
-        if (p == null) {
+        if (p == null)
             throw new NullPointerException("p is null");
-        }
         // default return value
         return nearest(root, p, root.p, true);
     }
 
-    // Returns up to k points from this symbol table that are different from and closest to the
-    // given point.
+    /**
+     * @param p the point
+     * @param k the maximum amount of points to return
+     * @return up to k points from this symbol table that are different from and closest to the given point
+     */
     public Iterable<Point2D> nearest(Point2D p, int k) {
-        if (p == null) {
+        if (p == null)
             throw new NullPointerException("p is null");
-        }
         MaxPQ<Point2D> maxpq = new MaxPQ<>(p.distanceToOrder());
         nearest(root, p, k, maxpq, true);
         return maxpq;
     }
 
-    // Note: In the helper methods that have lr as a parameter, its value specifies how to
-    // compare the point p with the point x.p. If true, the points are compared by their
-    // x-coordinates; otherwise, the points are compared by their y-coordinates. If the
-    // comparison of the coordinates (x or y) is true, the recursive call is made on x.lb;
-    // otherwise, the call is made on x.rt.
+    /*
+    In the helper methods that have lr as a parameter, its value specifies how to compare the point p with the point
+    x.p. If true, the points are compared by their x-coordinates; otherwise, the points are compared by their y-coordinates.
+    If the comparison of the coordinates (x or y) is true, the recursive call is made on x.lb; otherwise, the call is
+    made on x.rt.
+     */
 
-    // Inserts the given point and value into the KdTree x having rect as its axis-aligned
-    // rectangle, and returns a reference to the modified tree.
+    /**
+     * Inserts the given point and value into the KdTree {@code x} having {@code rect} as its axis-aligned rectangle
+     * @param x the KdTree
+     * @param p the point
+     * @param value the value
+     * @param rect the rectangle that defines the alignment
+     * @param lr the comparison measure ({@code true} calls for x-coordinate comparisons, {@code false} calls for y-coordinate comparisons)
+     * @return a reference to the modified tree
+     */
     private Node put(Node x, Point2D p, Value value, RectHV rect, boolean lr) {
         if (x == null) {
             n++;
@@ -150,60 +179,65 @@ public class KdTreePointST<Value> implements PointST<Value> {
         return x;
     }
 
-    // Returns the value associated with the given point in the KdTree x, or null.
+    /**
+     * @param x the KdTree
+     * @param p the point
+     * @param lr the comparison measure ({@code true} calls for x-coordinate comparisons, {@code false} calls for y-coordinate comparisons)
+     * @return the value associated with the given point in the KdTree x, or {@code null}
+     */
     private Value get(Node x, Point2D p, boolean lr) {
-        if (x == null) {
+        if (x == null)
             return null;
-        }
         if (lr) {   // check x coordinates
             double compare = Double.compare(p.x(), x.p.x());
             if (compare < 0.0) {
-                // check left tree y coordinates
-                return get(x.lb, p, false);
+                return get(x.lb, p, false);     // check left tree y coordinates
             } else if (compare > 0.0) {
-                // check right tree y coordinates
-                return get(x.rt, p, false);
+                return get(x.rt, p, false);     // check right tree y coordinates
             } else {
                 return x.value;
             }
         } else {    // check y coordinates
             double compare = Double.compare(p.y(), x.p.y());
             if (compare < 0.0) {
-                // check left tree
-                return get(x.lb, p, true);
+                return get(x.lb, p, true);      // check left tree
             } else if (compare > 0.0) {
-                // check right tree
-                return get(x.rt, p, true);
+                return get(x.rt, p, true);      // check right tree
             } else {
                 return x.value;
             }
         }
     }
 
-    // Collects in the given queue all the points in the KdTree x that are inside rect.
+    /**
+     * Collects in the given queue all the points in the KdTree {@code x} that are inside {@code rect}
+     * @param x the KdTree
+     * @param rect the rectangle that is the bounds of the returned group
+     * @param q the queue
+     */
     private void range(Node x, RectHV rect, LinkedQueue<Point2D> q) {
-        if (x == null) {
+        if (x == null)
             return;
-        }
-        if (rect.contains(x.p)) {
+        if (rect.contains(x.p))
             q.enqueue(x.p);
-        }
         // pruning rule
-        if (x.lb != null && rect.intersects(x.lb.rect)) {
+        if (x.lb != null && rect.intersects(x.lb.rect))
             range(x.lb, rect, q);
-        }
-        if (x.rt != null && rect.intersects(x.rt.rect)) {
+        if (x.rt != null && rect.intersects(x.rt.rect))
             range(x.rt, rect, q);
-        }
     }
 
-    // Returns the point in the KdTree x that is closest to p, or null; nearest is the closest
-    // point discovered so far.
+    /**
+     * @param x the KdTree
+     * @param p the point
+     * @param nearest the closest point discovered so far
+     * @param lr the comparison measure ({@code true} calls for x-coordinate comparisons, {@code false} calls for y-coordinate comparisons)
+     * @return the point in the KdTree {@code x} that is closest to {@code p}, or {@code null}
+     */
     private Point2D nearest(Node x, Point2D p, Point2D nearest, boolean lr) {
         Point2D min = nearest;  // tracking nearest point
-        if (x == null) {
+        if (x == null)
             return min;
-        }
         if (!x.p.equals(p) && p.distanceSquaredTo(x.p) < p.distanceSquaredTo(nearest)) {
             min = x.p;
         }
@@ -235,17 +269,22 @@ public class KdTreePointST<Value> implements PointST<Value> {
         return min;
     }
 
-    // Collects in the given max-PQ up to k points from the KdTree x that are different from and
-    // closest to p.
+    /**
+     * Collects in the given {@link MaxPQ} up to {@code k} points from the KdTree {@code x} that are different from
+     * and closest to {@code p}
+     * @param x the KdTree
+     * @param p the point
+     * @param k the maximum amount of points to return
+     * @param pq the max priority queue
+     * @param lr the comparison measure ({@code true} calls for x-coordinate comparisons, {@code false} calls for y-coordinate comparisons)
+     */
     private void nearest(Node x, Point2D p, int k, MaxPQ<Point2D> pq, boolean lr) {
-        if (x == null || pq.size() > k) {
+        if (x == null || pq.size() > k)
             return;
-        }
         if (!p.equals(x.p)) {
             pq.insert(x.p);
-            if (pq.size() > k) {
+            if (pq.size() > k)
                 pq.delMax();
-            }
         }
         if (lr) {
             if (p.x() > x.p.x()) {
@@ -266,18 +305,41 @@ public class KdTreePointST<Value> implements PointST<Value> {
         }
     }
 
-    // A representation of node in a KdTree in two dimensions (ie, a 2dTree). Each node stores a
-    // 2d point (the key), a value, an axis-aligned rectangle, and references to the left/bottom
-    // and right/top subtrees.
+    /**
+     * A representation of node in a KdTree in two dimensions (ie, a 2dTree). Each node stores a
+     * 2d point (the key), a value, an axis-aligned rectangle, and references to the left/bottom
+     * and right/top subtrees
+     */
     private class Node {
-        private final Point2D p;   // the point (key)
-        private final Value value; // the value
-        private final RectHV rect; // the axis-aligned rectangle
-        private Node lb;     // the left/bottom subtree
-        private Node rt;     // the right/top subtree
+        /**
+         * The point (key)
+         */
+        private final Point2D p;
+        /**
+         * The value
+         */
+        private final Value value;
+        /**
+         * The axis-aligned rectangle
+         */
+        private final RectHV rect;
+        /**
+         * The left/bottom subtree
+         */
+        private Node lb;
+        /**
+         * The right/top subtree
+         */
+        private Node rt;
 
-        // Constructs a node given the point (key), the associated value, and the
-        // corresponding axis-aligned rectangle.
+
+        /**
+         * Constructs a node given the point (key), the associated value, and the corresponding
+         * axis-aligned rectangle
+         * @param p the point (key)
+         * @param value the value
+         * @param rect the axis-aligned rectangle
+         */
         Node(Point2D p, Value value, RectHV rect) {
             this.p = p;
             this.value = value;
@@ -285,7 +347,10 @@ public class KdTreePointST<Value> implements PointST<Value> {
         }
     }
 
-    // Unit tests the data type. [DO NOT EDIT]
+    /**
+     * Unit tests the data type. [DO NOT EDIT]
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         KdTreePointST<Integer> st = new KdTreePointST<>();
         double qx = Double.parseDouble(args[0]);
@@ -304,13 +369,11 @@ public class KdTreePointST<Value> implements PointST<Value> {
         StdOut.println("st.size() = " + st.size());
         StdOut.printf("st.contains(%s)? %s\n", query, st.contains(query));
         StdOut.printf("st.range(%s):\n", rect);
-        for (Point2D p : st.range(rect)) {
+        for (Point2D p : st.range(rect))
             StdOut.println("  " + p);
-        }
         StdOut.printf("st.nearest(%s) = %s\n", query, st.nearest(query));
         StdOut.printf("st.nearest(%s, %d):\n", query, k);
-        for (Point2D p : st.nearest(query, k)) {
+        for (Point2D p : st.nearest(query, k))
             StdOut.println("  " + p);
-        }
     }
 }

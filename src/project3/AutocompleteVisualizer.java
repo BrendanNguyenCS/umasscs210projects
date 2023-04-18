@@ -1,5 +1,3 @@
-// Accepts filename (String) and k (int) as command-line arguments; provides a GUI for the user
-// to enter queries against the file; and presents the top $k$ matching terms in real time.
 package project3;
 
 import edu.princeton.cs.algs4.*;
@@ -16,7 +14,12 @@ import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Accepts {@code filename} ({@link String}) and {@code k} ({@link Integer}) as command-line arguments; provides a GUI
+ * for the user to enter queries against the file; and presents the top {@code k} matching terms in real time
+ */
 public class AutocompleteVisualizer extends JFrame {
+    @Serial
     private static final long serialVersionUID = 1L;
     private static final int DEF_WIDTH = 850;
     private static final int DEF_HEIGHT = 400;
@@ -24,7 +27,11 @@ public class AutocompleteVisualizer extends JFrame {
     private final int k;
     private boolean displayWeights = true;
 
-    // Initializes the GUI, and the associated Autocomplete object
+    /**
+     * Initializes the GUI, and the associated {@link Autocomplete} object
+     * @param filename the file name or path
+     * @param k the amount of terms to show
+     */
     public AutocompleteVisualizer(String filename, int k) {
         this.k = k;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,7 +95,10 @@ public class AutocompleteVisualizer extends JFrame {
         );
     }
 
-    // Entry point.
+    /**
+     * Entry point
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         String filename = args[0];
         int k = Integer.parseInt(args[1]);
@@ -100,9 +110,10 @@ public class AutocompleteVisualizer extends JFrame {
                 });
     }
 
-    // The panel that interfaces with the Autocomplete object. It consists of a search bar that
-    // text can be entered into, and a drop-down list of suggestions auto-completing the user's
-    // query.
+    /**
+     * The panel that interfaces with the {@link Autocomplete} object. It consists of a search bar that
+     * text can be entered into, and a drop-down list of suggestions auto-completing the user's query
+     */
     private class AutocompletePanel extends JPanel {
         private static final long serialVersionUID = 1L;
         private final JTextField searchText;
@@ -116,8 +127,11 @@ public class AutocompleteVisualizer extends JFrame {
         private final String suggListLen =
                 "<b>Harry Potter and the Deathly Hallows: Part 1 (2010)</b>";
 
-        // Creates the Autocomplete object and the search bar and suggestion drop-down portions
-        // of the GUI.
+        /**
+         * Creates the {@link Autocomplete} object and the search bar and suggsetion drop-down portions
+         * of the GUI
+         * @param filename the file name or path
+         */
         @SuppressWarnings("unchecked")
         public AutocompletePanel(String filename) {
             super();
@@ -434,8 +448,10 @@ public class AutocompleteVisualizer extends JFrame {
             );
         }
 
-        // Re-populates the drop-down menu with the new suggestions, and resizes the containing
-        // panel vertically.
+        /**
+         * Re-populates the drop-down menu with the new suggestions, and resizes the containing
+         * panel vertically
+         */
         private void updateListSize() {
             int rows = Math.min(suggestions.getModel().getSize(), k);
             int suggWidth = searchText.getPreferredSize().width;
@@ -452,13 +468,18 @@ public class AutocompleteVisualizer extends JFrame {
             suggestionsPanel.setVisible(true);
         }
 
-        // See getSuggestions for documentation.
+        /**
+         * See {@link #getSuggestions(String)} for documentation
+         */
         public void update() {
             getSuggestions(searchText.getText());
         }
 
-        // Makes a call to the implementation of Autocomplete to get suggestions for the
-        // currently entered text.
+        /**
+         * Makes a call to the implementation of {@link Autocomplete} to get suggestions for
+         * the currently entered text
+         * @param text the text to calculate suggestions
+         */
         @SuppressWarnings("unchecked")
         public void getSuggestions(String text) {
             // Don't search for suggestions if there is no input
@@ -526,7 +547,10 @@ public class AutocompleteVisualizer extends JFrame {
             }
         }
 
-        // Bring the clicked suggestion up to the Search bar and search it
+        /**
+         * Bring the clicked suggestion up to the search bar and search it
+         * @return the string to search
+         */
         public String getSelectedText() {
             if (!suggestions.isSelectionEmpty()) {
                 String selection = (String) suggestions.getSelectedValue();
@@ -546,8 +570,11 @@ public class AutocompleteVisualizer extends JFrame {
         }
     }
 
-    // Creates a URI from the user-defined string and searches the web with the selected search
-    // engine. Opens the default web browser (or a new tab if it is already open).
+    /**
+     * Creates a URI from the user-defined string and searches the web with the selected search
+     * engine. Opens the default web browser (or a new tab if it is already open)
+     * @param s the string to search
+     */
     private void searchOnline(String s) {
         // Create the URL
         URI searchAddress = null;

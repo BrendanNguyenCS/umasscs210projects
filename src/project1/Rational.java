@@ -3,58 +3,70 @@ package project1;
 import edu.princeton.cs.algs4.*;
 
 public class Rational {
-    private final long x; // numerator
-    private final long y; // denominator
+    /**
+     * Numerator
+     */
+    private final long x;
+    /**
+     * Denominator
+     */
+    private final long y;
 
-    // Constructs a rational number whose numerator is x and denominator is 1.
+    /**
+     * Constructs a rational number whose numerator is {@code x} and denominator is 1
+     */
     public Rational(long x) {
-        // Set this.x to x and this.y to 1.
         this.x = x;
         this.y = 1;
     }
 
-    // Constructs a rational number given its numerator x and denominator y.
+    /**
+     * Constructs a rational number given its numerator {@code x} and denominator {@code y}
+     */
     public Rational(long x, long y) {
-        // Set this.x to x / gcd(x, y) and this.y to y / gcd(x, y).
         this.x = x / gcd(x, y);
         this.y = y / gcd(x, y);
     }
 
-    // Returns the sum of this rational number and other.
+    /**
+     * The sum of rationals {@code a/b} and {@code c/d} is the rational {@code (ad+bc)/bd}.
+     * @param other another {@link Rational} number
+     * @return the sum of this rational number and {@code other}
+     */
     public Rational add(Rational other) {
-        // Sum of rationals a/b and c/d is the rational (ad + bc) / bd.
         return new Rational(x * other.y + y * other.x, y * other.y);
     }
 
-    // Returns the product of this rational number and other.
+    /**
+     * The product of rationals {@code a/b} and {@code c/d} is the rational {@code ac/bd}.
+     * @param other another {@link Rational} number
+     * @return the product of this rational number and {@code other}
+     */
     public Rational multiply(Rational other) {
-        // Product of rationals a/b and c/d is the rational ac / bd.
         return new Rational(x * other.x, y * other.y);
     }
 
-    // Returns true if this rational number is equal to other, and false otherwise.
+    /**
+     * Rationals {@code a/b} and {@code c/d} are equal iff {@code a == c} and {@code b == d}.
+     * @param other another {@link Rational} number
+     * @return {@code true} if this rational number is equal to {@code other}, {@code false} otherwise
+     */
     public boolean equals(Object other) {
-        if (other == null) {
+        if (other == null || (other.getClass() != this.getClass()))
             return false;
-        }
-        if (other == this) {
+        if (other == this)
             return true;
-        }
-        if (other.getClass() != this.getClass()) {
-            return false;
-        }
-
-        // Rationals a/b and c/d are equal iff a == c and b == d.
         Rational a = this, b = (Rational) other;
         return a.x == b.x && a.y == b.y;
     }
 
-    // Returns a string representation of this rational number.
+    /**
+     * @return the string representation of this rational number
+     */
     public String toString() {
         long a = x, b = y;
-        if (a == 0 || b == 1) {
-            return a + "";
-        }
+        if (a == 0 || b == 1)
+            return String.valueOf(a);
         if (b < 0) {
             a *= -1;
             b *= -1;
@@ -62,12 +74,17 @@ public class Rational {
         return a + "/" + b;
     }
 
-    // Returns gcd(p, q), computed using Euclid's algorithm.
-    private static long gcd(long p, long q) {
-        return q == 0 ? p : gcd(q, p % q);
-    }
+    /**
+     * @param p a number
+     * @param q a number
+     * @return the greatest common divisor, computed using Euclid's algorithm
+     */
+    private static long gcd(long p, long q) { return q == 0 ? p : gcd(q, p % q); }
 
-    // Unit tests the data type. [DO NOT EDIT]
+    /**
+     * Unit tests the data type. [DO NOT EDIT]
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         int n = Integer.parseInt(args[0]);
         Rational total = new Rational(0);

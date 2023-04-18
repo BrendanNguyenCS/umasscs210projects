@@ -3,45 +3,51 @@ package project3;
 import edu.princeton.cs.algs4.*;
 
 public class Die implements Comparable<Die> {
-    private int value; // the face value
+    /**
+     * The face value
+     */
+    private int value;
 
-    // Constructs a die.
-    public Die() {
-        this.value = 0;
-    }
-    
-    // Rolls this die.
-    public void roll() {
-        value = StdRandom.uniformInt(1, 7);
-    }
+    /**
+     * Constructs a die
+     */
+    public Die() { this.value = 0; }
 
-    // Returns the face value of this die.
-    public int value() {
-        return value;
-    }
+    /**
+     * Rolls this die
+     * @apiNote the deprecated {@link StdRandom#uniform(int) uniform()} method has been replaced
+     */
+    public void roll() { value = StdRandom.uniformInt(1, 7); }
 
-    // Returns true if this die is the same as other, and false otherwise.
+    /**
+     * Getter for {@link #value}
+     * @return the face value of this die
+     */
+    public int value() { return value; }
+
+    /**
+     * @param other the other die
+     * @return {@code true} if this die is the same as {@code other}, {@code false} otherwise
+     */
     public boolean equals(Object other) {
-        if (other == this) {
+        if (other == this)
             return true;
-        }
-        if (other == null) {
+        if (other == null || (other.getClass() != this.getClass()))
             return false;
-        }
-        if (other.getClass() != this.getClass()) {
-            return false;
-        }
         Die a = this;
         Die b = (Die) other;
         return a.value == b.value;
     }
 
-    // Returns a comparison of this die with other, by their face values.
-    public int compareTo(Die that) {
-        return this.value - that.value;
-    }
+    /**
+     * @param that the object to be compared
+     * @return a comparison of this die with other, by their face values
+     */
+    public int compareTo(Die that) { return this.value - that.value; }
 
-    // Returns a string representation of this die.
+    /**
+     * @return the string representation of this die
+     */
     public String toString() {
         return switch (this.value) {
             case 1 -> "     \n  *  \n     ";
@@ -54,26 +60,26 @@ public class Die implements Comparable<Die> {
         };
     }
 
-    // Unit tests the data type. [DO NOT EDIT]
+    /**
+     * Unit tests the data type. [DO NOT EDIT]
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         int x = Integer.parseInt(args[0]);
         int y = Integer.parseInt(args[1]);
         int z = Integer.parseInt(args[2]);
         Die a = new Die();
         a.roll();
-        while (a.value() != x) {
+        while (a.value() != x)
             a.roll();
-        }
         Die b = new Die();        
         b.roll();
-        while (b.value() != y) {
+        while (b.value() != y)
             b.roll();
-        }
         Die c = new Die();        
         c.roll();
-        while (c.value() != z) {
+        while (c.value() != z)
             c.roll();
-        }
         StdOut.println("Dice a, b, and c:");
         StdOut.println(a);
         StdOut.println(b);

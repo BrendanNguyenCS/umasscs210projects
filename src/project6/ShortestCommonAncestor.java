@@ -3,24 +3,31 @@ package project6;
 import edu.princeton.cs.algs4.*;
 
 public class ShortestCommonAncestor {
-    private final Digraph G;      // associated DiGraph
+    /**
+     * Associated DiGraph
+     */
+    private final Digraph G;
 
-    // Constructs a ShortestCommonAncestor object given a rooted DAG.
+    /**
+     * Constructs a {@link ShortestCommonAncestor} object given a rooted DAG
+     * @param G the rooted DAG
+     */
     public ShortestCommonAncestor(Digraph G) {
-        if (G == null) {
+        if (G == null)
             throw new NullPointerException("G is null");
-        }
         this.G = G;
     }
 
-    // Returns length of the shortest ancestral path between vertices v and w.
+    /**
+     * @param v a vertex
+     * @param w a vertex
+     * @return the length of the shortest ancestral path between vertices {@code v} and {@code w}
+     */
     public int length(int v, int w) {
-        if (v < 0 || v >= G.V()) {
+        if (v < 0 || v >= G.V())
             throw new IndexOutOfBoundsException("v is invalid");
-        }
-        if (w < 0 || w >= G.V()) {
+        if (w < 0 || w >= G.V())
             throw new IndexOutOfBoundsException("w is invalid");
-        }
         // get distance maps for both vertices
         SeparateChainingHashST<Integer, Integer> vst = distFrom(v);
         SeparateChainingHashST<Integer, Integer> wst = distFrom(w);
@@ -30,14 +37,16 @@ public class ShortestCommonAncestor {
         return vst.get(ancestor) + wst.get(ancestor);
     }
 
-    // Returns a shortest common ancestor of vertices v and w.
+    /**
+     * @param v a vertex
+     * @param w a vertex
+     * @return a shortest common ancestor of vertices {@code v} and {@code w}
+     */
     public int ancestor(int v, int w) {
-        if (v < 0 || v >= G.V()) {
+        if (v < 0 || v >= G.V())
             throw new IndexOutOfBoundsException("v is invalid");
-        }
-        if (w < 0 || w >= G.V()) {
+        if (w < 0 || w >= G.V())
             throw new IndexOutOfBoundsException("w is invalid");
-        }
         // get distance maps for both vertices
         SeparateChainingHashST<Integer, Integer> vst = distFrom(v);
         SeparateChainingHashST<Integer, Integer> wst = distFrom(w);
@@ -60,20 +69,20 @@ public class ShortestCommonAncestor {
         return vertex;
     }
 
-    // Returns length of the shortest ancestral path of vertex subsets A and B.
+    /**
+     * @param A a vertex subset
+     * @param B a vertex subset
+     * @return the length of the shortest ancestral path of vertex subsets {@code A} and {@code B}
+     */
     public int length(Iterable<Integer> A, Iterable<Integer> B) {
-        if (A == null) {
+        if (A == null)
             throw new NullPointerException("A is null");
-        }
-        if (B == null) {
+        if (B == null)
             throw new NullPointerException("B is null");
-        }
-        if (!A.iterator().hasNext()) {
+        if (!A.iterator().hasNext())
             throw new IllegalArgumentException("A is empty");
-        }
-        if (!B.iterator().hasNext()) {
+        if (!B.iterator().hasNext())
             throw new IllegalArgumentException("B is empty");
-        }
         // get triad
         int[] triad = triad(A, B);
         // get distances
@@ -83,27 +92,30 @@ public class ShortestCommonAncestor {
         return v + w;
     }
 
-    // Returns a shortest common ancestor of vertex subsets A and B.
+    /**
+     * @param A a vertex subset
+     * @param B a vertex subset
+     * @return a shortest common ancestor of vertex subsets {@code A} and {@code B}
+     */
     public int ancestor(Iterable<Integer> A, Iterable<Integer> B) {
-        if (A == null) {
+        if (A == null)
             throw new NullPointerException("A is null");
-        }
-        if (B == null) {
+        if (B == null)
             throw new NullPointerException("B is null");
-        }
-        if (!A.iterator().hasNext()) {
+        if (!A.iterator().hasNext())
             throw new IllegalArgumentException("A is empty");
-        }
-        if (!B.iterator().hasNext()) {
+        if (!B.iterator().hasNext())
             throw new IllegalArgumentException("B is empty");
-        }
         // get triad of vertices and ancestor
         int[] triad = triad(A, B);
         // return ancestor
         return triad[0];
     }
 
-    // Returns a map of vertices reachable from v and their respective shortest distances from v.
+    /**
+     * @param v a vertex
+     * @return a map of vertices reachable from {@code v} and their respective shortest distances from {@code v}
+     */
     private SeparateChainingHashST<Integer, Integer> distFrom(int v) {
         SeparateChainingHashST<Integer, Integer> st = new SeparateChainingHashST<>();
         LinkedQueue<Integer> queue = new LinkedQueue<>();
@@ -123,9 +135,13 @@ public class ShortestCommonAncestor {
         return st;
     }
 
-    // Returns an array consisting of a shortest common ancestor a of vertex subsets A and B,
-    // vertex v from A, and vertex w from B such that the path v-a-w is the shortest ancestral
-    // path of A and B.
+    /**
+     * @param A a vertex subset
+     * @param B a vertex subset
+     * @return an array consisting of the shortest common ancestors of vertex subsets {@code A} and {@code B},
+     * vertex {@code v} from {@code A}, and vertex {@code w} from {@code B} such that the path {@code v-a-w} is the
+     * shortest ancestral path of {@code A} and {@code B}
+     */
     private int[] triad(Iterable<Integer> A, Iterable<Integer> B) {
         // shortest distance
         int shortestDistance = Integer.MAX_VALUE;
@@ -148,7 +164,10 @@ public class ShortestCommonAncestor {
         return new int[] {shortestAncestor, v, w};
     }
 
-    // Unit tests the data type. [DO NOT EDIT]
+    /**
+     * Unit tests the data type. [DO NOT EDIT]
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         In in = new In(args[0]);
         Digraph G = new Digraph(in);

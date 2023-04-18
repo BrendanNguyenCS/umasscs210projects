@@ -2,20 +2,37 @@ package project1;
 
 import edu.princeton.cs.algs4.*;
 
-// An implementation of the Percolation API using the UF data structure.
+/**
+ * An implementation of the Percolation API using the UF data structure
+ */
 public class UFPercolation implements Percolation {
-    private final int n; // percolation system size
-    private final boolean[][] open; // percolation system
-    private int openSites; // total number of open sites in percolation system
-    private final WeightedQuickUnionUF uf; // union find percolation system
-    private final WeightedQuickUnionUF uf2; // union find percolation system created for the backwash
-    // problem
+    /**
+     * Percolation system size
+     */
+    private final int n;
+    /**
+     * Percolation system
+     */
+    private final boolean[][] open;
+    /**
+     * Total number of open sites in percolation system
+     */
+    private int openSites;
+    /**
+     * Union find percolation system
+     */
+    private final WeightedQuickUnionUF uf;
+    /**
+     * Union find percolation system created for the backwash problem
+     */
+    private final WeightedQuickUnionUF uf2;
 
-    // Constructs an n x n percolation system, with all sites blocked.
+    /**
+     * Constructs an n x n percolation system, with all sites blocked
+     */
     public UFPercolation(int n) {
-        if (n <= 0) {
+        if (n <= 0)
             throw new IllegalArgumentException("Illegal n");
-        }
         this.n = n;
         open = new boolean[n][n];
         openSites = 0;
@@ -25,11 +42,14 @@ public class UFPercolation implements Percolation {
         uf2 = new WeightedQuickUnionUF(n * n + 1);
     }
 
-    // Opens site (i, j) if it is not already open.
+    /**
+     * Opens {@code site(i, j)} if it is not already open
+     * @param i the row coordinate of the site
+     * @param j the column coordinate of the site
+     */
     public void open(int i, int j) {
-        if ((i < 0 || i >= n) || (j < 0 || j >= n)) {
+        if ((i < 0 || i >= n) || (j < 0 || j >= n))
             throw new IndexOutOfBoundsException("Illegal i or j");
-        }
 
         if (!isOpen(i, j)) {
             open[i][j] = true;
@@ -41,9 +61,8 @@ public class UFPercolation implements Percolation {
                 uf.union(0, ufSite);
                 uf2.union(0, ufSite);
             }
-            if (i == n - 1) {
+            if (i == n - 1)
                 uf.union(ufSite, n * n + 1);
-            }
 
             // if northern neighbor in row i-1 is not out of bounds and neighbor is open,
             // connect said neighbor to current site
@@ -73,44 +92,52 @@ public class UFPercolation implements Percolation {
                 uf2.union(ufSite, encode(i + 1, j));
             }
         }
-
     }
 
-    // Returns true if site (i, j) is open, and false otherwise.
+    /**
+     * @param i the row coordinate of the site
+     * @param j the column coordinate of the site
+     * @return {@code true} if {@code site (i, j)} is open, {@code false} otherwise.
+     */
     public boolean isOpen(int i, int j) {
-        if ((i < 0 || i >= n) || (j < 0 || j >= n)) {
+        if ((i < 0 || i >= n) || (j < 0 || j >= n))
             throw new IndexOutOfBoundsException("Illegal i or j");
-        }
         return open[i][j];
     }
 
-    // Returns true if site (i, j) is full, and false otherwise.
+    /**
+     * @param i the row coordinate of the site
+     * @param j the column coordinate of the site
+     * @return {@code true} if {@code site(i, j)} is full, {@code false} otherwise
+     * @apiNote the deprecated {@link WeightedQuickUnionUF#connected(int, int) connected()} method has been replaced
+     */
     public boolean isFull(int i, int j) {
-        if ((i < 0 || i >= n) || (j < 0 || j >= n)) {
+        if ((i < 0 || i >= n) || (j < 0 || j >= n))
             throw new IndexOutOfBoundsException("Illegal i or j");
-        }
         int ufSite = encode(i, j);
-        // the deprecated connected() method has been replaced
         return isOpen(i, j) && (uf2.find(0) == uf2.find(ufSite));
     }
 
-    // Returns the number of open sites.
-    public int numberOfOpenSites() {
-        return openSites;
-    }
+    /**
+     * @return the number of open sites
+     */
+    public int numberOfOpenSites() { return openSites; }
 
-    // Returns true if this system percolates, and false otherwise.
-    // the deprecated connected() method has been replaced
-    public boolean percolates() {
-        return uf.find(0) == uf.find(n*n+1);
-    }
+    /**
+     * @return {@code true} if this system percolates, {@code false} otherwise
+     * @apiNote the deprecated {@link WeightedQuickUnionUF#connected(int, int) connected()} method has been replaced
+     */
+    public boolean percolates() { return uf.find(0) == uf.find(n*n+1); }
 
-    // Returns an integer ID (1...n) for site (i, j).
-    private int encode(int i, int j) {
-        return n * i + j + 1;
-    }
+    /**
+     * @return an integer ID (1...n) for {@code site(i, j)}
+     */
+    private int encode(int i, int j) { return n * i + j + 1; }
 
-    // Unit tests the data type. [DO NOT EDIT]
+    /**
+     * Unit tests the data type. [DO NOT EDIT]
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         String filename = args[0];
         In in = new In(filename);

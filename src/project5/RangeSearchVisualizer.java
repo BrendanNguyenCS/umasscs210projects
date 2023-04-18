@@ -1,12 +1,18 @@
-package project5;// Accepts filename (String) as command-line argument; draws points from the file using standard
-// draw; and highlights all the points in the rectangle the user selects by dragging the mouse.
-// The search results obtained using BrutePointST are highlighted in red while those obtained
-// using the KdTreeST are highlighted in blue.
+package project5;
 
 import edu.princeton.cs.algs4.*;
 
+/**
+ * Accepts {@code filename} ({@link String}) as command-line argument; draws points from the file using standard
+ * draw; and highlights all the points in the rectangle the user selects by dragging the mouse. The search results
+ * obtained using {@code BrutePointST} are highlighted in red while those obtained using the {@link KdTreePointST}
+ * are highlighted in blue
+ */
 public class RangeSearchVisualizer {
-    // Entry point.
+    /**
+     * Entry point
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         String filename = args[0];
         In in = new In(filename);
@@ -56,9 +62,8 @@ public class RangeSearchVisualizer {
             StdDraw.clear();
             StdDraw.setPenColor(StdDraw.BLACK);
             StdDraw.setPenRadius(0.01);
-            for (Point2D p : brute.points()) {
+            for (Point2D p : brute.points())
                 p.draw();
-            }
 
             // Draw the rectangle.
             StdDraw.setPenColor(StdDraw.BLACK);
@@ -68,16 +73,14 @@ public class RangeSearchVisualizer {
             // Highlight the range search results from BrutePointST in red.
             StdDraw.setPenRadius(0.03);
             StdDraw.setPenColor(StdDraw.RED);
-            for (Point2D p : brute.range(rect)) {
+            for (Point2D p : brute.range(rect))
                 p.draw();
-            }
 
             // Highlight the range search results from KdTreeST in blue.
             StdDraw.setPenRadius(0.02);
             StdDraw.setPenColor(StdDraw.BLUE);
-            for (Point2D p : kdtree.range(rect)) {
+            for (Point2D p : kdtree.range(rect))
                 p.draw();
-            }
 
             StdDraw.show();
             StdDraw.pause(40);

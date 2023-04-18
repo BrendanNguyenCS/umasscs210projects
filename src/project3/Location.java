@@ -4,18 +4,35 @@ import java.util.Arrays;
 import edu.princeton.cs.algs4.*;
 
 public class Location implements Comparable<Location> {
-    private final String name; // location name
-    private final double lat;  // latitude
-    private final double lon;  // longitude
+    /**
+     * Location name
+     */
+    private final String name;
+    /**
+     * Latitude
+     */
+    private final double lat;
+    /**
+     * Longitude
+     */
+    private final double lon;
 
-    // Constructs a new location given its name, latitude, and longitude.
+    /**
+     * Constructs a new location given its name, latitude, and longitude
+     * @param name the location's name
+     * @param lat the location's latitude
+     * @param lon the location's longitude
+     */
     public Location(String name, double lat, double lon) {
         this.name = name;
         this.lat = lat;
         this.lon = lon;
     }
 
-    // Returns the great-circle distance between this location and other.
+    /**
+     * @param other the other {@link Location}
+     * @return the great circle distance between this location and {@code other}
+     */
     public double distanceTo(Location other) {
         double lat1 = Math.toRadians(lat);
         double lon1 = Math.toRadians(lon);
@@ -26,29 +43,31 @@ public class Location implements Comparable<Location> {
                 Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1-lon2)));
     }
 
-    // Returns true if this location is the same as other, and false otherwise.
+    /**
+     * @param other the other {@link Location}
+     * @return {@code true} if this location is the same as {@code other}, {@code false} otherwise
+     */
     public boolean equals(Object other) {
-        if (other == null) {
+        if (other == null || (other.getClass() != this.getClass()))
             return false;
-        }
-        if (other == this) {
+        if (other == this)
             return true;
-        }
-        if (other.getClass() != this.getClass()) {
-            return false;
-        }
         Location a = this;
         Location b = (Location) other;
         return a.lat == b.lat && a.lon == b.lon;
     }
 
-    // Returns a string representation of this location.
-    public String toString() {
-        return name + " (" + lat + ", " + lon + ")";
-    }
+    /**
+     * @return the string representation of this {@link Location} object
+     */
+    public String toString() { return name + " (" + lat + ", " + lon + ")"; }
 
-    // Returns a comparison of this location with other based on their respective distances to
-    // the origin, Parthenon (Greece) @ 37.971525, 23.726726.
+    /**
+     * Compares this location with other based on their respective distances to the origin, the
+     * Parthenon (Greece) @ 37.971525, 23.726726
+     * @param that the object to be compared
+     * @return {@code -1} if this location is closer, {@code 1} if it is farther, {@code 0} if they are the same
+     */
     public int compareTo(Location that) {
         Location origin = new Location("Parthenon (Greece)", 37.971525, 23.726726);
         double a = distanceTo(origin);
@@ -56,7 +75,10 @@ public class Location implements Comparable<Location> {
         return Double.compare(a, b);
     }
 
-    // Unit tests the data type. [DO NOT EDIT]
+    /**
+     * Unit tests the data type. [DO NOT EDIT]
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         int rank = Integer.parseInt(args[0]);
         String name = args[1];
@@ -72,9 +94,8 @@ public class Location implements Comparable<Location> {
         wonders[6] = new Location("Christ the Redeemer (Brazil)", 22.9519, -43.2106);
         Arrays.sort(wonders);
         StdOut.println("Seven wonders, in the order of their distance to Parthenon (Greece):");
-        for (Location wonder : wonders) {
+        for (Location wonder : wonders)
             StdOut.println("  " + wonder);
-        }
         Location loc = new Location(name, lat, lon);
         StdOut.print("wonders[" + rank + "] == " + loc + "? ");
         StdOut.println(wonders[rank].equals(loc));

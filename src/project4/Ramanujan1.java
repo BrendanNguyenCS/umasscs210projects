@@ -3,7 +3,10 @@ package project4;
 import edu.princeton.cs.algs4.*;
 
 public class Ramanujan1 {
-    // Entry point.
+    /**
+     * Entry point
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         int n = Integer.parseInt(args[0]);
 

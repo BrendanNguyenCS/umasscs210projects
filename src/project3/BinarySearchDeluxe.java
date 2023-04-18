@@ -1,21 +1,24 @@
 package project3;
 
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 import edu.princeton.cs.algs4.*;
 
 public class BinarySearchDeluxe {
-    // Returns the index of the first key in a that equals the search key, or -1, according to
-    // the order induced by the comparator c.
+    /**
+     * Returns the index of the first key in {@code a} that equals the search {@code key}, or {@code -1}, according
+     * to the order induced by the comparator {@code c}
+     * @param a the array of keys to search through
+     * @param key the key to find
+     * @param c the comparator
+     * @return the {@link Key} of first index hit of the search
+     */
     public static <Key> int firstIndexOf(Key[] a, Key key, Comparator<Key> c) {
         // corner case
-        if (a == null || key == null || c == null) {
+        if (a == null || key == null || c == null)
             throw new NullPointerException("a, key, or c is null");
-        }
         // invalid or empty array length
-        if (a.length == 0) {
+        if (a.length == 0)
             return -1;
-        }
         int lo = 0; // first index of a
         int hi = a.length - 1; // last index of a
         int mid;
@@ -42,17 +45,21 @@ public class BinarySearchDeluxe {
         return index;
     }
 
-    // Returns the index of the first key in a that equals the search key, or -1, according to
-    // the order induced by the comparator c.
+    /**
+     * Returns the index of the last key in {@code a} that equals the search {@code key}, or {@code -1}, according to
+     * the order induced by the comparator {@code c}
+     * @param a the array of keys to search through
+     * @param key the key to find
+     * @param c the comparator
+     * @return the {@link Key} of the last index hit of the search
+     */
     public static <Key> int lastIndexOf(Key[] a, Key key, Comparator<Key> c) {
         // corner case
-        if (a == null || key == null || c == null) {
+        if (a == null || key == null || c == null)
             throw new NullPointerException("a, key, or c is null");
-        }
         // invalid or empty array
-        if (a.length == 0) {
+        if (a.length == 0)
             return -1;
-        }
         int lo = 0; // first index of a
         int hi = a.length - 1; // last index of a
         int mid;
@@ -80,7 +87,10 @@ public class BinarySearchDeluxe {
         return index;
     }
 
-    // Unit tests the library. [DO NOT EDIT]
+    /**
+     * Unit tests the library. [DO NOT EDIT]
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         String filename = args[0];
         String prefix = args[1];

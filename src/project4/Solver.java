@@ -2,20 +2,29 @@ package project4;
 
 import edu.princeton.cs.algs4.*;
 
-// A data type that implements the A* algorithm for solving the 8-puzzle and its generalizations.
+/**
+ * A data type that implements the A* algorithm for solving the 8-puzzle and its generalizations
+ */
 public class Solver {
-    private int moves; // minimum number of moves to solve
-    private final LinkedStack<Board> solution; // short solution sequence of boards
+    /**
+     * Minimum number of moves to solve
+     */
+    private int moves;
+    /**
+     * Short solution sequence of boards
+     */
+    private final LinkedStack<Board> solution;
 
-    // Finds a solution to the initial board using the A* algorithm.
+    /**
+     * Finds a solution to the initial board using the A* algorithm
+     * @param board the initial board
+     */
     public Solver(Board board) {
         // corner cases
-        if (board == null) {
+        if (board == null)
             throw new NullPointerException("board is null");
-        }
-        if (!board.isSolvable()) {
+        if (!board.isSolvable())
             throw new IllegalArgumentException("board is unsolvable");
-        }
         int moves = 0;
         solution = new LinkedStack<>();
         MinPQ<SearchNode> pq = new MinPQ<>();
@@ -29,44 +38,63 @@ public class Solver {
                 break;
             } else {
                 for (Board neighbor : node.board.neighbors()) {
-                    if (node.previous == null) {
+                    if (node.previous == null)
                         continue;
-                    }
-                    if (!neighbor.equals(node.previous.board)) {
+                    if (!neighbor.equals(node.previous.board))
                         pq.insert(new SearchNode(neighbor, moves + 1, node));
-                    }
                 }
             }
         }
     }
 
-    // Returns the minimum number of moves needed to solve the initial board.
-    public int moves() {
-        return this.moves;
-    }
+    /**
+     * Getter for {@link #moves}
+     * @return the minimum number of moves needed to solve the initial board
+     */
+    public int moves() { return moves; }
 
-    // Returns a sequence of boards in a shortest solution of the initial board.
-    public Iterable<Board> solution() {
-        return this.solution;
-    }
+    /**
+     * @return a sequence of boards in a shortest solution of the initial board
+     */
+    public Iterable<Board> solution() { return solution; }
 
-    // A data type that represents a search node in the grame tree. Each node includes a
-    // reference to a board, the number of moves to the node from the initial node, and a
-    // reference to the previous node.
+    /**
+     * A data type that represents a search node in the game tree. Each node includes a
+     * reference to a board, the number of moves to the node from the initial node, and a
+     * reference to the previous node
+     */
     private class SearchNode implements Comparable<SearchNode> {
-        private final Board board; // board reference
-        private final int moves; // number of moves to the node from initial node
-        private final SearchNode previous; // reference to previous node
+        /**
+         * Board reference
+         */
+        private final Board board;
+        /**
+         * Number of moves to the node from the initial node
+         */
+        private final int moves;
+        /**
+         * Reference to the previous node
+         */
+        private final SearchNode previous;
 
-        // Constructs a new search node.
+        /**
+         * Constructs a new search node
+         * @param board the board reference
+         * @param moves the number of moves from the initial node
+         * @param previous the previous node
+         */
         public SearchNode(Board board, int moves, SearchNode previous) {
             this.board = board;
             this.moves = moves;
             this.previous = previous;
         }
 
-        // Returns a comparison of this node and other based on the following sum:
-        //   Manhattan distance of the board in the node + the # of moves to the node
+        /**
+         * Compares nodes based on the following sum:<br>
+         * Manhattan distance of the board in the node + the # of moves to the node
+         * @param other the object to be compared
+         * @return {@code -1} if this node's sum is smaller, {@code 1} if it's larger, {@code 0} otherwise
+         */
         public int compareTo(SearchNode other) {
             // current node's sum
             int sumA = this.board.manhattan() + this.moves;
@@ -77,15 +105,17 @@ public class Solver {
         }
     }
 
-    // Unit tests the data type. [DO NOT EDIT]
+    /**
+     * Unit tests the data type. [DO NOT EDIT]
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         In in = new In(args[0]);
         int n = in.readInt();
         int[][] tiles = new int[n][n];
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+            for (int j = 0; j < n; j++)
                 tiles[i][j] = in.readInt();
-            }
         }
         Board initial = new Board(tiles);
         if (initial.isSolvable()) {

@@ -2,76 +2,101 @@ package project1;
 
 import edu.princeton.cs.algs4.*;
 
-// An implementation of the Percolation API using a 2D array.
+/**
+ * An implementation of the Percolation API using a 2D array
+ */
 public class ArrayPercolation implements Percolation {
-    private final int n; // percolation system size
-    private final boolean[][] open; // percolation system
-    private int openSites; // total number of open sites in percolation system
+    /**
+     * Percolation system size
+     */
+    private final int n;
+    /**
+     * Percolation system
+     */
+    private final boolean[][] open;
+    /**
+     * Total number of open sites in percolation system
+     */
+    private int openSites;
 
-    // Constructs an n x n percolation system, with all sites blocked.
+    /**
+     * Constructs an n x n percolation system, with all sites blocked.
+     * @param n the percolation system size (one dimension)
+     */
     public ArrayPercolation(int n) {
-        if (n <= 0) {
+        if (n <= 0)
             throw new IllegalArgumentException("Illegal n");
-        }
         this.n = n;
         open = new boolean[n][n];
         openSites = 0;
     }
 
-    // Opens site (i, j) if it is not already open.
+    /**
+     * Opens {@code site(i, j)} if it is not already open.
+     * @param i the row coordinate of the site
+     * @param j the column coordinate of the site
+     */
     public void open(int i, int j) {
-        if ((i < 0 || i >= n) || (j < 0 || j >= n)) {
+        if ((i < 0 || i >= n) || (j < 0 || j >= n))
             throw new IndexOutOfBoundsException("Illegal i or j");
-        }
         if (!open[i][j]) {
             open[i][j] = true;
             openSites++;
         }
     }
 
-    // Returns true if site (i, j) is open, and false otherwise.
+    /**
+     * @param i the row coordinate of the site
+     * @param j the column coordinate of the site
+     * @return {@code true} if {@code site(i, j)} is open, {@code false} otherwise
+     */
     public boolean isOpen(int i, int j) {
-        if ((i < 0 || i >= n) || (j < 0 || j >= n)) {
+        if ((i < 0 || i >= n) || (j < 0 || j >= n))
             throw new IndexOutOfBoundsException("Illegal i or j");
-        }
         return open[i][j];
     }
 
-    // Returns true if site (i, j) is full, and false otherwise.
+    /**
+     * @param i the row coordinate of the site
+     * @param j the column coordinate of the site
+     * @return {@code true} if {@code site(i, j)} is full, {@code false} otherwise
+     */
     public boolean isFull(int i, int j) {
-        if ((i < 0 || i >= n) || (j < 0 || j >= n)) {
+        if ((i < 0 || i >= n) || (j < 0 || j >= n))
             throw new IndexOutOfBoundsException("Illegal i or j");
-        }
         boolean[][] full = new boolean[n][n];
-        for (int a = 0; a < n; a++) {
+        for (int a = 0; a < n; a++)
             floodFill(full, 0, a);
-        }
-
         return full[i][j];
     }
 
-    // Returns the number of open sites.
-    public int numberOfOpenSites() {
-        return openSites;
-    }
+    /**
+     * Getter for {@link #openSites}
+     * @return the number of open sites
+     */
+    public int numberOfOpenSites() { return openSites; }
 
-    // Returns true if this system percolates, and false otherwise.
+    /**
+     * @return {@code true} if this system percolates, {@code false} otherwise
+     */
     public boolean percolates() {
-        // local variable to store whether or not there are any full sites in last row
+        // local variable to store whether there are any full sites in last row
         boolean percolates = false;
-
-        for (int a = 0; a < n; a++) {
+        for (int a = 0; a < n; a++)
             percolates = percolates || isFull(n-1, a);
-        }
-
         return percolates;
     }
 
-    // Recursively flood fills full[][] using depth-first exploration, starting at (i, j).
+    /**
+     * Recursively flood fills {@code full[][]} using depth-first exploration, starting at {@code (i,j)}.
+     * @param full the array of full sites
+     * @param i the row coordinate of the source
+     * @param j the column coordinate of the source
+     */
     private void floodFill(boolean[][] full, int i, int j) {
-        if ((i < 0 || i >= n) || (j < 0 || j >= n) || !isOpen(i, j) || full[i][j]) {
+        if ((i < 0 || i >= n) || (j < 0 || j >= n) || !isOpen(i, j) || full[i][j])
             return;
-        }
+        // fill the current site
         full[i][j] = true;
         // recursive call on element north of current site
         floodFill(full, i - 1, j);
@@ -83,7 +108,10 @@ public class ArrayPercolation implements Percolation {
         floodFill(full, i + 1, j);
     }
 
-    // Unit tests the data type. [DO NOT EDIT]
+    /**
+     * Unit tests the data type. [DO NOT EDIT]
+     * @param args the command-line arguments
+     */
     public static void main(String[] args) {
         String filename = args[0];
         In in = new In(filename);

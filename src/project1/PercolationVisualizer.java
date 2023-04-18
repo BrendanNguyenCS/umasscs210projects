@@ -1,27 +1,34 @@
-// Accepts mode ("array" or "UF") and filename (String) as command-line arguments; and visually
-// reports if the percolation system whose size and open sites are specified by the file
-// percolates or not. The mode determines which implementation (array-based or UF-based) of the
-// Percolation API to use.
 package project1;
 
 import edu.princeton.cs.algs4.*;
 import java.awt.*;
 
+/**
+ * Accepts {@code mode} ("array" or "UF") and {@code filename} ({@link String}) as command-line arguments; and visually
+ * reports if the percolation system whose size and open sites are specified by the file
+ * percolates or not. The mode determines which implementation (array-based or UF-based) of the
+ * Percolation API to use.
+ */
 public class PercolationVisualizer {
-    // Delay in milliseconds (controls animation speed).
+    /**
+     * Delay in milliseconds (controls animation speed)
+     */
     private static final int DELAY = 100;
 
-    // Entry point.
+    /**
+     * Entry point
+     */
     public static void main(String[] args) {
         String mode = args[0];
-        if (!mode.equals("array") && !mode.equals("UF")) {
+        if (!mode.equals("array") && !mode.equals("UF"))
             throw new IllegalArgumentException("Illegal command-line argument");
-        }
         String filename = args[1];
         simulateFromFile(mode, filename);
     }
 
-    // Draws n-by-n percolation system.
+    /**
+     * Draws n-by-n percolation system
+     */
     public static void draw(Percolation perc, int n) {
         StdDraw.clear();
         StdDraw.setPenColor(StdDraw.BLACK);
@@ -30,13 +37,12 @@ public class PercolationVisualizer {
         StdDraw.filledSquare(n / 2.0, n / 2.0, n / 2.0);
         for (int row = 0; row < n; row++) {
             for (int col = 0; col < n; col++) {
-                if (perc.isFull(row, col)) {
+                if (perc.isFull(row, col))
                     StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
-                } else if (perc.isOpen(row, col)) {
+                else if (perc.isOpen(row, col))
                     StdDraw.setPenColor(StdDraw.WHITE);
-                } else {
+                else
                     StdDraw.setPenColor(StdDraw.BLACK);
-                }
                 StdDraw.filledSquare(col + 0.5, n - row - 0.5, 0.45);
             }
         }
@@ -50,7 +56,9 @@ public class PercolationVisualizer {
         }
     }
 
-    // Simulates visualization from a data file
+    /**
+     * Simulates visualization from a data file
+     */
     private static void simulateFromFile(String mode, String filename) {
         In in = new In(filename);
         int n = in.readInt();

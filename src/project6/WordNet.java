@@ -4,21 +4,29 @@ import edu.princeton.cs.algs4.*;
 import java.util.*;
 
 public class WordNet {
-    // symbol table mapping synset noun to set of synset ids
+    /**
+     * Symbol table mapping synset noun to set of synset ids
+     */
     private final SeparateChainingHashST<String, Set<Integer>> st;
-    // symbol table mapping synset id to synset string
+    /**
+     * Symbol table mapping synset id to synset string
+     */
     private final SeparateChainingHashST<Integer, String> rst;
-    // shortest common ancestor
+    /**
+     * Shortest common ancestor
+     */
     private final ShortestCommonAncestor sca;
 
-    // Constructs a WordNet object given the names of the input (synset and hypernym) files.
+    /**
+     * Constructs a {@link WordNet} object given the names of the input (synset and hypernym) files.
+     * @param synsets the synset input file name or path
+     * @param hypernyms the hypernyms input file name or path
+     */
     public WordNet(String synsets, String hypernyms) {
-        if (synsets == null) {
+        if (synsets == null)
             throw new NullPointerException("synsets is null");
-        }
-        if (hypernyms == null) {
+        if (hypernyms == null)
             throw new NullPointerException("hypernyms is null");
-        }
         rst = new SeparateChainingHashST<>();
         st = new SeparateChainingHashST<>();
         In synIn = new In(synsets);
@@ -32,9 +40,8 @@ public class WordNet {
             rst.put(id, line[1]);
             String[] synsetSet = line[1].split("\\s");
             for (String synSet : synsetSet) {
-                if (!st.contains(synSet)) {
+                if (!st.contains(synSet))
                     st.put(synSet, new HashSet<>());
-                }
                 st.get(synSet).add(id);
             }
         }
@@ -50,66 +57,69 @@ public class WordNet {
                 G.addEdge(synset, hypernym);
             }
         }
-
         sca = new ShortestCommonAncestor(G);
     }
 
-    // Returns all WordNet nouns.
-    public Iterable<String> nouns() {
-        return st.keys();
-    }
+    /**
+     * @return all {@link WordNet} nouns
+     */
+    public Iterable<String> nouns() { return st.keys(); }
 
-    // Returns true if the given word is a WordNet noun, and false otherwise.
+    /**
+     * @param word the word
+     * @return {@code true} if the given word is a WordNet noun, {@code false} otherwise
+     */
     public boolean isNoun(String word) {
-        if (word == null) {
+        if (word == null)
             throw new NullPointerException("word is null");
-        }
         return st.contains(word);
     }
 
-    // Returns a synset that is a shortest common ancestor of noun1 and noun2.
+    /**
+     * @param noun1 a noun
+     * @param noun2 a noun
+     * @return a synset that is a shortest common ancestor of {@code noun1} and {@code noun2}
+     */
     public String sca(String noun1, String noun2) {
-        if (noun1 == null) {
+        if (noun1 == null)
             throw new NullPointerException("noun1 is null");
-        }
-        if (noun2 == null) {
+        if (noun2 == null)
             throw new NullPointerException("noun2 is null");
-        }
-        if (!isNoun(noun1)) {
+        if (!isNoun(noun1))
             throw new IllegalArgumentException("noun1 is not a noun");
-        }
-        if (!isNoun(noun2)) {
+        if (!isNoun(noun2))
             throw new IllegalArgumentException("noun2 is not a noun");
-        }
         return rst.get(sca.ancestor(st.get(noun1), st.get(noun2)));
     }
 
-    // Returns the length of the shortest ancestral path between noun1 and noun2.
+    /**
+     * @param noun1 a noun
+     * @param noun2 a noun
+     * @return the length of the shortest ancestral path between {@code noun1} and {@code noun2}
+     */
     public int distance(String noun1, String noun2) {
-        if (noun1 == null) {
+        if (noun1 == null)
             throw new NullPointerException("noun1 is null");
-        }
-        if (noun2 == null) {
+        if (noun2 == null)
             throw new NullPointerException("noun2 is null");
-        }
-        if (!isNoun(noun1)) {
+        if (!isNoun(noun1))
             throw new IllegalArgumentException("noun1 is not a noun");
-        }
-        if (!isNoun(noun2)) {
+        if (!isNoun(noun2))
             throw new IllegalArgumentException("noun2 is not a noun");
-        }
         return sca.length(st.get(noun1), st.get(noun2));
     }
 
-    // Unit tests the data type. [DO NOT EDIT]
+    /**
+     * Unit tests the data type. [DO NOT EDIT]
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         WordNet wordnet = new WordNet(args[0], args[1]);
         String word1 = args[2];
         String word2 = args[3];
         int nouns = 0;
-        for (String noun : wordnet.nouns()) {
+        for (String noun : wordnet.nouns())
             nouns++;
-        }
         StdOut.printf("# of nouns = %d\n", nouns);
         StdOut.printf("isNoun(%s)? %s\n", word1, wordnet.isNoun(word1));
         StdOut.printf("isNoun(%s)? %s\n", word2, wordnet.isNoun(word2));

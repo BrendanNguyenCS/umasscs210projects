@@ -3,37 +3,48 @@ package dummy_project;
 import edu.princeton.cs.algs4.*;
 
 public class WeightedQuickUnionUF {
-    private final int[] id;           // parent link (site indexed)
-    private final int[] sz;           // size of component for roots (site indexed)
-    private int count;                // number of components
+    /**
+     * Parent link (site indexed)
+     */
+    private final int[] id;
+    /**
+     * Size of component for roots (site indexed)
+     */
+    private final int[] sz;
+    /**
+     * Number of components
+     */
+    private int count;
 
+    /**
+     * Constructor
+     * @param n the number of components
+     */
     public WeightedQuickUnionUF(int n) {
         count = n;
         id = new int[n];
         sz = new int[n];
-
-        for (int i = 0; i < n; i++) id[i] = i;
-        for (int i = 0; i < n; i++) sz[i] = 1;
+        for (int i = 0; i < n; i++)
+            id[i] = i;
+        for (int i = 0; i < n; i++)
+            sz[i] = 1;
     }
 
-    public int count() {
-        return count;
-    }
+    public int count() { return count; }
 
-    public boolean connected(int p, int q) {
-        return find(p) == find(q);
-    }
+    public boolean connected(int p, int q) { return find(p) == find(q); }
 
     public int find(int p) {
-        // Follow links to find a root
-        while (p != id[p]) p = id[p];
+        while (p != id[p])
+            p = id[p];
         return p;
     }
 
     public void union(int p, int q) {
         int i = find(p);
         int j = find(q);
-        if (i == j) return;
+        if (i == j)
+            return;
 
         // Make smaller root point to larger one
         if (sz[i] < sz[j]) {
@@ -53,7 +64,8 @@ public class WeightedQuickUnionUF {
         while (!StdIn.isEmpty()) {
             int p = StdIn.readInt();
             int q = StdIn.readInt();                                // Read pair to connect
-            if (uf.connected(p, q)) continue;                       // Ignore if connected
+            if (uf.connected(p, q))
+                continue;                                           // Ignore if connected
             uf.union(p, q);                                         // Combine components
             StdOut.println(p + " " + q);                            // And print connection
         }

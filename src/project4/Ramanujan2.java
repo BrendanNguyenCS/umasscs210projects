@@ -3,13 +3,15 @@ package project4;
 import edu.princeton.cs.algs4.*;
 
 public class Ramanujan2 {
-    // Entry point.
+    /**
+     * Entry point
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         int n = Integer.parseInt(args[0]);
         MinPQ<Pair> pq = new MinPQ<>();
-        for (int i = 1; cubed(i) < n; i++) {
+        for (int i = 1; cubed(i) < n; i++)
             pq.insert(new Pair(i, i + 1));
-        }
 
         Pair prev, curr = null;
         while (!pq.isEmpty()) {
@@ -19,34 +21,48 @@ public class Ramanujan2 {
                 String s = "%d = %d^3 + %d^3 = %d^3 + %d^3\n";
                 StdOut.printf(s, prev.sumOfCubes, prev.i, prev.j, curr.i, curr.j);
             }
-
-            if (cubed(curr.j) < n) {
+            if (cubed(curr.j) < n)
                 pq.insert(new Pair(curr.i, curr.j + 1));
-            }
         }
     }
 
-    // Returns an integer cubed (or to the 3rd power)
-    public static int cubed(int x) {
-        return x * x * x;
-    }
+    /**
+     * @param x a number
+     * @return an integer cubed (or to the 3rd power)
+     */
+    public static int cubed(int x) { return x * x * x; }
 
-    // A data type that encapsulates a pair of numbers (i, j) and the sum of their cubes.
+    /**
+     * A data type that encapsulates a pair of numbers ({@code i}, {@code j}) and the sum of their cubes
+     */
     private static class Pair implements Comparable<Pair> {
-        private final int i;          // first number in the pair
-        private final int j;          // second number in the pair
-        private final int sumOfCubes; // i^3 + j^3
+        /**
+         * The first number in the pair
+         */
+        private final int i;
+        /**
+         * The second number in the pair
+         */
+        private final int j;
+        /**
+         * The sum of their cubes ({@code i}^3 + {@code j}^3)
+         */
+        private final int sumOfCubes;
 
-        // Constructs a pair (i, j).
+        /**
+         * Constructs a pair ({@code i}, {@code j})
+         */
         public Pair(int i, int j) {
             this.i = i;
             this.j = j;
             sumOfCubes = i * i * i + j * j * j;
         }
 
-        // Returns a comparison of pairs this and other based on their sum-of-cubes values.
-        public int compareTo(Pair other) {
-            return sumOfCubes - other.sumOfCubes;
-        }
+        /**
+         * Compares two pairs of numbers based on their sum-of-cube values
+         * @param other the object to be compared
+         * @return the difference in the sum-of-cubes of the pairs ({@code this} - {@code other})
+         */
+        public int compareTo(Pair other) { return sumOfCubes - other.sumOfCubes; }
     }
 }

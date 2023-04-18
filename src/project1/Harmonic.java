@@ -3,7 +3,10 @@ package project1;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Harmonic {
-    // Entry point.
+    /**
+     * Entry point
+     * @param args the command-line arguments
+     */
     public static void main(String[] args) {
         // Accept n (int) as command-line argument.
         int n = Integer.parseInt(args[0]);

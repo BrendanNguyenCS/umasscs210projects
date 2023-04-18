@@ -1,10 +1,14 @@
-package dummy_project;// Writes the message "Hello, World" to standard output.
+package dummy_project;
 
 import edu.princeton.cs.algs4.*;
 
+/**
+ * Writes the message "Hello, World" to standard output
+  */
 public class HelloWorld {
-    // Entry point.
-    public static void main(String[] args) {
-        StdOut.println("Hello, World");
-    }
+    /**
+     * Entry point
+     * @param args command-line arguments
+     */
+    public static void main(String[] args) { StdOut.println("Hello, World"); }
 }

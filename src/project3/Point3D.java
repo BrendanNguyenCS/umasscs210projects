@@ -1,34 +1,55 @@
 package project3;
 
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 import edu.princeton.cs.algs4.*;
 
 public class Point3D implements Comparable<Point3D> {
-    private final double x; // x coordinate
-    private final double y; // y coordinate
-    private final double z; // z coordinate
+    /**
+     * X coordinate
+     */
+    private final double x;
+    /**
+     * Y coordinate
+     */
+    private final double y;
+    /**
+     * Z coordinate
+     */
+    private final double z;
 
-    // Constructs a point in 3D given its x, y, and z coordinates.
+    /**
+     * Constructs a point in 3D given its coordinates
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param z the z coordinate
+     */
     public Point3D(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    // Returns the Euclidean distance between this point and other.
+    /**
+     * @param other the other {@link Point3D}
+     * @return the Euclidean distance between this point and {@code other}
+     */
     public double distance(Point3D other) {
         return Math.sqrt(Math.pow((this.x - other.x), 2) + Math.pow((this.y - other.y),
                 2) + Math.pow((this.z - other.z), 2));
     }
 
-    // Returns a string representation of this point.
+    /**
+     * @return the string representation of this {@link Point3D} object
+     */
     public String toString() {
         return "(" + x + ", " + y + ", " + z + ")";
     }
 
-    // Returns a comparison of this point with other based on their respective distances to the
-    // origin (0, 0, 0).
+    /**
+     * Compares this point with {@code other} based on their respective distances to teh origin (0, 0, 0)
+     * @param other the object to be compared
+     * @return {@code -1} if this point is closer, {@code 1} if the other point is closer, {@code 0} if they are the same
+     */
     public int compareTo(Point3D other) {
         Point3D origin = new Point3D(0, 0, 0);
         double a = distance(origin);
@@ -36,46 +57,49 @@ public class Point3D implements Comparable<Point3D> {
         return Double.compare(a, b);
     }
 
-    // Returns a comparator to compare two points by their x-coordinate.
-    public static Comparator<Point3D> xOrder() {
-        return new XOrder();
-    }
+    /**
+     * @return a comparator to compare two points by their x-coordinates
+     */
+    public static Comparator<Point3D> xOrder() { return new XOrder(); }
 
-    // Returns a comparator to compare two points by their y-coordinate.
-    public static Comparator<Point3D> yOrder() {
-        return new YOrder();
-    }
+    /**
+     * @return a comparator to compare two points by their y-coordinates
+     */
+    public static Comparator<Point3D> yOrder() { return new YOrder(); }
 
-    // Returns a comparator to compare two points by their z-coordinate.
-    public static Comparator<Point3D> zOrder() {
-        return new ZOrder();
-    }
+    /**
+     * @return a comparator to compare two points by their z-coordinates
+     */
+    public static Comparator<Point3D> zOrder() { return new ZOrder(); }
 
-    // A comparator for comparing two points by their x-coordinate.
+    /**
+     * A class that compares two points based on their x-coordinates
+     */
     private static class XOrder implements Comparator<Point3D> {
         // Returns a comparison of p1 and p2 by their x-coordinate.
-        public int compare(Point3D p1, Point3D p2) {
-            return Double.compare(p1.x, p2.x);
-        }
+        public int compare(Point3D p1, Point3D p2) { return Double.compare(p1.x, p2.x); }
     }
 
-    // A comparator for comparing two points by their y-coordinate.
+    /**
+     * A class that compares two points based on their y-coordinates
+     */
     private static class YOrder implements Comparator<Point3D> {
         // Returns a comparison of p1 and p2 by their y-coordinate.
-        public int compare(Point3D p1, Point3D p2) {
-            return Double.compare(p1.y, p2.y);
-        }
+        public int compare(Point3D p1, Point3D p2) { return Double.compare(p1.y, p2.y); }
     }
 
-    // A comparator for comparing two points by their z-coordinate.
+    /**
+     * A class that compares two points based on their z-coordinates
+     */
     private static class ZOrder implements Comparator<Point3D> {
         // Returns a comparison of p1 and p2 by their z-coordinate.
-        public int compare(Point3D p1, Point3D p2) {
-            return Double.compare(p1.z, p2.z);
-        }
+        public int compare(Point3D p1, Point3D p2) { return Double.compare(p1.z, p2.z); }
     }
 
-    // Unit tests the data type. [DO NOT EDIT]
+    /**
+     * Unit tests the data type. [DO NOT EDIT]
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         StdOut.print("How many points? ");
         int n = StdIn.readInt();
@@ -88,28 +112,23 @@ public class Point3D implements Comparable<Point3D> {
             points[i] = new Point3D(x, y, z);
         }
         StdOut.println("Here are the points in the order entered:");
-        for (Point3D point : points) {
+        for (Point3D point : points)
             StdOut.println("  " + point);
-        }
         Arrays.sort(points);
         StdOut.println("Sorted by their natural ordering (compareTo)");
-        for (Point3D point : points) {
+        for (Point3D point : points)
             StdOut.println("  " + point);
-        }
         Arrays.sort(points, Point3D.xOrder());
         StdOut.println("Sorted by their x coordinate (xOrder)");
-        for (Point3D point : points) {
+        for (Point3D point : points)
             StdOut.println("  " + point);
-        }
         Arrays.sort(points, Point3D.yOrder());
         StdOut.println("Sorted by their y coordinate (yOrder)");
-        for (Point3D point : points) {
+        for (Point3D point : points)
             StdOut.println("  " + point);
-        }
         Arrays.sort(points, Point3D.zOrder());
         StdOut.println("Sorted by their z coordinate (zOrder)");
-        for (Point3D point : points) {
+        for (Point3D point : points)
             StdOut.println("  " + point);
-        }
     }
 }

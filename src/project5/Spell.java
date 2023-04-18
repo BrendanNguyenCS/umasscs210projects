@@ -3,7 +3,10 @@ package project5;
 import edu.princeton.cs.algs4.*;
 
 public class Spell {
-    // Entry point.
+    /**
+     * Entry point
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         In in = new In(args[0]);
         String[] lines = in.readAllLines();
@@ -29,9 +32,8 @@ public class Spell {
             i++;
             String[] words = input.trim().split("\\b");
             for (String word : words) {
-                if (st.contains(word)) {
+                if (st.contains(word))
                     StdOut.printf("%s:%d -> %s\n", word, i, st.get(word));
-                }
             }
         }
     }
