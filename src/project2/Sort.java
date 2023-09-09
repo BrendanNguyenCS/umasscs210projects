@@ -28,8 +28,9 @@ public class Sort {
                 }
             }
         }
-        for (String s : d)
+        for (String s : d) {
             StdOut.println(s);
+        }
     }
 
     /**
@@ -37,5 +38,7 @@ public class Sort {
      * @param w another string
      * @return {@code true} if v is less than w according to their lexicographic order, and {@code false} otherwise.
      */
-    private static boolean less(String v, String w) { return v.compareTo(w) < 0; }
+    private static boolean less(String v, String w) {
+        return v.compareTo(w) < 0;
+    }
 }

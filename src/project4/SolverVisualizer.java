@@ -4,9 +4,10 @@ import java.awt.*;
 import edu.princeton.cs.algs4.*;
 
 /**
- * Accepts {@code filename} ({@link String}) as command-line argument; and using the student's {@link Board}
- * and {@link Solver} data types graphically solves the sliding-tiles puzzle with initial configuration
- * specified by the file
+ * Accepts {@code filename} ({@link String}) as command-line argument
+ * <p>
+ * Using the student's {@link Board} and {@link Solver} data types graphically solves the sliding-tiles puzzle with
+ * initial configuration specified by the file
  */
 public class SolverVisualizer {
     /**
@@ -81,12 +82,13 @@ public class SolverVisualizer {
         n = in.readInt();
         tileAt = new int[n][n];
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++)
+            for (int j = 0; j < n; j++) {
                 tileAt[i][j] = in.readInt();
+            }
         }
 
         title = filename;
-        movingTile = 0; // show initial state for first 'move time'
+        movingTile = 0;                                     // show initial state for first 'move time'
 
         // Enable double buffering to avoid flicker.
         StdDraw.enableDoubleBuffering();
@@ -100,7 +102,7 @@ public class SolverVisualizer {
             title += " (no solution possible)";
             movingTile = 0;
             currentMoves = 0;
-            animateMove(); // display start position only
+            animateMove();                                  // display start position only
         } else {
             Solver solver = new Solver(initial);
             totalMoves = solver.moves();
@@ -110,14 +112,14 @@ public class SolverVisualizer {
                 for (int row = 0; row < n; row++) {
                     for (int col = 0; col < n; col++) {
                         int tile = board.tileAt(row, col);
-                        // If this position was previously empty
-                        if (tileAt[row][col] == 0)
-                            movingTile = tile; // animate the tile into it
+                        if (tileAt[row][col] == 0) {        // If this position was previously empty
+                            movingTile = tile;              // animate the tile into it
+                        }
                         tileAt[row][col] = tile;
                     }
                 }
                 currentMoves++;
-                animateMove(); // show move (or static initial state 1st time)
+                animateMove();                              // show move (or static initial state 1st time)
             }
             // Show final position for one extra 'move time' before (possibly) moving on to
             // display next puzzle solution.
@@ -128,7 +130,7 @@ public class SolverVisualizer {
 
     /**
      * Draws one frame of animation. If the start position is being displayed (movingTile == 0)
-     * or during the PAUSE_TIME following each animated move, the display is unchanged
+     * or during the {@link #PAUSE_TIME} following each animated move, the display is unchanged
      * @param moveTime the number of milliseconds since the current move began
      */
     private static void refresh(int moveTime) {
@@ -157,8 +159,9 @@ public class SolverVisualizer {
                 double y = n - row - 0.5;
                 if (tileAt[row][col] == movingTile) {
                     double moveFraction = (double) moveTime / ANIMATE_TIME;
-                    if (moveFraction > 1.0)
+                    if (moveFraction > 1.0) {
                         moveFraction = 1.0;
+                    }
                     x += (1.0 - moveFraction) * (emptyCol - col);
                     y -= (1.0 - moveFraction) * (emptyRow - row);
                 }

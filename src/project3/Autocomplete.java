@@ -12,14 +12,18 @@ public class Autocomplete {
     /**
      * Constructs an autocomplete data structure from an array of terms
      * @param terms the terms to calculate data
+     * @throws NullPointerException if the terms are {@code null}
      */
     public Autocomplete(Term[] terms) {
         // corner case
-        if (terms == null)
+        if (terms == null) {
             throw new NullPointerException("terms is null");
+        }
+
         // defensive copy of parameter
         this.terms = new Term[terms.length];
         System.arraycopy(terms, 0, this.terms, 0, terms.length);
+
         // lexicographic sort
         Arrays.sort(this.terms);
     }
@@ -27,25 +31,29 @@ public class Autocomplete {
     /**
      * @param prefix the prefix to find
      * @return all terms that start with prefix, in descending order of their weights
+     * @throws NullPointerException if the prefix is {@code null}
      */
     public Term[] allMatches(String prefix) {
         // corner case
-        if (prefix == null)
+        if (prefix == null) {
             throw new NullPointerException("prefix is null");
-        // first instance of prefix
+        }
+
+        // first and last instance of prefix
         int i = BinarySearchDeluxe.firstIndexOf(terms, new Term(prefix),
                 Term.byPrefixOrder(prefix.length()));
-        // last instance of prefix
         int j = BinarySearchDeluxe.lastIndexOf(terms, new Term(prefix),
                 Term.byPrefixOrder(prefix.length()));
+
         // number of matching terms
         int n = numberOfMatches(prefix);
         // array to hold results
         Term[] matches = new Term[n];
 
         // if results are found, copy matches from terms into matches
-        if (i != -1 && j != -1)
+        if (i != -1 && j != -1) {
             System.arraycopy(terms, i, matches, 0, n);
+        }
         // sort matches by reverse weight
         Arrays.sort(matches, Term.byReverseWeightOrder());
         return matches;
@@ -54,16 +62,16 @@ public class Autocomplete {
     /**
      * @param prefix the prefix to find
      * @return the number of terms that start with prefix
+     * @throws NullPointerException if the prefix is {@code null}
      */
     public int numberOfMatches(String prefix) {
         // corner case
-        if (prefix == null)
+        if (prefix == null) {
             throw new NullPointerException("prefix is null");
-        // new Term for prefix
+        }
+
         Term search = new Term(prefix);
-        // first instance of prefix
         int i = BinarySearchDeluxe.firstIndexOf(terms, search, Term.byPrefixOrder(prefix.length()));
-        // last instance of prefix
         int j = BinarySearchDeluxe.lastIndexOf(terms, search, Term.byPrefixOrder(prefix.length()));
         return j - i + 1;
     }
@@ -98,8 +106,9 @@ public class Autocomplete {
                 msg = "All" + msg;
             }
             StdOut.printf("%s\n", msg);
-            for (int i = 0; i < Math.min(k, results.length); i++)
+            for (int i = 0; i < Math.min(k, results.length); i++) {
                 StdOut.println("  " + results[i]);
+            }
             StdOut.print("Enter a prefix (or ctrl-d to quit): ");
         }
     }

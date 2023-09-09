@@ -32,8 +32,9 @@ public class Spell {
             i++;
             String[] words = input.trim().split("\\b");
             for (String word : words) {
-                if (st.contains(word))
+                if (st.contains(word)) {
                     StdOut.printf("%s:%d -> %s\n", word, i, st.get(word));
+                }
             }
         }
     }

@@ -20,7 +20,6 @@ public class ResizingArrayRandomQueue<T> implements Iterable<T> {
     /**
      * Constructs an empty random queue
      */
-    @SuppressWarnings("unchecked")
     public ResizingArrayRandomQueue() {
         q = (T[]) new Object[2];
         n = 0;
@@ -29,34 +28,43 @@ public class ResizingArrayRandomQueue<T> implements Iterable<T> {
     /**
      * @return {@code true} if this queue is empty, {@code false} otherwise
      */
-    public boolean isEmpty() { return n == 0; }
+    public boolean isEmpty() {
+        return n == 0;
+    }
 
     /**
      * Getter for {@link #n}
      * @return the number of items in this queue
      */
-    public int size() { return n; }
+    public int size() {
+        return n;
+    }
 
     /**
      * Adds an item to the end of this queue
      * @param item the item to be added
+     * @throws NullPointerException if the item is {@code null}
      */
     public void enqueue(T item) {
-        if (item == null)
+        if (item == null) {
             throw new NullPointerException("item is null");
-        if (n == q.length)
+        }
+        if (n == q.length) {
             resize(2 * q.length);
+        }
         q[n] = item;
         n++;
     }
 
     /**
      * @return a random item from this queue
+     * @throws NoSuchElementException if the queue is empty
      * @apiNote the deprecated {@link StdRandom#uniform(int) uniform()} method has been replaced
      */
     public T sample() {
-        if (isEmpty())
+        if (isEmpty()) {
             throw new NoSuchElementException("Random queue is empty");
+        }
         int r = StdRandom.uniformInt(n);
         return q[r];
     }
@@ -64,25 +72,30 @@ public class ResizingArrayRandomQueue<T> implements Iterable<T> {
     /**
      * Removes and returns a random item form this queue
      * @return the item that is removed
+     * @throws NoSuchElementException if the queue is empty
      * @apiNote the deprecated {@link StdRandom#uniform(int) uniform()} method has been replaced
      */
     public T dequeue() {
-        if (isEmpty())
+        if (isEmpty()) {
             throw new NoSuchElementException("Random queue is empty");
+        }
         int r = StdRandom.uniformInt(n);
         T item = q[r];                          // temp variable for the random sample
         q[r] = q[n-1];                          // set the random sample element to the last element of the queue
         q[n-1] = null;                          // set the last element of the queue to null
         n--;
-        if (n > 0 && n == q.length / 4)         // check for resize
+        if (n > 0 && n == q.length / 4) {       // check for resize
             resize(q.length / 2);
+        }
         return item;
     }
 
     /**
      * @return an independent iterator to iterate over the items in this queue in random order
      */
-    public Iterator<T> iterator() { return new RandomQueueIterator(); }
+    public Iterator<T> iterator() {
+        return new RandomQueueIterator();
+    }
 
     /**
      * @return the string representation of this queue
@@ -97,7 +110,7 @@ public class ResizingArrayRandomQueue<T> implements Iterable<T> {
     }
 
     /**
-     * An iterator, doesn't implement {@code remove()} since it's optional
+     * An iterator, doesn't implement {@link #remove()} since it's optional
      */
     private class RandomQueueIterator implements Iterator<T> {
         /**
@@ -112,7 +125,6 @@ public class ResizingArrayRandomQueue<T> implements Iterable<T> {
         /**
          * Constructs an iterator
          */
-        @SuppressWarnings("unchecked")
         public RandomQueueIterator() {
             items = (T[]) new Object[n];
             System.arraycopy(q, 0, items, 0, n);
@@ -123,14 +135,18 @@ public class ResizingArrayRandomQueue<T> implements Iterable<T> {
         /**
          * @return {@code true} if there are more items to iterate, {@code false} otherwise
          */
-        public boolean hasNext() { return current < n; }
+        public boolean hasNext() {
+            return current < n;
+        }
 
         /**
          * @return the next item
+         * @throws NoSuchElementException if the iterator has already reached the final item
          */
         public T next() {
-            if (!hasNext())
+            if (!hasNext()) {
                 throw new NoSuchElementException("Iterator is exhausted");
+            }
             T item = items[current];
             current++;
             return item;
@@ -141,12 +157,12 @@ public class ResizingArrayRandomQueue<T> implements Iterable<T> {
      * Resizes the underlying array.
      * @param max the new array length
      */
-    @SuppressWarnings("unchecked")
     private void resize(int max) {
         T[] temp = (T[]) new Object[max];
         for (int i = 0; i < n; i++) {
-            if (q[i] != null)
+            if (q[i] != null) {
                 temp[i] = q[i];
+            }
         }
         q = temp;
     }
@@ -165,11 +181,13 @@ public class ResizingArrayRandomQueue<T> implements Iterable<T> {
             sum += r;
         }
         int iterSumQ = 0;
-        for (int x : q)
+        for (int x : q) {
             iterSumQ += x;
+        }
         int dequeSumQ = 0;
-        while (q.size() > 0)
+        while (q.size() > 0) {
             dequeSumQ += q.dequeue();
+        }
         StdOut.println("sum       = " + sum);
         StdOut.println("iterSumQ  = " + iterSumQ);
         StdOut.println("dequeSumQ = " + dequeSumQ);

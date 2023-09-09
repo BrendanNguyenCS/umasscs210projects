@@ -15,12 +15,16 @@ public class BinaryStrings implements Iterable<String> {
     /**
      * Constructs a BinaryStrings object given the length of binary strings needed
      */
-    public BinaryStrings(int n) { this.n = n; }
+    public BinaryStrings(int n) {
+        this.n = n;
+    }
 
     /**
      * @return an iterator to iterate over binary strings of length n
      */
-    public Iterator<String> iterator() { return new BinaryStringsIterator(); }
+    public Iterator<String> iterator() {
+        return new BinaryStringsIterator();
+    }
 
     /**
      * Binary strings iterator
@@ -46,7 +50,9 @@ public class BinaryStrings implements Iterable<String> {
         /**
          * @return {@code true} if there are anymore binary strings to be iterated, {@code false} otherwise
          */
-        public boolean hasNext() { return count <= Math.pow(2, n) - 1; }
+        public boolean hasNext() {
+            return count <= Math.pow(2, n) - 1;
+        }
 
         /**
          * @return the next binary string
@@ -63,8 +69,9 @@ public class BinaryStrings implements Iterable<String> {
         private String binary(int x) {
             StringBuilder s = new StringBuilder(Integer.toBinaryString(x));
             int padding = n - s.length();
-            for (int i = 1; i <= padding; i++)
+            for (int i = 1; i <= padding; i++) {
                 s.insert(0, "0");
+            }
             return s.toString();
         }
     }
@@ -75,7 +82,8 @@ public class BinaryStrings implements Iterable<String> {
      */
     public static void main(String[] args) {
         int n = Integer.parseInt(args[0]);
-        for (String s : new BinaryStrings(n))
+        for (String s : new BinaryStrings(n)) {
             StdOut.println(s);
+        }
     }
 }

@@ -60,40 +60,64 @@ public class Point3D implements Comparable<Point3D> {
     /**
      * @return a comparator to compare two points by their x-coordinates
      */
-    public static Comparator<Point3D> xOrder() { return new XOrder(); }
+    public static Comparator<Point3D> xOrder() {
+        return new XOrder();
+    }
 
     /**
      * @return a comparator to compare two points by their y-coordinates
      */
-    public static Comparator<Point3D> yOrder() { return new YOrder(); }
+    public static Comparator<Point3D> yOrder() {
+        return new YOrder();
+    }
 
     /**
      * @return a comparator to compare two points by their z-coordinates
      */
-    public static Comparator<Point3D> zOrder() { return new ZOrder(); }
+    public static Comparator<Point3D> zOrder() {
+        return new ZOrder();
+    }
 
     /**
      * A class that compares two points based on their x-coordinates
      */
     private static class XOrder implements Comparator<Point3D> {
-        // Returns a comparison of p1 and p2 by their x-coordinate.
-        public int compare(Point3D p1, Point3D p2) { return Double.compare(p1.x, p2.x); }
+        /**
+         * @param p1 the first object to be compared.
+         * @param p2 the second object to be compared.
+         * @return a comparison of {@code p1} and {@code p2} by their x-coordinate
+         */
+        public int compare(Point3D p1, Point3D p2) {
+            return Double.compare(p1.x, p2.x);
+        }
     }
 
     /**
      * A class that compares two points based on their y-coordinates
      */
     private static class YOrder implements Comparator<Point3D> {
-        // Returns a comparison of p1 and p2 by their y-coordinate.
-        public int compare(Point3D p1, Point3D p2) { return Double.compare(p1.y, p2.y); }
+        /**
+         * @param p1 the first object to be compared.
+         * @param p2 the second object to be compared.
+         * @return a comparison of {@code p1} and {@code p2} by their y-coordinate
+         */
+        public int compare(Point3D p1, Point3D p2) {
+            return Double.compare(p1.y, p2.y);
+        }
     }
 
     /**
      * A class that compares two points based on their z-coordinates
      */
     private static class ZOrder implements Comparator<Point3D> {
-        // Returns a comparison of p1 and p2 by their z-coordinate.
-        public int compare(Point3D p1, Point3D p2) { return Double.compare(p1.z, p2.z); }
+        /**
+         * @param p1 the first object to be compared.
+         * @param p2 the second object to be compared.
+         * @return a comparison of {@code p1} and {@code p2} by their z-coordinate
+         */
+        public int compare(Point3D p1, Point3D p2) {
+            return Double.compare(p1.z, p2.z);
+        }
     }
 
     /**
@@ -112,23 +136,28 @@ public class Point3D implements Comparable<Point3D> {
             points[i] = new Point3D(x, y, z);
         }
         StdOut.println("Here are the points in the order entered:");
-        for (Point3D point : points)
+        for (Point3D point : points) {
             StdOut.println("  " + point);
+        }
         Arrays.sort(points);
         StdOut.println("Sorted by their natural ordering (compareTo)");
-        for (Point3D point : points)
+        for (Point3D point : points) {
             StdOut.println("  " + point);
+        }
         Arrays.sort(points, Point3D.xOrder());
         StdOut.println("Sorted by their x coordinate (xOrder)");
-        for (Point3D point : points)
+        for (Point3D point : points) {
             StdOut.println("  " + point);
+        }
         Arrays.sort(points, Point3D.yOrder());
         StdOut.println("Sorted by their y coordinate (yOrder)");
-        for (Point3D point : points)
+        for (Point3D point : points) {
             StdOut.println("  " + point);
+        }
         Arrays.sort(points, Point3D.zOrder());
         StdOut.println("Sorted by their z coordinate (zOrder)");
-        for (Point3D point : points)
+        for (Point3D point : points) {
             StdOut.println("  " + point);
+        }
     }
 }

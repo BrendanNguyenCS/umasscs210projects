@@ -14,14 +14,18 @@ public class Primes implements Iterable<Integer> {
 
     /**
      * Constructs a {@link Primes} object given the number of primes needed
-     * @param n
+     * @param n the number of primes to be calculated
      */
-    public Primes(int n) { this.n = n; }
+    public Primes(int n) {
+        this.n = n;
+    }
 
     /**
      * @return an iterator to iterate over the first {@link #n} primes
      */
-    public Iterator<Integer> iterator() { return new PrimesIterator(); }
+    public Iterator<Integer> iterator() {
+        return new PrimesIterator();
+    }
 
     /**
      * {@link Primes} iterator
@@ -47,15 +51,18 @@ public class Primes implements Iterable<Integer> {
         /**
          * @return {@code true} if there are more primes to be iterated, {@code false} otherwise
          */
-        public boolean hasNext() { return count < n; }
+        public boolean hasNext() {
+            return count < n;
+        }
 
         /**
          * @return the next prime
          */
         public Integer next() {
             count++;
-            while (!isPrime(p))
+            while (!isPrime(p)) {
                 p++;
+            }
             return p++;
         }
 
@@ -65,8 +72,9 @@ public class Primes implements Iterable<Integer> {
          */
         private boolean isPrime(int x) {
             for (int i = 2; i <= x / i; i++) {
-                if (x % i == 0)
+                if (x % i == 0) {
                     return false;
+                }
             }
             return true;
         }
@@ -78,7 +86,8 @@ public class Primes implements Iterable<Integer> {
      */
     public static void main(String[] args) {
         int n = Integer.parseInt(args[0]);
-        for (int i : new Primes(n))
+        for (int i : new Primes(n)) {
             StdOut.println(i);
+        }
     }
 }

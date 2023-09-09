@@ -3,10 +3,11 @@ package project4;
 import edu.princeton.cs.algs4.*;
 
 /**
- * Accepts filenames ({@link String}s) as command-line arguments; creates an initial board from each
- * file; and writes to standard output: the filename, minimum number of moves to reach the goal board from
- * the initial board, and the time (in secs) taken. If the initial board is unsolvable, a "--" is written for
- * the number of moves and time taken
+ * Accepts filenames ({@link String}s) as command-line arguments
+ * <p>
+ * Creates an initial board from each file and writes to standard output: the filename, minimum number of moves to
+ * reach the goal board from the initial board, and the time (in secs) taken. If the initial board is unsolvable,
+ * a "--" is written for the number of moves and time taken
  */
 public class PuzzleChecker {
     /**

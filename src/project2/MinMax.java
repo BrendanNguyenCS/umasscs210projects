@@ -10,8 +10,9 @@ public class MinMax {
     public static int min(Node first) {
         int min = Integer.MAX_VALUE;
         for (Node x = first; x != null; x = x.next) {
-            if (x.item < min)
+            if (x.item < min) {
                 min = x.item;
+            }
         }
         return min;
     }
@@ -23,8 +24,9 @@ public class MinMax {
     public static int max(Node first) {
         int max = Integer.MIN_VALUE;
         for (Node x = first; x != null; x = x.next) {
-            if (x.item > max)
+            if (x.item > max) {
                 max = x.item;
+            }
         }
         return max;
     }
@@ -50,8 +52,9 @@ public class MinMax {
      */
     public static void main(String[] args) {
         int[] items = new int[1000];
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < 1000; i++) {
             items[i] = StdRandom.uniformInt(-10000, 10000);
+        }
         Node first = null;
         for (int item : items) {
             Node oldfirst = first;

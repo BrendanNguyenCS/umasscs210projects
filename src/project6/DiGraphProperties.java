@@ -26,16 +26,19 @@ public class DiGraphProperties {
     public DiGraphProperties(Digraph G) {
         isDAG = !(new DirectedCycle(G).hasCycle());
         isMap = true;
-        for (int v = 0; v < G.V(); v++)
+        for (int v = 0; v < G.V(); v++) {
             isMap = isMap && (G.outdegree(v) == 1);
+        }
 
         sources = new LinkedBag<>();
         sinks = new LinkedBag<>();
         for (int v = 0; v < G.V(); v++) {
-            if (G.indegree(v) == 0)
+            if (G.indegree(v) == 0) {
                 sources.add(v);
-            if (G.outdegree(v) == 0)
+            }
+            if (G.outdegree(v) == 0) {
                 sinks.add(v);
+            }
         }
     }
 
@@ -43,25 +46,33 @@ public class DiGraphProperties {
      * Getter for {@link #isDAG}
      * @return {@code true} if the digraph is a directed acyclic graph (DAG), {@code false} otherwise.
      */
-    public boolean isDAG() { return isDAG; }
+    public boolean isDAG() {
+        return isDAG;
+    }
 
     /**
      * Getter for {@link #isMap}
      * @return {@code true} if the digraph is a map, {@code false} otherwise
      */
-    public boolean isMap() { return isMap; }
+    public boolean isMap() {
+        return isMap;
+    }
 
     /**
      * Getter for {@link #sources}
      * @return all the sources (ie, vertices without any incoming edges) in the digraph
      */
-    public Iterable<Integer> sources() { return sources; }
+    public Iterable<Integer> sources() {
+        return sources;
+    }
 
     /**
      * Getter for {@link #sinks}
      * @return all the sinks (ie, vertices without any outgoing edges) in the digraph
      */
-    public Iterable<Integer> sinks() { return sinks; }
+    public Iterable<Integer> sinks() {
+        return sinks;
+    }
 
     /**
      * Unit tests the data type. [DO NOT EDIT]
@@ -72,12 +83,14 @@ public class DiGraphProperties {
         Digraph G = new Digraph(in);
         DiGraphProperties gp = new DiGraphProperties(G);
         StdOut.print("Sources: ");
-        for (int v : gp.sources())
+        for (int v : gp.sources()) {
             StdOut.print(v + " ");
+        }
         StdOut.println();
         StdOut.print("Sinks: ");
-        for (int v : gp.sinks())
+        for (int v : gp.sinks()) {
             StdOut.print(v + " ");
+        }
         StdOut.println();
         StdOut.println("Is DAG? " + gp.isDAG());
         StdOut.println("Is Map? " + gp.isMap());

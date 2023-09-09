@@ -19,12 +19,14 @@ public class UniqueCount {
      */
     private static int uniqueCount(String[] a) {
         Arrays.sort(a);
-        if (a.length == 0)
+        if (a.length == 0) {
             return 0;
+        }
         int count = 1;
         for (int i = 1; i < a.length; i++) {
-            if (!a[i].equals(a[i - 1]))
+            if (!a[i].equals(a[i - 1])) {
                 count++;
+            }
         }
         return count;
     }

@@ -18,12 +18,13 @@ public class Distance {
      * where {@code 0 <= i < x.length}.
      * @param x a position vector
      * @param y a position vector
-     * @return the Euclidean distance between the position vectors x and y
+     * @return the Euclidean distance between the position vectors {@code x} and {@code y}
      */
     private static double distance(double[] x, double[] y) {
         double sum = 0;
-        for (int i = 0; i < x.length; i++)
+        for (int i = 0; i < x.length; i++) {
             sum += Math.pow((x[i] - y[i]), 2);
+        }
         return Math.sqrt(sum);
     }
 }

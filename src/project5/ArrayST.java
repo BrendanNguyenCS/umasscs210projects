@@ -2,7 +2,6 @@ package project5;
 
 import edu.princeton.cs.algs4.*;
 
-@SuppressWarnings({"unchecked"})
 public class ArrayST<Key extends Comparable<Key>, Value> extends ST<Key, Value> {
     /**
      * Keys in the symbol table
@@ -29,23 +28,31 @@ public class ArrayST<Key extends Comparable<Key>, Value> extends ST<Key, Value> 
     /**
      * @return {@code true} if this symbol table is empty, {@code false} otherwise.
      */
-    public boolean isEmpty() { return n == 0; }
+    public boolean isEmpty() {
+        return n == 0;
+    }
 
     /**
      * @return the number of key-value pairs in this symbol table
      */
-    public int size() { return n; }
+    public int size() {
+        return n;
+    }
 
     /**
      * Inserts the key-value pair into this symbol table
      * @param key the key
      * @param value the value
+     * @throws IllegalArgumentException if either the key or value are {@code null}
      */
     public void put(Key key, Value value) {
-        if (key == null)
+        if (key == null) {
             throw new IllegalArgumentException("key is null");
-        if (value == null)
+        }
+        if (value == null) {
             throw new IllegalArgumentException("value is null");
+        }
+
         // duplicates
         for (int i = 0; i < n; i++) {
             if (keys[i].equals(key)) {
@@ -53,9 +60,12 @@ public class ArrayST<Key extends Comparable<Key>, Value> extends ST<Key, Value> 
                 return;
             }
         }
+
         // increase size if needed
-        if (n >= values.length)
+        if (n >= values.length) {
             resize(2 * n);
+        }
+
         keys[n] = key;
         values[n++] = value;
     }
@@ -63,13 +73,16 @@ public class ArrayST<Key extends Comparable<Key>, Value> extends ST<Key, Value> 
     /**
      * @param key the key
      * @return the value associated with {@code key} in this symbol table, or {@code null}
+     * @throws IllegalArgumentException if the key is {@code null}
      */
     public Value get(Key key) {
-        if (key == null)
+        if (key == null) {
             throw new IllegalArgumentException("key is null");
+        }
         for (int i = 0; i < n; i++) {
-            if (keys[i].equals(key))
+            if (keys[i].equals(key)) {
                 return values[i];
+            }
         }
         return null;
     }
@@ -77,27 +90,33 @@ public class ArrayST<Key extends Comparable<Key>, Value> extends ST<Key, Value> 
     /**
      * @param key the key
      * @return {@code true} if this symbol table contains key, {@code false} otherwise
+     * @throws IllegalArgumentException if the key is {@code null}
      */
     public boolean contains(Key key) {
-        if (key == null)
+        if (key == null) {
             throw new IllegalArgumentException("key is null");
+        }
         return get(key) != null;
     }
 
     /**
      * Deletes key and the associated value from thsi symbol table
      * @param key the key
+     * @throws IllegalArgumentException if the key is {@code null}
      */
     public void delete(Key key) {
-        if (key == null)
+        if (key == null) {
             throw new IllegalArgumentException("key is null");
+        }
         int i;
         for (i = 0; i < n; i++) {
-            if (keys[i].equals(key))
+            if (keys[i].equals(key)) {
                 break;
+            }
         }
-        if (i == n)
+        if (i == n) {
             return;
+        }
         for (int j = i; j < n - 1; j++) {
             keys[j] = keys[j + 1];
             values[j] = values[j + 1];
@@ -105,8 +124,9 @@ public class ArrayST<Key extends Comparable<Key>, Value> extends ST<Key, Value> 
         n--;
         keys[n] = null;
         values[n] = null;
-        if (n > 0 && n == keys.length / 4)
+        if (n > 0 && n == keys.length / 4) {
             resize(keys.length / 2);
+        }
     }
 
     /**
@@ -114,8 +134,9 @@ public class ArrayST<Key extends Comparable<Key>, Value> extends ST<Key, Value> 
      */
     public Iterable<Key> keys() {
         LinkedQueue<Key> queue = new LinkedQueue<>();
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             queue.enqueue(keys[i]);
+        }
         return queue;
     }
 
@@ -144,7 +165,8 @@ public class ArrayST<Key extends Comparable<Key>, Value> extends ST<Key, Value> 
             String key = StdIn.readString();
             st.put(key, i);
         }
-        for (String s : st.keys())
+        for (String s : st.keys()) {
             StdOut.println(s + " " + st.get(s));
+        }
     }
 }

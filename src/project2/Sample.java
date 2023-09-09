@@ -14,8 +14,9 @@ public class Sample {
         int k = Integer.parseInt(args[2]);
         String mode = args[3];
         // corner case
-        if (!(mode.equals("+") || mode.equals("-")))
+        if (!(mode.equals("+") || mode.equals("-"))) {
             throw new IllegalArgumentException("Illegal mode");
+        }
         ResizingArrayRandomQueue<Integer> q = new ResizingArrayRandomQueue<>();
         for (int i = lo; i <= hi; i++)                  // populate queue with all integers between lo and hi
             q.enqueue(i);

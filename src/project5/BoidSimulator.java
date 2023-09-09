@@ -4,8 +4,10 @@ import java.awt.event.KeyEvent;
 import edu.princeton.cs.algs4.*;
 
 /**
- * Accepts {@code mode} ("brute" or "kdtree"), {@code numBoids} ({@link Integer}), and {@code friends} ({@link Integer}) as command-line
- * arguments; and implements a boid simulator using {@link BrutePointST} if mode is "brute" and {@link KdTreePointST} if mode is
+ * Accepts {@code mode} ("brute" or "kdtree"), {@code numBoids} ({@link Integer}), and {@code friends} ({@link Integer})
+ * as command-line arguments
+ * <p>
+ * Implements a boid simulator using {@link BrutePointST} if mode is "brute" and {@link KdTreePointST} if mode is
  * "kdtree", with the given number of boids and friends per boid. Instructions for using the boid simulator:
  * <ol>
  *     <li>Press "o" to zoom out.
@@ -68,16 +70,21 @@ public class BoidSimulator {
 
         while (true) {
             // Process keyboard input.
-            if (StdDraw.isKeyPressed(KeyEvent.VK_I))            // Press "i" to zoom in.
+            if (StdDraw.isKeyPressed(KeyEvent.VK_I)) {          // Press "i" to zoom in.
                 radius *= 1 / ZOOM_FACTOR;
-            if (StdDraw.isKeyPressed(KeyEvent.VK_O))            // Press "o" to zoom out.
+            }
+            if (StdDraw.isKeyPressed(KeyEvent.VK_O)) {          // Press "o" to zoom out.
                 radius *= ZOOM_FACTOR;
-            if (StdDraw.isKeyPressed(KeyEvent.VK_M))            // Press "m" to enter "manual" mode.
+            }
+            if (StdDraw.isKeyPressed(KeyEvent.VK_M)) {          // Press "m" to enter "manual" mode.
                 BoidSimulator.mode = MANUAL_MODE;
-            if (StdDraw.isKeyPressed(KeyEvent.VK_H))            // Press "h" to enter "hawk" mode.
+            }
+            if (StdDraw.isKeyPressed(KeyEvent.VK_H)) {          // Press "h" to enter "hawk" mode.
                 BoidSimulator.mode = HAWK_MODE;
-            if (StdDraw.isKeyPressed(KeyEvent.VK_T))            // Press "t" to enter "tracking" mode.
+            }
+            if (StdDraw.isKeyPressed(KeyEvent.VK_T)) {          // Press "t" to enter "tracking" mode.
                 BoidSimulator.mode = TRACKING_MODE;
+            }
 
             // Scale pen radius relative to zoom.
             StdDraw.setPenRadius(0.01 * (0.5 / radius));
@@ -100,14 +107,18 @@ public class BoidSimulator {
                 currentX = meanX;
                 currentY = meanY;
             } else if (BoidSimulator.mode == MANUAL_MODE) {     // Allow user to control movement in manual mode.
-                if (StdDraw.isKeyPressed(KeyEvent.VK_UP))       // Press "up arrow" to pan upwards.
+                if (StdDraw.isKeyPressed(KeyEvent.VK_UP)) {     // Press "up arrow" to pan upwards.
                     currentY += radius * CAMERA_SPEED;
-                if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN))     // Press "down arrow" to pan downwards.
+                }
+                if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {   // Press "down arrow" to pan downwards.
                     currentY -= radius * CAMERA_SPEED;
-                if (StdDraw.isKeyPressed(KeyEvent.VK_LEFT))     // Press "left arrow" to pan to the left.
+                }
+                if (StdDraw.isKeyPressed(KeyEvent.VK_LEFT)) {   // Press "left arrow" to pan to the left.
                     currentX -= radius * CAMERA_SPEED;
-                if (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT))    // Press "right arrow" to pan to the right.
+                }
+                if (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)) {  // Press "right arrow" to pan to the right.
                     currentX += radius * CAMERA_SPEED;
+                }
             } else if (BoidSimulator.mode == HAWK_MODE) {       // Follow hawk in hawk mode.
                 currentX = hawk.x();
                 currentY = hawk.y();
@@ -123,8 +134,9 @@ public class BoidSimulator {
             } else {
                 throw new IllegalArgumentException("Illegal command-line argument");
             }
-            for (int i = 0; i < numBoids; i++)
+            for (int i = 0; i < numBoids; i++) {
                 st.put(boids[i].position(), boids[i]);
+            }
             for (int i = 0; i < numBoids; i++) {
                 Iterable<Point2D> kNearestPoints = st.nearest(boids[i].position(), friends);
                 Iterable<Boid> kNearest = lookUpBoids(st, kNearestPoints);
@@ -143,8 +155,9 @@ public class BoidSimulator {
 
     private static Iterable<Boid> lookUpBoids(PointST<Boid> st, Iterable<Point2D> points) {
         LinkedQueue<Boid> values = new LinkedQueue<Boid>();
-        for (Point2D p : points)
+        for (Point2D p : points) {
             values.enqueue(st.get(p));
+        }
         return values;
     }
 }
@@ -169,11 +182,17 @@ class Boid {
         velocity = new Vector(xvel, yvel);
     }
 
-    public Point2D position() { return position; }
+    public Point2D position() {
+        return position;
+    }
 
-    public double x() { return position.x(); }
+    public double x() {
+        return position.x();
+    }
 
-    public double y() { return position.y(); }
+    public double y() {
+        return position.y();
+    }
 
     public Vector avoidCollision(Iterable<Boid> neighbors) {
         Vector requestedVector = new Vector(0, 0);
@@ -181,8 +200,9 @@ class Boid {
         for (Boid b : neighbors) {
             Vector neighborPosition = new Vector(b.x(), b.y());
             double distanceTo = distance(myPosition, neighborPosition);
-            if (distanceTo == 0.0)
+            if (distanceTo == 0.0) {
                 break;
+            }
             Vector avoidanceVector = myPosition.minus(neighborPosition);
             Vector scaledAvoidanceVector = avoidanceVector.scale(1.0 / distanceTo);
             requestedVector = requestedVector.plus(scaledAvoidanceVector);
@@ -247,8 +267,9 @@ class Boid {
         desired = desired.plus(matchingVector);
         desired = desired.plus(plungingVector);
         desired = desired.plus(returnVector);
-        if (desired.magnitude() == 0.0)
+        if (desired.magnitude() == 0.0) {
             return desired;
+        }
         return desired.direction().scale(THRUST_FACTOR);
     }
 
@@ -257,7 +278,9 @@ class Boid {
         StdDraw.point(x(), y());
     }
 
-    public Vector getVelocity() { return velocity; }
+    public Vector getVelocity() {
+        return velocity;
+    }
 
     public Vector updatePositionAndVelocity(Iterable<Boid> neighbors, Hawk hawk) {
         double x = x() + velocity.cartesian(0);
@@ -283,11 +306,17 @@ class Hawk {
         velocity = new Vector(0, 0);
     }
 
-    public Point2D position() { return position; }
+    public Point2D position() {
+        return position;
+    }
 
-    public double x() { return position.x(); }
+    public double x() {
+        return position.x();
+    }
 
-    public double y() { return position.y(); }
+    public double y() {
+        return position.y();
+    }
 
     public Vector eatBoid(Boid boid) {
         Vector boidPosition = new Vector(boid.x(), boid.y());
