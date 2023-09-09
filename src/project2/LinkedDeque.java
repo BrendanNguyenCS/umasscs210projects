@@ -34,20 +34,26 @@ public class LinkedDeque<Item> implements Iterable<Item> {
     /**
      * @return {@code true} if this deque is empty, {@code false} otherwise.
      */
-    public boolean isEmpty() { return n == 0; }
+    public boolean isEmpty() {
+        return n == 0;
+    }
 
     /**
      * @return the number of items in this deque
      */
-    public int size() { return n; }
+    public int size() {
+        return n;
+    }
 
     /**
      * Adds an item to the front of this deque
      * @param item the item to be added
+     * @throws NullPointerException if the item is {@code null}
      */
     public void addFirst(Item item) {
-        if (item == null)
+        if (item == null) {
             throw new NullPointerException("item is null");
+        }
         Node newFirst = new Node();
         newFirst.item = item;
         if (isEmpty()) {
@@ -66,8 +72,9 @@ public class LinkedDeque<Item> implements Iterable<Item> {
      * @param item the item to be added
      */
     public void addLast(Item item) {
-        if (item == null)
+        if (item == null) {
             throw new NullPointerException("item is null");
+        }
         Node newLast = new Node();
         newLast.item = item;
         if (isEmpty()) {
@@ -83,20 +90,24 @@ public class LinkedDeque<Item> implements Iterable<Item> {
 
     /**
      * @return the item at the front of this deque
+     * @throws NoSuchElementException if the deque is empty
      */
     public Item peekFirst() {
-        if (isEmpty())
+        if (isEmpty()) {
             throw new NoSuchElementException("Deque is empty");
+        }
         return first.item;
     }
 
     /**
      * Removes and returns the item at the front of this deque
      * @return the item at the front of this deque that is removed
+     * @throws NoSuchElementException if the deque is empty
      */
     public Item removeFirst() {
-        if (isEmpty())
+        if (isEmpty()) {
             throw new NoSuchElementException("Deque is empty");
+        }
         Item item = first.item;
         if (n == 1) {                           // Removing a Node in a queue with only 1 Node results in an empty queue
             first = null;
@@ -111,20 +122,24 @@ public class LinkedDeque<Item> implements Iterable<Item> {
 
     /**
      * @return the item at the back of this deque
+     * @throws NoSuchElementException if the deque is empty
      */
     public Item peekLast() {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("Deque is empty");
+        }
         return last.item;
     }
 
     /**
      * Removes and returns the item at the back of this deque
      * @return the item at the back of this deque that is removed
+     * @throws NoSuchElementException if the deque is empty
      */
     public Item removeLast() {
-        if (isEmpty())
+        if (isEmpty()) {
             throw new NoSuchElementException("Deque is empty");
+        }
         Item item = last.item;
         if (n == 1) {                           // Removing a Node in a queue with only 1 Node results in an empty queue
             first = null;
@@ -140,7 +155,9 @@ public class LinkedDeque<Item> implements Iterable<Item> {
     /**
      * @return an iterator to iterate over the items in this deque from front to back
      */
-    public Iterator<Item> iterator() { return new DequeIterator(); }
+    public Iterator<Item> iterator() {
+        return new DequeIterator();
+    }
 
     /**
      * @return the string representation of this deque
@@ -166,19 +183,25 @@ public class LinkedDeque<Item> implements Iterable<Item> {
         /**
          * Constructs an iterator
          */
-        public DequeIterator() { current = first; }
+        public DequeIterator() {
+            current = first;
+        }
 
         /**
          * @return {@code true} if there are more items to iterate, {@code false} otherwise
          */
-        public boolean hasNext() { return current != null; }
+        public boolean hasNext() {
+            return current != null;
+        }
 
         /**
          * @return the next item
+         * @throws NoSuchElementException if the iterator has already reached the final item
          */
         public Item next() {
-            if (isEmpty())
+            if (isEmpty()) {
                 throw new NoSuchElementException("Iterator is exhausted");
+            }
             Item item = current.item;
             current = current.next;
             return item;
@@ -209,7 +232,7 @@ public class LinkedDeque<Item> implements Iterable<Item> {
      * @param args command-line arguments
      */
     public static void main(String[] args) {
-        LinkedDeque<Character> deque = new LinkedDeque<Character>();
+        LinkedDeque<Character> deque = new LinkedDeque<>();
         String quote = "There is grandeur in this view of life, with its several powers, having " +
                 "been originally breathed into a few forms or into one; and that, whilst this " +
                 "planet has gone cycling on according to the fixed law of gravity, from so simple" +
@@ -217,21 +240,25 @@ public class LinkedDeque<Item> implements Iterable<Item> {
                 "being, evolved. ~ Charles Darwin, The Origin of Species";
         int r = StdRandom.uniformInt(0, quote.length());
         StdOut.println("Filling the deque...");
-        for (int i = quote.substring(0, r).length() - 1; i >= 0; i--)
+        for (int i = quote.substring(0, r).length() - 1; i >= 0; i--) {
             deque.addFirst(quote.charAt(i));
-        for (int i = 0; i < quote.substring(r).length(); i++)
+        }
+        for (int i = 0; i < quote.substring(r).length(); i++) {
             deque.addLast(quote.charAt(r + i));
+        }
         StdOut.printf("The deque (%d characters): ", deque.size());
-        for (char c : deque)
+        for (char c : deque) {
             StdOut.print(c);
+        }
         StdOut.println();
         StdOut.println("Emptying the deque...");
         double s = StdRandom.uniformDouble();
         for (int i = 0; i < quote.length(); i++) {
-            if (StdRandom.bernoulli(s))
+            if (StdRandom.bernoulli(s)) {
                 deque.removeFirst();
-            else
+            } else {
                 deque.removeLast();
+            }
         }
         StdOut.println("deque.isEmpty()? " + deque.isEmpty());
     }

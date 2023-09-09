@@ -3,9 +3,10 @@ package project5;
 import edu.princeton.cs.algs4.*;
 
 /**
- * Accepts {@code filename} ({@link String}) and {@code k} ({@link Integer}) as command-line arguments; draws points
- * from the file using standard draw; and highlights the k points closest to the mouse. The search results obtained
- * using {@link BrutePointST} are highlighted in red while those obtained using the {@link KdTreePointST} are
+ * Accepts {@code filename} ({@link String}) and {@code k} ({@link Integer}) as command-line arguments
+ * <p>
+ * Draws points from the file using standard draw and highlights the k points closest to the mouse. The search results
+ * obtained using {@link BrutePointST} are highlighted in red while those obtained using the {@link KdTreePointST} are
  * highlighted in blue
  */
 public class NearestNeighborVisualizer {
@@ -42,8 +43,9 @@ public class NearestNeighborVisualizer {
             StdDraw.clear();
             StdDraw.setPenColor(StdDraw.BLACK);
             StdDraw.setPenRadius(0.01);
-            for (Point2D p : brute.points())
+            for (Point2D p : brute.points()) {
                 p.draw();
+            }
 
             // Highlight the k nearest neighbors obtained using BrutePointST.
             StdDraw.setPenRadius(0.03);
@@ -52,8 +54,9 @@ public class NearestNeighborVisualizer {
                 Point2D p = brute.nearest(query);
                 p.draw();
             } else {
-                for (Point2D p : brute.nearest(query, k))
+                for (Point2D p : brute.nearest(query, k)) {
                     p.draw();
+                }
             }
             StdDraw.setPenRadius(0.02);
 
@@ -63,8 +66,9 @@ public class NearestNeighborVisualizer {
                 Point2D p = kdtree.nearest(query);
                 p.draw();
             } else {
-                for (Point2D p : kdtree.nearest(query, k))
+                for (Point2D p : kdtree.nearest(query, k)) {
                     p.draw();
+                }
             }
 
             StdDraw.show();

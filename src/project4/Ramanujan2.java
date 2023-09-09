@@ -10,8 +10,9 @@ public class Ramanujan2 {
     public static void main(String[] args) {
         int n = Integer.parseInt(args[0]);
         MinPQ<Pair> pq = new MinPQ<>();
-        for (int i = 1; cubed(i) < n; i++)
+        for (int i = 1; cubed(i) < n; i++) {
             pq.insert(new Pair(i, i + 1));
+        }
 
         Pair prev, curr = null;
         while (!pq.isEmpty()) {
@@ -21,16 +22,19 @@ public class Ramanujan2 {
                 String s = "%d = %d^3 + %d^3 = %d^3 + %d^3\n";
                 StdOut.printf(s, prev.sumOfCubes, prev.i, prev.j, curr.i, curr.j);
             }
-            if (cubed(curr.j) < n)
+            if (cubed(curr.j) < n) {
                 pq.insert(new Pair(curr.i, curr.j + 1));
+            }
         }
     }
 
     /**
      * @param x a number
-     * @return an integer cubed (or to the 3rd power)
+     * @return the cube of an integer
      */
-    public static int cubed(int x) { return x * x * x; }
+    public static int cubed(int x) {
+        return (int)Math.pow(x, 3);
+    }
 
     /**
      * A data type that encapsulates a pair of numbers ({@code i}, {@code j}) and the sum of their cubes
@@ -45,7 +49,7 @@ public class Ramanujan2 {
          */
         private final int j;
         /**
-         * The sum of their cubes ({@code i}^3 + {@code j}^3)
+         * The sum of their cubes ({@code i}<sup>3</sup> + {@code j}<sup>3</sup>)
          */
         private final int sumOfCubes;
 
@@ -55,7 +59,7 @@ public class Ramanujan2 {
         public Pair(int i, int j) {
             this.i = i;
             this.j = j;
-            sumOfCubes = i * i * i + j * j * j;
+            sumOfCubes = (int)Math.pow(i, 3) + (int)Math.pow(j, 3);
         }
 
         /**
@@ -63,6 +67,8 @@ public class Ramanujan2 {
          * @param other the object to be compared
          * @return the difference in the sum-of-cubes of the pairs ({@code this} - {@code other})
          */
-        public int compareTo(Pair other) { return sumOfCubes - other.sumOfCubes; }
+        public int compareTo(Pair other) {
+            return sumOfCubes - other.sumOfCubes;
+        }
     }
 }

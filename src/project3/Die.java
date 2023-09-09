@@ -17,23 +17,29 @@ public class Die implements Comparable<Die> {
      * Rolls this die
      * @apiNote the deprecated {@link StdRandom#uniform(int) uniform()} method has been replaced
      */
-    public void roll() { value = StdRandom.uniformInt(1, 7); }
+    public void roll() {
+        value = StdRandom.uniformInt(1, 7);
+    }
 
     /**
      * Getter for {@link #value}
      * @return the face value of this die
      */
-    public int value() { return value; }
+    public int value() {
+        return value;
+    }
 
     /**
      * @param other the other die
      * @return {@code true} if this die is the same as {@code other}, {@code false} otherwise
      */
     public boolean equals(Object other) {
-        if (other == this)
+        if (other == this) {
             return true;
-        if (other == null || (other.getClass() != this.getClass()))
+        }
+        if (other == null || (other.getClass() != this.getClass())) {
             return false;
+        }
         Die a = this;
         Die b = (Die) other;
         return a.value == b.value;
@@ -43,7 +49,9 @@ public class Die implements Comparable<Die> {
      * @param that the object to be compared
      * @return a comparison of this die with other, by their face values
      */
-    public int compareTo(Die that) { return this.value - that.value; }
+    public int compareTo(Die that) {
+        return this.value - that.value;
+    }
 
     /**
      * @return the string representation of this die
@@ -70,16 +78,19 @@ public class Die implements Comparable<Die> {
         int z = Integer.parseInt(args[2]);
         Die a = new Die();
         a.roll();
-        while (a.value() != x)
+        while (a.value() != x) {
             a.roll();
+        }
         Die b = new Die();        
         b.roll();
-        while (b.value() != y)
+        while (b.value() != y) {
             b.roll();
+        }
         Die c = new Die();        
         c.roll();
-        while (c.value() != z)
+        while (c.value() != z) {
             c.roll();
+        }
         StdOut.println("Dice a, b, and c:");
         StdOut.println(a);
         StdOut.println(b);

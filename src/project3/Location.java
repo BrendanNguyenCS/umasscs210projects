@@ -48,10 +48,12 @@ public class Location implements Comparable<Location> {
      * @return {@code true} if this location is the same as {@code other}, {@code false} otherwise
      */
     public boolean equals(Object other) {
-        if (other == null || (other.getClass() != this.getClass()))
+        if (other == null || (other.getClass() != this.getClass())) {
             return false;
-        if (other == this)
+        }
+        if (other == this) {
             return true;
+        }
         Location a = this;
         Location b = (Location) other;
         return a.lat == b.lat && a.lon == b.lon;
@@ -60,7 +62,9 @@ public class Location implements Comparable<Location> {
     /**
      * @return the string representation of this {@link Location} object
      */
-    public String toString() { return name + " (" + lat + ", " + lon + ")"; }
+    public String toString() {
+        return name + " (" + lat + ", " + lon + ")";
+    }
 
     /**
      * Compares this location with other based on their respective distances to the origin, the
@@ -94,8 +98,9 @@ public class Location implements Comparable<Location> {
         wonders[6] = new Location("Christ the Redeemer (Brazil)", 22.9519, -43.2106);
         Arrays.sort(wonders);
         StdOut.println("Seven wonders, in the order of their distance to Parthenon (Greece):");
-        for (Location wonder : wonders)
+        for (Location wonder : wonders) {
             StdOut.println("  " + wonder);
+        }
         Location loc = new Location(name, lat, lon);
         StdOut.print("wonders[" + rank + "] == " + loc + "? ");
         StdOut.println(wonders[rank].equals(loc));

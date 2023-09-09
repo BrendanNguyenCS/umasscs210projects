@@ -22,14 +22,15 @@ public class Sentence implements Comparable<Sentence>, Iterable<String> {
      */
     public Sentence(String s) {
         this.s = s;
-        // split string by words and assign to instance variable
         words = s.split("\\s+");
     }
 
     /**
      * @return the number of words in this sentence
      */
-    public int wordCount() { return words.length; }
+    public int wordCount() {
+        return words.length;
+    }
 
     /**
      * Compares two {@link Sentence}s
@@ -37,15 +38,18 @@ public class Sentence implements Comparable<Sentence>, Iterable<String> {
      * @return {@code true} if they are the same, {@code false} otherwise
      */
     public boolean equals(Object other) {
-        if (other == null || other.getClass() != this.getClass())
+        if (other == null || other.getClass() != this.getClass()) {
             return false;
-        if (other == this)
+        }
+        if (other == this) {
             return true;
+        }
         String[] a = this.words;
         String[] b = ((Sentence) other).words;
         for (int i = 0; i < a.length; i++) {
-            if (!a[i].equals(b[i]))
+            if (!a[i].equals(b[i])) {
                 return false;
+            }
         }
         return true;
     }
@@ -53,31 +57,45 @@ public class Sentence implements Comparable<Sentence>, Iterable<String> {
     /**
      * @return the string representation of this {@link Sentence} object
      */
-    public String toString() { return wordCount() + ":" + s; }
+    public String toString() {
+        return wordCount() + ":" + s;
+    }
 
     /**
      * A comparison of this and other {@link Sentence} based on their lengths (i.e. character counts)
      * @param other the object to be compared
      * @return the difference in character lengths
      */
-    public int compareTo(Sentence other) { return this.s.length() - other.s.length(); }
+    public int compareTo(Sentence other) {
+        return this.s.length() - other.s.length();
+    }
 
     /**
      * @return the comparator for comparing {@link Sentence}s based on their word count
      */
-    public static Comparator<Sentence> wordCountOrder() { return new WordCountOrder(); }
+    public static Comparator<Sentence> wordCountOrder() {
+        return new WordCountOrder();
+    }
 
     /**
      * @return the iterator for iterating over this sentence in reverse order
      */
-    public Iterator<String> iterator() { return new ReverseIterator(); }
+    public Iterator<String> iterator() {
+        return new ReverseIterator();
+    }
 
     /**
      * A comparator class for comparing {@link Sentence}s based on their word counts
      */
     private static class WordCountOrder implements Comparator<Sentence> {
-        // Returns a comparison of sentences s1 and s2 based on their word count.
-        public int compare(Sentence s1, Sentence s2) { return s1.wordCount() - s2.wordCount(); }
+        /**
+         * @param s1 the first object to be compared.
+         * @param s2 the second object to be compared.
+         * @return a comparison of sentences s1 and s2 based on their word count.
+         */
+        public int compare(Sentence s1, Sentence s2) {
+            return s1.wordCount() - s2.wordCount();
+        }
     }
 
     /**
@@ -92,12 +110,16 @@ public class Sentence implements Comparable<Sentence>, Iterable<String> {
         /**
          * Constructor (Sets i to the last element of the {@code words} array)
          */
-        public ReverseIterator() { i = wordCount() - 1; }
+        public ReverseIterator() {
+            i = wordCount() - 1;
+        }
 
         /**
          * @return {@code true} if there are more words in the sentence, {@code false} otherwise
          */
-        public boolean hasNext() { return i >= 0; }
+        public boolean hasNext() {
+            return i >= 0;
+        }
 
         /**
          * @return the next word in the sentence
@@ -125,8 +147,9 @@ public class Sentence implements Comparable<Sentence>, Iterable<String> {
         StdOut.println("WordCountOrder::compare(s1, s2) = " +
                 Sentence.wordCountOrder().compare(s1, s2));
         StdOut.print("reverse(s3): ");
-        for (String word : s3)
+        for (String word : s3) {
             StdOut.print(word + " ");
+        }
         StdOut.println();
     }
 }

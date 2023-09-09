@@ -29,10 +29,12 @@ public class UFPercolation implements Percolation {
 
     /**
      * Constructs an n x n percolation system, with all sites blocked
+     * @throws IllegalArgumentException if the request system size is invalid
      */
     public UFPercolation(int n) {
-        if (n <= 0)
+        if (n <= 0) {
             throw new IllegalArgumentException("Illegal n");
+        }
         this.n = n;
         open = new boolean[n][n];
         openSites = 0;
@@ -46,10 +48,12 @@ public class UFPercolation implements Percolation {
      * Opens {@code site(i, j)} if it is not already open
      * @param i the row coordinate of the site
      * @param j the column coordinate of the site
+     * @throws IndexOutOfBoundsException if the coordinates are out of bounds
      */
     public void open(int i, int j) {
-        if ((i < 0 || i >= n) || (j < 0 || j >= n))
+        if ((i < 0 || i >= n) || (j < 0 || j >= n)) {
             throw new IndexOutOfBoundsException("Illegal i or j");
+        }
 
         if (!isOpen(i, j)) {
             open[i][j] = true;
@@ -61,8 +65,9 @@ public class UFPercolation implements Percolation {
                 uf.union(0, ufSite);
                 uf2.union(0, ufSite);
             }
-            if (i == n - 1)
+            if (i == n - 1) {
                 uf.union(ufSite, n * n + 1);
+            }
 
             // if northern neighbor in row i-1 is not out of bounds and neighbor is open,
             // connect said neighbor to current site
@@ -98,10 +103,12 @@ public class UFPercolation implements Percolation {
      * @param i the row coordinate of the site
      * @param j the column coordinate of the site
      * @return {@code true} if {@code site (i, j)} is open, {@code false} otherwise.
+     * @throws IndexOutOfBoundsException if the coordinates are out of bounds
      */
     public boolean isOpen(int i, int j) {
-        if ((i < 0 || i >= n) || (j < 0 || j >= n))
+        if ((i < 0 || i >= n) || (j < 0 || j >= n)) {
             throw new IndexOutOfBoundsException("Illegal i or j");
+        }
         return open[i][j];
     }
 
@@ -109,11 +116,13 @@ public class UFPercolation implements Percolation {
      * @param i the row coordinate of the site
      * @param j the column coordinate of the site
      * @return {@code true} if {@code site(i, j)} is full, {@code false} otherwise
+     * @throws IndexOutOfBoundsException if the coordinates are out of bounds
      * @apiNote the deprecated {@link WeightedQuickUnionUF#connected(int, int) connected()} method has been replaced
      */
     public boolean isFull(int i, int j) {
-        if ((i < 0 || i >= n) || (j < 0 || j >= n))
+        if ((i < 0 || i >= n) || (j < 0 || j >= n)) {
             throw new IndexOutOfBoundsException("Illegal i or j");
+        }
         int ufSite = encode(i, j);
         return isOpen(i, j) && (uf2.find(0) == uf2.find(ufSite));
     }
@@ -121,18 +130,24 @@ public class UFPercolation implements Percolation {
     /**
      * @return the number of open sites
      */
-    public int numberOfOpenSites() { return openSites; }
+    public int numberOfOpenSites() {
+        return openSites;
+    }
 
     /**
      * @return {@code true} if this system percolates, {@code false} otherwise
      * @apiNote the deprecated {@link WeightedQuickUnionUF#connected(int, int) connected()} method has been replaced
      */
-    public boolean percolates() { return uf.find(0) == uf.find(n*n+1); }
+    public boolean percolates() {
+        return uf.find(0) == uf.find(n*n+1);
+    }
 
     /**
      * @return an integer ID (1...n) for {@code site(i, j)}
      */
-    private int encode(int i, int j) { return n * i + j + 1; }
+    private int encode(int i, int j) {
+        return n * i + j + 1;
+    }
 
     /**
      * Unit tests the data type. [DO NOT EDIT]

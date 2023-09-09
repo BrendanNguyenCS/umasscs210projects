@@ -4,10 +4,12 @@ import edu.princeton.cs.algs4.*;
 import java.awt.*;
 
 /**
- * Accepts {@code mode} ("array" or "UF") and {@code filename} ({@link String}) as command-line arguments; and visually
- * reports if the percolation system whose size and open sites are specified by the file
- * percolates or not. The mode determines which implementation (array-based or UF-based) of the
- * Percolation API to use.
+ * Accepts {@code mode} ("array" or "UF") and {@code filename} ({@link String}) as command-line arguments
+ * <p>
+ * Visually reports if the percolation system whose size and open sites are specified by the file
+ * percolates or not.
+ * <p>
+ * The mode determines which implementation (array-based or UF-based) of the Percolation API to use.
  */
 public class PercolationVisualizer {
     /**
@@ -20,8 +22,9 @@ public class PercolationVisualizer {
      */
     public static void main(String[] args) {
         String mode = args[0];
-        if (!mode.equals("array") && !mode.equals("UF"))
+        if (!mode.equals("array") && !mode.equals("UF")) {
             throw new IllegalArgumentException("Illegal command-line argument");
+        }
         String filename = args[1];
         simulateFromFile(mode, filename);
     }
@@ -37,12 +40,13 @@ public class PercolationVisualizer {
         StdDraw.filledSquare(n / 2.0, n / 2.0, n / 2.0);
         for (int row = 0; row < n; row++) {
             for (int col = 0; col < n; col++) {
-                if (perc.isFull(row, col))
+                if (perc.isFull(row, col)) {
                     StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
-                else if (perc.isOpen(row, col))
+                } else if (perc.isOpen(row, col)) {
                     StdDraw.setPenColor(StdDraw.WHITE);
-                else
+                } else {
                     StdDraw.setPenColor(StdDraw.BLACK);
+                }
                 StdDraw.filledSquare(col + 0.5, n - row - 0.5, 0.45);
             }
         }

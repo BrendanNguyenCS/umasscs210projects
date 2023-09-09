@@ -17,7 +17,7 @@ public class Transpose {
      * @return a new matrix that is the transpose of x
      */
     private static double[][] transpose(double[][] x) {
-        // Create a new 2D matrix t (for transpose) with dimensions n x m, where m x n are the
+        // Create a new transposed 2D matrix t with dimensions n-by-m, where m-by-n are the
         // dimensions of x.
         int m = x.length;
         int n = x[0].length;
@@ -25,8 +25,9 @@ public class Transpose {
 
         // For each 0 <= i < m and 0 <= j < n, set t[j][i] to x[i][j].
         for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++)
+            for (int j = 0; j < n; j++) {
                 t[j][i] = x[i][j];
+            }
         }
 
         // Return t.

@@ -52,10 +52,12 @@ public class Rational {
      * @return {@code true} if this rational number is equal to {@code other}, {@code false} otherwise
      */
     public boolean equals(Object other) {
-        if (other == null || (other.getClass() != this.getClass()))
+        if (other == null || (other.getClass() != this.getClass())) {
             return false;
-        if (other == this)
+        }
+        if (other == this) {
             return true;
+        }
         Rational a = this, b = (Rational) other;
         return a.x == b.x && a.y == b.y;
     }
@@ -65,8 +67,9 @@ public class Rational {
      */
     public String toString() {
         long a = x, b = y;
-        if (a == 0 || b == 1)
+        if (a == 0 || b == 1) {
             return String.valueOf(a);
+        }
         if (b < 0) {
             a *= -1;
             b *= -1;
@@ -79,7 +82,9 @@ public class Rational {
      * @param q a number
      * @return the greatest common divisor, computed using Euclid's algorithm
      */
-    private static long gcd(long p, long q) { return q == 0 ? p : gcd(q, p % q); }
+    private static long gcd(long p, long q) {
+        return q == 0 ? p : gcd(q, p % q);
+    }
 
     /**
      * Unit tests the data type. [DO NOT EDIT]

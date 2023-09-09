@@ -4,7 +4,7 @@ import edu.princeton.cs.algs4.*;
 
 public class ShortestCommonAncestor {
     /**
-     * Associated DiGraph
+     * Associated {@link Digraph}
      */
     private final Digraph G;
 
@@ -13,8 +13,9 @@ public class ShortestCommonAncestor {
      * @param G the rooted DAG
      */
     public ShortestCommonAncestor(Digraph G) {
-        if (G == null)
+        if (G == null) {
             throw new NullPointerException("G is null");
+        }
         this.G = G;
     }
 
@@ -22,12 +23,15 @@ public class ShortestCommonAncestor {
      * @param v a vertex
      * @param w a vertex
      * @return the length of the shortest ancestral path between vertices {@code v} and {@code w}
+     * @throws IndexOutOfBoundsException if either of the vertices are outside the DAG
      */
     public int length(int v, int w) {
-        if (v < 0 || v >= G.V())
+        if (v < 0 || v >= G.V()) {
             throw new IndexOutOfBoundsException("v is invalid");
-        if (w < 0 || w >= G.V())
+        }
+        if (w < 0 || w >= G.V()) {
             throw new IndexOutOfBoundsException("w is invalid");
+        }
         // get distance maps for both vertices
         SeparateChainingHashST<Integer, Integer> vst = distFrom(v);
         SeparateChainingHashST<Integer, Integer> wst = distFrom(w);
@@ -41,6 +45,7 @@ public class ShortestCommonAncestor {
      * @param v a vertex
      * @param w a vertex
      * @return a shortest common ancestor of vertices {@code v} and {@code w}
+     * @throws IndexOutOfBoundsException if either of the vertices are outside the DAG
      */
     public int ancestor(int v, int w) {
         if (v < 0 || v >= G.V())
@@ -73,16 +78,22 @@ public class ShortestCommonAncestor {
      * @param A a vertex subset
      * @param B a vertex subset
      * @return the length of the shortest ancestral path of vertex subsets {@code A} and {@code B}
+     * @throws NullPointerException if either of the subsets are {@code null}
+     * @throws IllegalArgumentException if either of the subsets are empty
      */
     public int length(Iterable<Integer> A, Iterable<Integer> B) {
-        if (A == null)
+        if (A == null) {
             throw new NullPointerException("A is null");
-        if (B == null)
+        }
+        if (B == null) {
             throw new NullPointerException("B is null");
-        if (!A.iterator().hasNext())
+        }
+        if (!A.iterator().hasNext()) {
             throw new IllegalArgumentException("A is empty");
-        if (!B.iterator().hasNext())
+        }
+        if (!B.iterator().hasNext()) {
             throw new IllegalArgumentException("B is empty");
+        }
         // get triad
         int[] triad = triad(A, B);
         // get distances
@@ -96,16 +107,22 @@ public class ShortestCommonAncestor {
      * @param A a vertex subset
      * @param B a vertex subset
      * @return a shortest common ancestor of vertex subsets {@code A} and {@code B}
+     * @throws NullPointerException if either of the subsets are {@code null}
+     * @throws IllegalArgumentException if either of the subsets are empty
      */
     public int ancestor(Iterable<Integer> A, Iterable<Integer> B) {
-        if (A == null)
+        if (A == null) {
             throw new NullPointerException("A is null");
-        if (B == null)
+        }
+        if (B == null) {
             throw new NullPointerException("B is null");
-        if (!A.iterator().hasNext())
+        }
+        if (!A.iterator().hasNext()) {
             throw new IllegalArgumentException("A is empty");
-        if (!B.iterator().hasNext())
+        }
+        if (!B.iterator().hasNext()) {
             throw new IllegalArgumentException("B is empty");
+        }
         // get triad of vertices and ancestor
         int[] triad = triad(A, B);
         // return ancestor
@@ -124,8 +141,7 @@ public class ShortestCommonAncestor {
         while (!queue.isEmpty()) {
             int n = queue.dequeue();
             for (int m : G.adj(n)) {
-                // each neighbor of the vertex in queue
-                // add that vertex and its distance from v
+                // each neighbor of the vertex in queue and add that vertex and its distance from v
                 if (!st.contains(m)) {
                     st.put(m, st.get(n) + 1);
                     queue.enqueue(m);

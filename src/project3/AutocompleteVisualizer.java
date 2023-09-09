@@ -15,8 +15,10 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Accepts {@code filename} ({@link String}) and {@code k} ({@link Integer}) as command-line arguments; provides a GUI
- * for the user to enter queries against the file; and presents the top {@code k} matching terms in real time
+ * Accepts {@code filename} ({@link String}) and {@code k} ({@link Integer}) as command-line arguments
+ * <p>
+ * Provides a GUI for the user to enter queries against the file and presents the top {@code k} matching terms in
+ * real time
  */
 public class AutocompleteVisualizer extends JFrame {
     @Serial
@@ -111,8 +113,10 @@ public class AutocompleteVisualizer extends JFrame {
     }
 
     /**
-     * The panel that interfaces with the {@link Autocomplete} object. It consists of a search bar that
-     * text can be entered into, and a drop-down list of suggestions auto-completing the user's query
+     * The panel that interfaces with the {@link Autocomplete} object.
+     * <p>
+     * It consists of a search bar that text can be entered into, and a drop-down list of suggestions auto-completing
+     * the user's query
      */
     private class AutocompletePanel extends JPanel {
         private static final long serialVersionUID = 1L;
@@ -132,7 +136,6 @@ public class AutocompleteVisualizer extends JFrame {
          * of the GUI
          * @param filename the file name or path
          */
-        @SuppressWarnings("unchecked")
         public AutocompletePanel(String filename) {
             super();
 
@@ -327,7 +330,6 @@ public class AutocompleteVisualizer extends JFrame {
             // Add mouse interactivity with the drop-down menu
             suggestions.addMouseListener(
                     new MouseAdapter() {
-                        @SuppressWarnings("rawtypes")
                         public void mouseClicked(MouseEvent mouseEvent) {
                             JList theList = (JList) mouseEvent.getSource();
                             if (mouseEvent.getClickCount() >= 1) {
@@ -343,7 +345,6 @@ public class AutocompleteVisualizer extends JFrame {
                             }
                         }
 
-                        @SuppressWarnings("rawtypes")
                         public void mouseEntered(MouseEvent mouseEvent) {
                             JList theList = (JList) mouseEvent.getSource();
                             int index = theList.locationToIndex(
@@ -360,7 +361,6 @@ public class AutocompleteVisualizer extends JFrame {
             suggestions.addMouseMotionListener(
                     new MouseInputAdapter() {
                         // Google a term when a user clicks on the dropdown menu
-                        @SuppressWarnings("rawtypes")
                         public void mouseClicked(MouseEvent mouseEvent) {
                             JList theList = (JList) mouseEvent.getSource();
                             if (mouseEvent.getClickCount() >= 1) {
@@ -376,7 +376,6 @@ public class AutocompleteVisualizer extends JFrame {
                             }
                         }
 
-                        @SuppressWarnings("rawtypes")
                         public void mouseEntered(MouseEvent mouseEvent) {
                             JList theList = (JList) mouseEvent.getSource();
                             int index = theList.locationToIndex(
@@ -385,7 +384,6 @@ public class AutocompleteVisualizer extends JFrame {
                             theList.setSelectedIndex(index);
                         }
 
-                        @SuppressWarnings("rawtypes")
                         public void mouseMoved(MouseEvent mouseEvent) {
                             JList theList = (JList) mouseEvent.getSource();
                             int index = theList.locationToIndex(
@@ -480,10 +478,9 @@ public class AutocompleteVisualizer extends JFrame {
          * the currently entered text
          * @param text the text to calculate suggestions
          */
-        @SuppressWarnings("unchecked")
         public void getSuggestions(String text) {
             // Don't search for suggestions if there is no input
-            if (text.equals("")) {
+            if (text.isEmpty()) {
                 suggestions.setListData(new String[0]);
                 suggestions.clearSelection();
                 suggestions.setVisible(false);

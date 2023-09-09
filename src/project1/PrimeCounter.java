@@ -20,8 +20,9 @@ public class PrimeCounter {
      */
     private static boolean isPrime(int x) {
         for (int i = 2; i <= x/i; i++) {
-            if (x % i == 0)
+            if (x % i == 0) {
                 return false;
+            }
         }
         return true;
     }
@@ -34,8 +35,9 @@ public class PrimeCounter {
      */
     private static int primes(int n) {
         int primes = 0;
-        for (int i = 2; i <= n; i++)
+        for (int i = 2; i <= n; i++) {
             primes += isPrime(i) ? 1 : 0;
+        }
         return primes;
     }
 }

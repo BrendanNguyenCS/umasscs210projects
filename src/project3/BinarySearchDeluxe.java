@@ -11,33 +11,34 @@ public class BinarySearchDeluxe {
      * @param key the key to find
      * @param c the comparator
      * @return the {@link Key} of first index hit of the search
+     * @throws NullPointerException if any of the inputs are {@code null}
      */
     public static <Key> int firstIndexOf(Key[] a, Key key, Comparator<Key> c) {
         // corner case
-        if (a == null || key == null || c == null)
+        if (a == null || key == null || c == null) {
             throw new NullPointerException("a, key, or c is null");
+        }
+
         // invalid or empty array length
-        if (a.length == 0)
+        if (a.length == 0) {
             return -1;
-        int lo = 0; // first index of a
-        int hi = a.length - 1; // last index of a
+        }
+
+        int lo = 0;                                     // first index of a
+        int hi = a.length - 1;                          // last index of a
         int mid;
-        int index = -1; // placeholder index
+        int index = -1;                                 // placeholder index
         while (lo <= hi) {
-            mid = (hi - lo) / 2 + lo; // set mid index
-            // if key is higher than mid, check right of current mid
-            if (c.compare(key, a[mid]) > 0) {
+            mid = (hi - lo) / 2 + lo;                   // set mid index
+            if (c.compare(key, a[mid]) > 0) {           // if key is higher than mid, check right of current mid
                 lo = mid + 1;
-            } else if (c.compare(key, a[mid]) < 0) {
-                // if key is lower than mid, check left of current mid
+            } else if (c.compare(key, a[mid]) < 0) {    // if key is lower than mid, check left of current mid
                 hi = mid - 1;
-            } else {             // if key is equal to mid
-                // if mid is in the first index of a or position left of mid is less than key
+            } else {                                    // if key is equal to mid
                 if (mid == 0 || c.compare(key, a[mid - 1]) > 0) {
                     index = mid;
                     break;
-                } else {
-                    // position left is equal or greater than key
+                } else {                                // position left is equal or greater than key
                     hi = mid - 1;
                 }
             }
@@ -52,34 +53,34 @@ public class BinarySearchDeluxe {
      * @param key the key to find
      * @param c the comparator
      * @return the {@link Key} of the last index hit of the search
+     * @throws NullPointerException if any of the inputs are {@code null}
      */
     public static <Key> int lastIndexOf(Key[] a, Key key, Comparator<Key> c) {
         // corner case
-        if (a == null || key == null || c == null)
+        if (a == null || key == null || c == null) {
             throw new NullPointerException("a, key, or c is null");
+        }
+
         // invalid or empty array
-        if (a.length == 0)
+        if (a.length == 0) {
             return -1;
-        int lo = 0; // first index of a
-        int hi = a.length - 1; // last index of a
+        }
+
+        int lo = 0;                                     // first index of a
+        int hi = a.length - 1;                          // last index of a
         int mid;
-        int index = -1; // placeholder index
+        int index = -1;                                 // placeholder index
         while (lo <= hi) {
-            mid = (hi - lo) / 2 + lo; // set mid index
-            // if key is higher than mid, check right of current mid
-            if (c.compare(key, a[mid]) > 0) {
+            mid = (hi - lo) / 2 + lo;                   // set mid index
+            if (c.compare(key, a[mid]) > 0) {           // if key is higher than mid, check right of current mid
                 lo = mid + 1;
-            } else if (c.compare(key, a[mid]) < 0) {
-                // if key is lower than mid, check left of current mid
+            } else if (c.compare(key, a[mid]) < 0) {    // if key is lower than mid, check left of current mid
                 hi = mid - 1;
-            } else {             // if key is equal to mid
-                // check last position in a or position right of mid is greater than key
+            } else {                                    // if key is equal to mid
                 if (mid == a.length - 1 || c.compare(key, a[mid + 1]) < 0) {
-                    // if position right of mid is greater than key
                     index = mid;
                     break;
-                }  else {
-                    // position right is equal or less than key
+                }  else {                               // position right is equal or less than key
                     lo = mid + 1;
                 }
             }
