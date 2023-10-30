@@ -38,16 +38,11 @@ public class Sentence implements Comparable<Sentence>, Iterable<String> {
      * @return {@code true} if they are the same, {@code false} otherwise
      */
     public boolean equals(Object other) {
-        if (other == null || other.getClass() != this.getClass()) {
+        if (!(other instanceof Sentence otherS)) {
             return false;
         }
-        if (other == this) {
-            return true;
-        }
-        String[] a = this.words;
-        String[] b = ((Sentence) other).words;
-        for (int i = 0; i < a.length; i++) {
-            if (!a[i].equals(b[i])) {
+        for (int i = 0; i < this.words.length; i++) {
+            if (this.words[i].equals(otherS.words[i])) {
                 return false;
             }
         }

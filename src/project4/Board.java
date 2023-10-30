@@ -183,21 +183,15 @@ public class Board {
      * @return {@code true} if this board is the same as {@code other}, {@code false} otherwise
      */
     public boolean equals(Object other) {
-        if (other == null || (other.getClass() != this.getClass())) {
+        if (!(other instanceof Board b)) {
             return false;
         }
-        if (other == this) {
-            return true;
-        }
-
-        Board a = this;
-        Board b = (Board) other;
-        if (a.size() != b.size()) {
+        if (this.size() != b.size()) {
             return false;
         }
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (a.tileAt(i, j) != b.tileAt(i, j)) {
+                if (this.tileAt(i, j) != b.tileAt(i, j)) {
                     return false;
                 }
             }

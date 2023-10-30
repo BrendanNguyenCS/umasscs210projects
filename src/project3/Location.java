@@ -48,15 +48,11 @@ public class Location implements Comparable<Location> {
      * @return {@code true} if this location is the same as {@code other}, {@code false} otherwise
      */
     public boolean equals(Object other) {
-        if (other == null || (other.getClass() != this.getClass())) {
+        if (other instanceof Location b) {
+            return this.lat == b.lat && this.lon == b.lon;
+        } else {
             return false;
         }
-        if (other == this) {
-            return true;
-        }
-        Location a = this;
-        Location b = (Location) other;
-        return a.lat == b.lat && a.lon == b.lon;
     }
 
     /**

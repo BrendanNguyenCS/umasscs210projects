@@ -34,15 +34,11 @@ public class Die implements Comparable<Die> {
      * @return {@code true} if this die is the same as {@code other}, {@code false} otherwise
      */
     public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if (other == null || (other.getClass() != this.getClass())) {
+        if (other instanceof Die b) {
+            return this .value == b.value;
+        } else {
             return false;
         }
-        Die a = this;
-        Die b = (Die) other;
-        return a.value == b.value;
     }
 
     /**

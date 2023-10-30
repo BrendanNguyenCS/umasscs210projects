@@ -34,8 +34,10 @@ public class Point3D implements Comparable<Point3D> {
      * @return the Euclidean distance between this point and {@code other}
      */
     public double distance(Point3D other) {
-        return Math.sqrt(Math.pow((this.x - other.x), 2) + Math.pow((this.y - other.y),
-                2) + Math.pow((this.z - other.z), 2));
+        return Math.sqrt(Math.pow((this.x - other.x), 2) +
+                         Math.pow((this.y - other.y), 2) +
+                         Math.pow((this.z - other.z), 2)
+        );
     }
 
     /**

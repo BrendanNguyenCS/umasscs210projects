@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.StdOut;
 public class GreatCircle {
     /**
      * Entry point
-     * @param args command-line arguments
+     * @param args the command-line arguments
      */
     public static void main(String[] args) {
         double x1 = Double.parseDouble(args[0]);

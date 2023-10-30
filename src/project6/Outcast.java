@@ -13,8 +13,9 @@ public class Outcast {
      * @param wordnet the word dictionary
      */
     public Outcast(WordNet wordnet) {
-        if (wordnet == null)
+        if (wordnet == null) {
             throw new IllegalArgumentException("wordnet is null");
+        }
         this.wordnet = wordnet;
     }
 

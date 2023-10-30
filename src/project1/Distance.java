@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.*;
 public class Distance {
     /**
      * Entry point. [DO NOT EDIT]
-     * @param args
+     * @param args the command-line arguments
      */
     public static void main(String[] args) {
         double[] x = StdArrayIO.readDouble1D();

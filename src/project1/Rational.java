@@ -52,14 +52,11 @@ public class Rational {
      * @return {@code true} if this rational number is equal to {@code other}, {@code false} otherwise
      */
     public boolean equals(Object other) {
-        if (other == null || (other.getClass() != this.getClass())) {
+        if (other instanceof Rational b) {
+            return this.x == b.x && this.y == b.y;
+        } else {
             return false;
         }
-        if (other == this) {
-            return true;
-        }
-        Rational a = this, b = (Rational) other;
-        return a.x == b.x && a.y == b.y;
     }
 
     /**

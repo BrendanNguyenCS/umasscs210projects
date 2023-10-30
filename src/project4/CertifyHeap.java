@@ -2,7 +2,6 @@ package project4;
 
 import edu.princeton.cs.algs4.*;
 
-@SuppressWarnings({"rawtypes", "unchecked"})
 public class CertifyHeap {
     /**
      * @param a an array
